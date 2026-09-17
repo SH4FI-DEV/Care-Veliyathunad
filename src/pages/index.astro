@@ -3,21 +3,22 @@ import Layout from "../layouts/Layout.astro";
 import Icon from "../components/Icon.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import OptimisedImage from "../components/OptimisedImage.astro";
+import ImageSlider from "../components/ImageSlider.astro";
 import { SITE, IMPACT } from "../data/site";
 import { PROJECTS, COUNTS, FEATURED_PROJECTS, getProject } from "../data/projects";
 import { WORKING_TEAM, SOCIETY_LEADERS } from "../data/team";
 import { JOURNEY_STEPS } from "../data/faqs";
 import { IMAGE_POOL, unsplash } from "../data/images";
 
-// Documentary hero imagery — chosen to depict small homes, families and
-// community work in a Kerala / South Indian context, NOT luxury real estate.
-const heroSlides = [
-  { id: IMAGE_POOL.HOME_RURAL_01, alt: "A simple new home in rural Kerala" },
-  { id: IMAGE_POOL.HOME_SIMPLE_03, alt: "Volunteers at a construction site" },
-  { id: IMAGE_POOL.HANDOVER_04,    alt: "Family at the doorway of a new home" },
+// Hero slider images - authentic Kerala project photos
+const heroImages = [
+  { src: unsplash(IMAGE_POOL.HOME_RURAL_01, 1600, 70), alt: "A simple new home in rural Kerala" },
+  { src: unsplash(IMAGE_POOL.HOME_SIMPLE_03, 1600, 70), alt: "Volunteers at a construction site" },
+  { src: unsplash(IMAGE_POOL.HANDOVER_04, 1600, 70), alt: "Family at the doorway of a new home" },
+  { src: unsplash(IMAGE_POOL.HOME_RURAL_02, 1600, 70), alt: "Another completed home in Kerala" },
 ];
 
-// Pick the most recent delivered project as the "A Family's Story" feature
+// Pick the most recent delivered project as the featured story
 const FEATURED_STORY = PROJECTS.filter((p) => p.status === "delivered").slice(-1)[0];
 
 // Suppress unused-var lint
@@ -29,21 +30,19 @@ void IMPACT; void FEATURED_PROJECTS; void getProject;
   description="Care Veliyathunadu builds simple, dignified homes for families in need in Veliyathunadu, Kerala. With contributions of ₹1,000 from anyone who wishes to be part of the work."
 >
   <!-- ============================================================
-       1. HERO — asymmetric editorial composition
+       1. HERO — asymmetric editorial with image slider
        ============================================================ -->
   <section class="relative min-h-[680px] md:min-h-[760px] overflow-hidden bg-cream-100">
-    <!-- Split layout: text left, image right -->
+    <!-- Split layout: text left, image slider right -->
     <div class="absolute inset-0 grid lg:grid-cols-12">
       <!-- Left: Typography area -->
-      <div class="lg:col-span-5 flex items-center relative z-10">
+      <div class="lg:col-span-5 flex items-center relative z-10 bg-cream-100">
         <div class="px-6 sm:px-10 lg:px-16 xl:px-24 py-20 md:py-32">
           <p class="font-sans text-xs uppercase tracking-[0.2em] text-ink-500 font-semibold mb-8">Care Veliyathunadu · Since 2021</p>
           
-          <h1 class="font-display text-ink-900 text-[2.5rem] sm:text-[3rem] md:text-[3.5rem] lg:text-[4rem] leading-[0.95] tracking-tight">
-            Building<br/>
-            Homes,<br/>
-            <span class="text-brand-500">Building</span><br/>
-            Hope.
+          <h1 class="font-display text-ink-900 text-[2.8rem] sm:text-[3.5rem] md:text-[4rem] lg:text-[4.5rem] leading-[1.0] tracking-tight">
+            Building Homes,<br/>
+            <span class="text-brand-500">Building Hope.</span>
           </h1>
           
           <p class="mt-8 text-ink-700 text-[16px] md:text-[17px] max-w-md leading-[1.7]">
@@ -55,40 +54,24 @@ void IMPACT; void FEATURED_PROJECTS; void getProject;
               Support Our Work
               <Icon name="arrow-right" size={16} />
             </a>
+            <a href="/projects" class="btn-tertiary">
+              See our projects
+              <Icon name="arrow-right" size={14} />
+            </a>
           </div>
         </div>
       </div>
       
-      <!-- Right: Image area - breaks grid -->
+      <!-- Right: Image slider -->
       <div class="lg:col-span-7 relative hidden lg:block">
-        <div class="absolute inset-0">
-          <OptimisedImage
-            src={unsplash(IMAGE_POOL.HOME_RURAL_01, 1200, 65)}
-            alt="A simple new home in rural Kerala"
-            width={1200}
-            height={800}
-            sizes="(min-width: 1024px) 58vw, 100vw"
-            priority={true}
-            class="w-full h-full object-cover"
-          />
-          <!-- Subtle gradient for text readability on mobile -->
-          <div class="absolute inset-0 bg-gradient-to-r from-cream-100/80 via-cream-100/20 to-transparent lg:hidden"></div>
-        </div>
+        <ImageSlider images={heroImages} autoPlay={true} interval={5000} />
       </div>
     </div>
     
-    <!-- Mobile image (shown below text on mobile) -->
-    <div class="lg:hidden absolute bottom-0 left-0 right-0 h-[40%]">
-      <OptimisedImage
-        src={unsplash(IMAGE_POOL.HOME_RURAL_01, 800, 60)}
-        alt="A simple new home in rural Kerala"
-        width={800}
-        height={400}
-        sizes="100vw"
-        priority={true}
-        class="w-full h-full object-cover"
-      />
-      <div class="absolute inset-0 bg-gradient-to-t from-cream-100 via-cream-100/50 to-transparent"></div>
+    <!-- Mobile image slider (full width below text) -->
+    <div class="lg:hidden absolute bottom-0 left-0 right-0 h-[45%]">
+      <ImageSlider images={heroImages} autoPlay={true} interval={5000} />
+      <div class="absolute inset-0 bg-gradient-to-t from-cream-100 via-cream-100/30 to-transparent pointer-events-none"></div>
     </div>
   </section>
 
