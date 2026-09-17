@@ -20,7 +20,7 @@ const nextProject = PROJECTS[(idx + 1) % PROJECTS.length];
 ---
 
 <Layout
-  title={`Home #${project.number} — ${project.familyName}`}
+  title={`Home #${project.number}, ${project.familyName}`}
   description={project.short}
   ogImage={project.cover}
 >
@@ -124,7 +124,7 @@ const nextProject = PROJECTS[(idx + 1) % PROJECTS.length];
                class={`block relative overflow-hidden rounded-xl bg-cream-200 group ${i === 0 ? "md:col-span-2 md:row-span-2 aspect-square md:aspect-auto" : "aspect-square"}`}>
               <OptimisedImage
                 src={src}
-                alt={`${project.familyName} — photograph ${i + 1}`}
+                alt={`${project.familyName}, photograph ${i + 1}`}
                 width={800}
                 height={i === 0 ? 800 : 800}
                 sizes={i === 0 ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 33vw, 50vw"}

@@ -17,7 +17,7 @@ import { WORKING_TEAM, SOCIETY_LEADERS } from "../data/team";
           The people behind every home.
         </h1>
         <p class="mt-5 text-ink-700 text-[17px] md:text-[18px] leading-[1.7]">
-          Fifteen working organisers, and a wider community of contributors, masons, and volunteers. Photographs below are placeholder images — real photographs will be added with each person's consent.
+          Fifteen working organisers, and a wider community of contributors, masons, and volunteers. Photographs below are placeholder images. Real photographs will be added with each person's consent.
         </p>
       </div>
     </div>
@@ -63,36 +63,40 @@ import { WORKING_TEAM, SOCIETY_LEADERS } from "../data/team";
         <p class="eyebrow">Voices in the community</p>
         <h2 class="heading-display mt-3 text-[2rem] md:text-[2.4rem]">Endorsements and statements</h2>
         <p class="mt-5 text-ink-700 text-[16px] leading-[1.7]">
-          Verified, on-record quotations from people in the community who have supported the work.
+          {SOCIETY_LEADERS.every((l) => !l.verified)
+            ? "We are currently collecting verified, on-record quotations from community leaders and supporters. The placeholders below indicate where these endorsements will appear once verified."
+            : "Verified, on-record quotations from people in the community who have supported the work."}
         </p>
       </div>
 
-      <div class="grid md:grid-cols-2 gap-6">
-        {SOCIETY_LEADERS.map((l) => (
-          <figure class="card-base p-7 reveal">
-            <blockquote class="font-display italic text-[1.15rem] text-ink-700 leading-[1.55]">
-              "{l.quote}"
-            </blockquote>
-            <figcaption class="mt-5 pt-5 border-t border-cream-200 flex items-center gap-3">
-              <div
-                class="w-10 h-10 rounded-full overflow-hidden bg-cream-200"
-                aria-hidden="true"
-              >
-                <img
-                  src={l.photo}
-                  alt={l.name}
-                  class="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-              <div>
-                <div class="text-sm font-semibold text-ink-900">{l.name}</div>
-                <div class="text-xs text-ink-500 mt-0.5">{l.designation}</div>
-              </div>
-            </figcaption>
-          </figure>
-        ))}
-      </div>
+      {SOCIETY_LEADERS.some((l) => l.verified) && (
+        <div class="grid md:grid-cols-2 gap-6">
+          {SOCIETY_LEADERS.filter((l) => l.verified).map((l) => (
+            <figure class="card-base p-7 reveal">
+              <blockquote class="font-display italic text-[1.15rem] text-ink-700 leading-[1.55]">
+                "{l.quote}"
+              </blockquote>
+              <figcaption class="mt-5 pt-5 border-t border-cream-200 flex items-center gap-3">
+                <div
+                  class="w-10 h-10 rounded-full overflow-hidden bg-cream-200"
+                  aria-hidden="true"
+                >
+                  <img
+                    src={l.photo}
+                    alt={l.name}
+                    class="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-ink-900">{l.name}</div>
+                  <div class="text-xs text-ink-500 mt-0.5">{l.designation}</div>
+                </div>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
     </div>
   </section>
 
@@ -103,7 +107,7 @@ import { WORKING_TEAM, SOCIETY_LEADERS } from "../data/team";
         <p class="eyebrow">Get involved</p>
         <h2 class="heading-display mt-3 text-[2rem] md:text-[2.4rem]">If you have time, we have work.</h2>
         <p class="mt-5 text-ink-700 text-[16px] leading-[1.7]">
-          Whether you are an engineer, a mason, a photographer, or simply someone with a few extra hours on a weekend — there is room for you in this work.
+          Whether you are an engineer, a mason, a photographer, or simply someone with a few extra hours on a weekend, there is room for you in this work.
         </p>
         <a href="/contact" class="btn-primary mt-6">
           <Icon name="mail" size={16} /> Get in touch

@@ -26,7 +26,7 @@ void IMPACT; void FEATURED_PROJECTS; void getProject;
 
 <Layout
   title="Building Homes, Building Hope"
-  description="Care Veliyathunadu builds simple, dignified homes for families in need in Veliyathunadu, Kerala — with contributions of ₹1,000 from anyone who wishes to be part of the work."
+  description="Care Veliyathunadu builds simple, dignified homes for families in need in Veliyathunadu, Kerala, with contributions of ₹1,000 from anyone who wishes to be part of the work."
   darkHero={true}
 >
   <!-- ============================================================
@@ -62,7 +62,7 @@ void IMPACT; void FEATURED_PROJECTS; void getProject;
           Hope.
         </h1>
         <p class="mt-6 text-cream-100/90 text-[17px] md:text-[19px] max-w-xl leading-[1.65]">
-          We build simple, dignified homes for families in Veliyathunadu, Kerala — and we do it with the smallest acts of kindness, starting at just <span class="text-saffron-300 font-semibold">₹1,000</span>.
+          We build simple, dignified homes for families in Veliyathunadu, Kerala, and we do it with the smallest acts of kindness, starting at just <span class="text-saffron-300 font-semibold">₹1,000</span>.
         </p>
         <div class="mt-9 flex flex-wrap items-center gap-5">
           <a href="/contact#donate" class="btn-orange !text-[15px] !px-6 !py-4">
@@ -102,7 +102,7 @@ void IMPACT; void FEATURED_PROJECTS; void getProject;
           Every brick, counted.
         </h2>
         <p class="mt-4 text-cream-100/85 text-[16px] md:text-[17px] max-w-2xl mx-auto leading-[1.7]">
-          Since 2021, the Care Veliyathunadu community has grown — one home, one family, one contribution at a time.
+          Since 2021, the Care Veliyathunadu community has grown, one home, one family, one contribution at a time.
         </p>
       </div>
 
@@ -195,7 +195,7 @@ void IMPACT; void FEATURED_PROJECTS; void getProject;
         <SectionHeading
           eyebrow="Gallery"
           title="A visual record of the work."
-          subtitle="Photographs from the homes we have built — before, during, and after construction."
+          subtitle="Photographs from the homes we have built, before, during, and after construction."
         />
       </div>
 
@@ -286,32 +286,40 @@ void IMPACT; void FEATURED_PROJECTS; void getProject;
         />
       </div>
 
-      <div class="mt-12 grid md:grid-cols-2 gap-6">
-        {SOCIETY_LEADERS.map((l) => (
-          <figure class={`card-base p-7 reveal`}>
-            <blockquote class="font-display italic text-[1.15rem] text-ink-700 leading-[1.55]">
-              "{l.quote}"
-            </blockquote>
-            <figcaption class="mt-5 pt-5 border-t border-cream-200 flex items-center gap-3">
-              <div
-                class="w-10 h-10 rounded-full overflow-hidden bg-cream-200"
-                aria-hidden="true"
-              >
-                <img
-                  src={l.photo}
-                  alt={l.name}
-                  class="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-              <div>
-                <div class="text-sm font-semibold text-ink-900">{l.name}</div>
-                <div class="text-xs text-ink-500 mt-0.5">{l.designation}</div>
-              </div>
-            </figcaption>
-          </figure>
-        ))}
-      </div>
+      {SOCIETY_LEADERS.some((l) => l.verified) ? (
+        <div class="mt-12 grid md:grid-cols-2 gap-6">
+          {SOCIETY_LEADERS.filter((l) => l.verified).map((l) => (
+            <figure class={`card-base p-7 reveal`}>
+              <blockquote class="font-display italic text-[1.15rem] text-ink-700 leading-[1.55]">
+                "{l.quote}"
+              </blockquote>
+              <figcaption class="mt-5 pt-5 border-t border-cream-200 flex items-center gap-3">
+                <div
+                  class="w-10 h-10 rounded-full overflow-hidden bg-cream-200"
+                  aria-hidden="true"
+                >
+                  <img
+                    src={l.photo}
+                    alt={l.name}
+                    class="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-ink-900">{l.name}</div>
+                  <div class="text-xs text-ink-500 mt-0.5">{l.designation}</div>
+                </div>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      ) : (
+        <div class="mt-12 text-center">
+          <p class="text-ink-500 text-[16px] max-w-2xl mx-auto">
+            We are currently collecting verified, on-record quotations from community leaders and supporters. These will appear here once verified.
+          </p>
+        </div>
+      )}
     </div>
   </section>
 
@@ -326,7 +334,7 @@ void IMPACT; void FEATURED_PROJECTS; void getProject;
           Help build the next home.
         </h2>
         <p class="mt-6 text-cream-100/85 text-[17px] md:text-[19px] leading-[1.65]">
-          A sixth home is currently being built. A contribution of ₹1,000 — or any amount — joins you to the people who will live there.
+          A sixth home is currently being built. A contribution of ₹1,000, or any amount, joins you to the people who will live there.
         </p>
         <div class="mt-10 flex flex-wrap justify-center gap-3">
           <a href="/contact#donate" class="btn-saffron !text-[15px] !px-6 !py-4">

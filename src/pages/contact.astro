@@ -5,8 +5,8 @@ import { SITE } from "../data/site";
 ---
 
 <Layout
-  title="Contact — Support a Home or talk to us"
-  description="Reach out to Care Veliyathunadu — by phone, email, WhatsApp, or the contact form. Support a home with a ₹1,000 contribution or more."
+  title="Contact - Support a Home or talk to us"
+  description="Reach out to Care Veliyathunadu by phone, email, WhatsApp, or the contact form. Support a home with a ₹1,000 contribution or more."
 >
   <!-- HERO -->
   <section class="pt-12 md:pt-20 pb-10">
@@ -191,7 +191,7 @@ import { SITE } from "../data/site";
                   </div>
                   <div class="bank-row">
                     <dt>Bank and branch</dt>
-                    <dd>{SITE.bank.bankName} — {SITE.bank.branch}</dd>
+                    <dd>{SITE.bank.bankName}, {SITE.bank.branch}</dd>
                   </div>
                   <div class="bank-row">
                     <dt>UPI ID</dt>
@@ -287,7 +287,7 @@ import { SITE } from "../data/site";
         <p class="eyebrow">Find us</p>
         <h3 class="heading-display mt-3 text-[1.8rem] md:text-[2.2rem]">Veliyathunadu, Kerala.</h3>
         <p class="mt-4 text-ink-700 text-[15.5px] leading-[1.7]">
-          Our office is in the heart of the community we serve — a small rented room that doubles as our meeting space, storage, and sometimes a guest room for visiting volunteers.
+          Our office is in the heart of the community we serve. A small rented room that doubles as our meeting space, storage, and sometimes a guest room for visiting volunteers.
         </p>
         <div class="mt-6 card-base aspect-video flex items-center justify-center relative overflow-hidden">
           <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle, #CFE0D8 1px, transparent 1px); background-size: 18px 18px;"></div>
@@ -512,8 +512,8 @@ import { SITE } from "../data/site";
     e.preventDefault();
     const f = new FormData(donateForm);
     const file = fileInput.files?.[0];
-    const fileInfo = file ? `\n\nSlip: ${file.name} (${(file.size/1024).toFixed(0)}KB) — attached offline` : "";
-    const body = `SUPPORT A HOME — Donation details\n\nName: ${f.get("name")}\nPhone: ${f.get("phone")}\nEmail: ${f.get("email")}\nAmount: ₹${f.get("amount")}\nTxn ref: ${f.get("txn")}\nMessage: ${f.get("message") || "(none)"}${fileInfo}\n\nThank you for joining the work.`;
+    const fileInfo = file ? `\n\nSlip: ${file.name} (${(file.size/1024).toFixed(0)}KB), attached offline` : "";
+    const body = `SUPPORT A HOME, Donation details\n\nName: ${f.get("name")}\nPhone: ${f.get("phone")}\nEmail: ${f.get("email")}\nAmount: ₹${f.get("amount")}\nTxn ref: ${f.get("txn")}\nMessage: ${f.get("message") || "(none)"}${fileInfo}\n\nThank you for joining the work.`;
     const wa = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(body)}`;
     if (confirm("Your details will now be sent to our working team via WhatsApp. Click OK to continue.")) {
       window.open(wa, "_blank");

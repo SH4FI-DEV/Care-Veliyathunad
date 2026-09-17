@@ -64,8 +64,8 @@ export const SOCIETY_LEADERS: SocietyLeader[] = [
     initials: "MR",
     bg: "#5AB885",
     category: "leader",
-    quote: "Care Veliyathunadu has shown that when a community comes together, even the smallest contribution can build a home. This initiative is a model for grassroots development.",
-    verified: true,
+    quote: "TODO: Replace with verified, on-record quotation from Panchayat President. Do not publish until consent and transcript are on file.",
+    verified: false,
   },
   {
     name: "Sajeena Parveen",
@@ -75,8 +75,8 @@ export const SOCIETY_LEADERS: SocietyLeader[] = [
     initials: "SP",
     bg: "#D88A0E",
     category: "leader",
-    quote: "I have seen firsthand how a simple home can transform a family's life. Care Veliyathunadu is doing remarkable work with transparency and dedication.",
-    verified: true,
+    quote: "TODO: Replace with verified, on-record quotation from Block Panchayat Member.",
+    verified: false,
   },
   {
     name: "Adv. P. A. Mohamed Riyas",
@@ -86,8 +86,8 @@ export const SOCIETY_LEADERS: SocietyLeader[] = [
     initials: "MR",
     bg: "#2D8B6E",
     category: "leader",
-    quote: "The Care Veliyathunadu initiative demonstrates the power of community-driven development. Their transparent approach and commitment to dignity in housing is commendable.",
-    verified: true,
+    quote: "TODO: Replace with verified, on-record quotation from District Collector.",
+    verified: false,
   },
   {
     name: "Dr. K. T. Jaleel",
@@ -97,7 +97,7 @@ export const SOCIETY_LEADERS: SocietyLeader[] = [
     initials: "KJ",
     bg: "#5AB885",
     category: "leader",
-    quote: "When ordinary people come together with extraordinary purpose, miracles happen. Care Veliyathunadu is proof that ₹1,000 can indeed build a home.",
-    verified: true,
+    quote: "TODO: Replace with verified, on-record quotation from MLA.",
+    verified: false,
   },
 ];
