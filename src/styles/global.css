@@ -1,36 +1,34 @@
 @import "tailwindcss";
 
 /* ============================================================
-   TYPOGRAPHY — Playfair Display (display) + Manrope (body)
-   Classic, elegant, readable. Standard web fonts.
+   TYPOGRAPHY — Newsreader (display) + Source Sans 3 (body)
+   Editorial, human, trustworthy. NOT Inter/Poppins/Montserrat/Manrope.
    ============================================================ */
-@import "@fontsource/playfair-display/400.css";
-@import "@fontsource/playfair-display/400-italic.css";
-@import "@fontsource/playfair-display/500.css";
-@import "@fontsource/playfair-display/600.css";
-@import "@fontsource/playfair-display/700.css";
-@import "@fontsource/manrope/400.css";
-@import "@fontsource/manrope/500.css";
-@import "@fontsource/manrope/600.css";
-@import "@fontsource/manrope/700.css";
-@import "@fontsource/manrope/800.css";
+@import "@fontsource/newsreader/400.css";
+@import "@fontsource/newsreader/400-italic.css";
+@import "@fontsource/newsreader/500.css";
+@import "@fontsource/newsreader/600.css";
+@import "@fontsource/source-sans-3/400.css";
+@import "@fontsource/source-sans-3/500.css";
+@import "@fontsource/source-sans-3/600.css";
+@import "@fontsource/source-sans-3/700.css";
 
 /* ============================================================
    DESIGN TOKENS — Care Veliyathunadu
-   Original: lighter greens, warm orange, cream — classic
+   Deeper greens, warm orange, cream — editorial
    ============================================================ */
 @theme {
-  /* Brand: lighter, more vibrant greens */
-  --color-brand-50:  #E8F5EE;
-  --color-brand-100: #C5E6D4;
-  --color-brand-200: #8ECBAA;
-  --color-brand-300: #5AB885;
-  --color-brand-400: #2D8B6E;   /* PRIMARY — Organisation / trust */
-  --color-brand-500: #1E6B52;   /* Slightly darker */
-  --color-brand-600: #155A45;   /* Dark accent */
-  --color-brand-700: #0F4A39;
-  --color-brand-800: #0A3A2E;
-  --color-brand-900: #052A22;
+  /* Brand: deeper, more sophisticated greens */
+  --color-brand-50:  #EAF1EE;
+  --color-brand-100: #CFE0D8;
+  --color-brand-200: #A2C2B4;
+  --color-brand-300: #6FA48D;
+  --color-brand-400: #3D8068;
+  --color-brand-500: #075C4D;   /* PRIMARY — Organisation / trust */
+  --color-brand-600: #06483D;   /* DEEP — Donation CTA background */
+  --color-brand-700: #053A31;
+  --color-brand-800: #042A24;
+  --color-brand-900: #021B17;
 
   /* Warm orange (action / warmth / donation) */
   --color-saffron-300: #F7C171;
@@ -48,27 +46,27 @@
   --color-ink-300: #98A39E;
 
   /* Typography */
-  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
-  --font-sans: "Manrope", system-ui, -apple-system, sans-serif;
-  --font-script: "Playfair Display", Georgia, serif;
-  --font-ui: "Manrope", var(--font-sans);  /* used in the top utility bar */
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-sans: "Source Sans 3", "Source Sans Pro", system-ui, sans-serif;
+  --font-script: "Newsreader", Georgia, serif;
+  --font-ui: "Source Sans 3", var(--font-sans);
 
-  /* Type scale — consistent, responsive sizes */
+  /* Type scale — editorial, responsive */
   --text-hero: clamp(2.6rem, 5vw, 4.6rem);
   --text-h1: clamp(2.4rem, 4vw, 3.4rem);
   --text-h2: clamp(2rem, 3.5vw, 2.8rem);
   --text-h3: clamp(1.5rem, 2.5vw, 2rem);
   --text-h4: clamp(1.25rem, 2vw, 1.5rem);
 
-  /* Reduced shadow palette (was excessive) */
+  /* Reduced shadow palette */
   --shadow-soft: 0 2px 8px -2px rgba(7, 92, 77, 0.06), 0 1px 2px rgba(7, 92, 77, 0.04);
   --shadow-lift: 0 8px 24px -8px rgba(7, 92, 77, 0.12), 0 2px 4px rgba(7, 92, 77, 0.06);
   --shadow-card: 0 1px 3px rgba(25, 51, 45, 0.06);
 
-  /* Generous, rounded radii */
-  --radius-soft: 1.5rem;       /* 24px — buttons, small UI */
-  --radius-card: 2rem;            /* 32px — large cards */
-  --radius-image: 1.75rem;      /* 28px — image containers */
+  /* Tighter, editorial radii */
+  --radius-soft: 0.625rem;       /* 10px — buttons, small UI */
+  --radius-card: 1rem;            /* 16px — large cards */
+  --radius-image: 0.875rem;      /* 14px — image containers */
 }
 
 /* ============================================================
@@ -312,17 +310,17 @@ p { text-wrap: pretty; }
 }
 
 /* ============================================================
-   BUTTONS — generous, rounded, pill-shaped
+   BUTTONS — restrained, editorial
    ============================================================ */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background: var(--color-brand-400);
+  background: var(--color-brand-500);
   color: #fff;
   padding: 0.85rem 1.5rem;
-  border-radius: 9999px;
+  border-radius: 10px;
   font-family: var(--font-sans);
   font-weight: 600;
   font-size: 0.95rem;
@@ -331,7 +329,7 @@ p { text-wrap: pretty; }
   border: 1px solid transparent;
 }
 .btn-primary:hover {
-  background: var(--color-brand-500);
+  background: var(--color-brand-600);
   transform: translateY(-1px);
 }
 .btn-primary:active { transform: translateY(0); }
@@ -344,7 +342,7 @@ p { text-wrap: pretty; }
   background: transparent;
   color: var(--color-ink-900);
   padding: 0.85rem 1.5rem;
-  border-radius: 9999px;
+  border-radius: 10px;
   font-family: var(--font-sans);
   font-weight: 600;
   font-size: 0.95rem;
@@ -364,7 +362,7 @@ p { text-wrap: pretty; }
   background: var(--color-saffron-400);
   color: var(--color-ink-900);
   padding: 0.85rem 1.5rem;
-  border-radius: 9999px;
+  border-radius: 10px;
   font-family: var(--font-sans);
   font-weight: 700;
   font-size: 0.95rem;
@@ -390,12 +388,12 @@ p { text-wrap: pretty; }
 .btn-text:hover { gap: 0.7rem; }
 
 /* ============================================================
-   CARDS — generous, rounded, less shadow
+   CARDS — editorial, restrained
    ============================================================ */
 .card-base {
   background: #fff;
   border: 1px solid var(--color-cream-200);
-  border-radius: 32px;
+  border-radius: 16px;
 }
 .card-lift {
   transition: transform 0.3s ease, border-color 0.3s ease;
