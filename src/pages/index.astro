@@ -343,26 +343,44 @@ void IMPACT; void FEATURED_PROJECTS; void getProject;
   </section>
 
   <!-- ============================================================
-       7. FINAL CTA — solid deep green, no gradient
+       7. FINAL CTA — asymmetric editorial composition
        ============================================================ -->
-  <section class="py-20 md:py-28 bg-brand-600 text-cream-50">
-    <div class="container-x text-center">
-      <div class="max-w-2xl mx-auto reveal">
-        <p class="eyebrow text-saffron-300">Join the work</p>
-        <h2 class="heading-display text-cream-50 mt-4 text-[2.6rem] md:text-[3.4rem] leading-[1.05]">
-          Help build the next home.
-        </h2>
-        <p class="mt-6 text-cream-100/85 text-[17px] md:text-[19px] leading-[1.65]">
-          A sixth home is currently being built. A contribution of ₹1,000, or any amount, joins you to the people who will live there.
-        </p>
-        <div class="mt-10 flex flex-wrap justify-center gap-3">
-          <a href="/contact#donate" class="btn-saffron !text-[15px] !px-6 !py-4">
-            Support a Home
-          </a>
-          <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-4 text-cream-50 font-semibold border border-cream-100/30 hover:bg-cream-50/5 transition rounded-md">
-            <Icon name="chat" size={18} />
-            Talk to Us
-          </a>
+  <section class="py-24 md:py-32 bg-brand-600 text-cream-50">
+    <div class="container-x">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        <!-- Left: Typography -->
+        <div class="lg:col-span-7 reveal">
+          <p class="font-sans text-xs uppercase tracking-[0.2em] text-cream-100/60 font-semibold mb-6">Join the work</p>
+          <h2 class="font-display text-[2.2rem] md:text-[3rem] lg:text-[3.5rem] leading-[1.0] text-cream-50 mb-8">
+            Help build<br/>the next home.
+          </h2>
+          <p class="text-cream-100/80 text-[17px] md:text-[19px] leading-[1.65] max-w-lg mb-10">
+            A sixth home is currently being built. A contribution of ₹1,000, or any amount, joins you to the people who will live there.
+          </p>
+          <div class="flex flex-wrap items-center gap-4">
+            <a href="/contact#donate" class="btn-primary">
+              Support a Home
+              <Icon name="arrow-right" size={16} />
+            </a>
+            <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener" class="btn-secondary !border-cream-100/30 !text-cream-50 hover:!bg-cream-50/10">
+              <Icon name="chat" size={16} />
+              Talk to Us
+            </a>
+          </div>
+        </div>
+        
+        <!-- Right: Decorative element -->
+        <div class="lg:col-span-5 hidden lg:block reveal">
+          <div class="aspect-[4/5] bg-brand-700 rounded-sm overflow-hidden relative">
+            <OptimisedImage
+              src={unsplash(IMAGE_POOL.HANDOVER_04, 600, 70)}
+              alt="Family at handover ceremony"
+              width={600}
+              height={750}
+              sizes="(min-width: 1024px) 42vw, 0vw"
+              class="w-full h-full object-cover opacity-80"
+            />
+          </div>
         </div>
       </div>
     </div>
