@@ -34,174 +34,102 @@ void IMPACT; void FEATURED_PROJECTS; void getProject;
   description="Care Veliyathunadu builds simple, dignified homes for families in need in Veliyathunadu, Kerala. With contributions of ₹1,000 from anyone who wishes to be part of the work."
 >
   <!-- ============================================================
-       1. HERO — full-width editorial with Ken Burns effect
+       1. HERO — nonprofit style: dark green, clean layout
        ============================================================ -->
-  <section class="hero-banner relative overflow-hidden" style="min-height: 100vh; min-height: 100dvh;">
-    <!-- Background image with Ken Burns effect -->
-    <div class="absolute inset-0 z-0">
-      <div class="hero-bg-slider absolute inset-0">
-        {heroImages.map((img, i) => (
-          <div 
-            class={`hero-bg-slide absolute inset-0 transition-opacity duration-[2000ms] ${i === 0 ? 'opacity-100' : 'opacity-0'}`}
-            data-index={i}
-          >
-            <img
-              src={img.src}
-              alt={img.alt}
-              class="w-full h-full object-cover scale-105"
-              style="animation: kenBurns 20s ease-in-out infinite alternate;"
-              loading={i === 0 ? "eager" : "lazy"}
-            />
-          </div>
-        ))}
-      </div>
-      <!-- Gradient overlay -->
-      <div class="absolute inset-0 bg-gradient-to-r from-brand-900/95 via-brand-900/70 to-brand-900/30"></div>
-      <div class="absolute inset-0 bg-gradient-to-t from-brand-900/50 via-transparent to-transparent"></div>
-    </div>
-
-    <!-- Content -->
-    <div class="relative z-10 flex flex-col justify-end min-h-[100vh] min-h-[100dvh] pb-20 md:pb-28">
-      <div class="container-x">
-        <div class="grid lg:grid-cols-12 gap-12 items-end">
-          <!-- Left: Main typography -->
-          <div class="lg:col-span-7">
-            <!-- Eyebrow -->
-            <div class="flex items-center gap-4 mb-8 reveal">
-              <div class="w-12 h-px bg-amber-400"></div>
-              <p class="font-sans text-[13px] uppercase tracking-[0.25em] text-cream-100/70 font-medium">
-                Care Veliyathunadu · Since 2021
-              </p>
-            </div>
-            
-            <!-- Headline -->
-            <h1 class="font-display text-cream-50 text-[2.8rem] sm:text-[3.8rem] md:text-[4.5rem] lg:text-[5.5rem] xl:text-[6.5rem] leading-[0.92] tracking-tight mb-8 reveal">
-              Building<br/>
-              <span class="relative inline-block">
-                <span class="relative z-10">Homes,</span>
-                <span class="absolute bottom-[0.05em] left-0 right-0 h-[0.12em] bg-amber-400/40 z-0"></span>
-              </span><br/>
-              <span class="text-amber-400">Building</span><br/>
-              <span class="text-cream-100/90">Hope.</span>
-            </h1>
-            
-            <!-- Description -->
-            <p class="text-cream-100/75 text-[17px] md:text-[19px] max-w-lg leading-[1.7] mb-12 reveal">
-              We build simple, dignified homes for families in Veliyathunadu, Kerala, with contributions of ₹1,000 from anyone who wishes to be part of the work.
-            </p>
-            
-            <!-- CTAs -->
-            <div class="flex flex-wrap items-center gap-5 reveal">
-              <a href="/contact#donate" class="group inline-flex items-center gap-3 bg-amber-400 hover:bg-amber-500 text-ink-900 px-8 py-4 rounded-md font-sans font-bold text-[15px] tracking-wide transition-all duration-300 hover:gap-4">
-                Support Our Work
-                <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
-              <a href="/projects" class="group inline-flex items-center gap-3 text-cream-50 font-sans font-semibold text-[15px] border-b border-cream-100/30 hover:border-amber-400/60 pb-1 transition-all duration-300 hover:gap-4">
-                See our projects
-                <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
-            </div>
+  <section class="relative bg-brand-900 overflow-hidden">
+    <!-- Subtle background pattern -->
+    <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+    
+    <!-- Main hero content -->
+    <div class="relative z-10 container-x py-16 md:py-24 lg:py-32">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center min-h-[70vh]">
+        <!-- Left: Content -->
+        <div>
+          <!-- Badge -->
+          <div class="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full mb-6">
+            <span class="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></span>
+            <span class="text-cream-100/80 text-sm font-medium">Since 2021</span>
           </div>
           
-          <!-- Right: Stats column -->
-          <div class="lg:col-span-4 lg:col-start-9 hidden lg:block">
-            <div class="space-y-8 reveal">
-              <!-- Stats -->
-              {[
-                { value: "5+", label: "Homes Built" },
-                { value: "21+", label: "Lives Changed" },
-                { value: "323+", label: "Contributors" },
-                { value: "₹1,000", label: "Starting Amount" },
-              ].map((stat) => (
-                <div class="border-l-2 border-amber-400/40 pl-6">
-                  <div class="font-display text-[2.5rem] text-cream-50 leading-none">{stat.value}</div>
-                  <div class="font-sans text-cream-100/60 text-[13px] uppercase tracking-[0.15em] mt-2">{stat.label}</div>
-                </div>
-              ))}
+          <!-- Headline -->
+          <h1 class="font-display text-white text-[2.5rem] sm:text-[3.2rem] lg:text-[4rem] leading-[1.08] tracking-tight mb-6">
+            Building Homes,<br/>
+            <span class="text-amber-400">Building Hope.</span>
+          </h1>
+          
+          <!-- Description -->
+          <p class="text-cream-100/70 text-[17px] leading-[1.7] max-w-lg mb-8">
+            We build simple, dignified homes for families in Veliyathunadu, Kerala, with contributions of ₹1,000 from anyone who wishes to be part of the work.
+          </p>
+          
+          <!-- CTAs -->
+          <div class="flex flex-wrap items-center gap-4 mb-12">
+            <a href="/contact#donate" class="inline-flex items-center gap-2.5 bg-amber-400 hover:bg-amber-500 text-ink-900 px-7 py-3.5 rounded-lg font-bold text-[15px] transition-all duration-200 shadow-lg shadow-amber-400/20 hover:shadow-amber-400/30">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+              Donate Now
+            </a>
+            <a href="/projects" class="inline-flex items-center gap-2 text-white border border-white/20 hover:border-white/40 px-7 py-3.5 rounded-lg font-semibold text-[15px] transition-all duration-200">
+              Our Projects
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+          </div>
+          
+          <!-- Trust strip -->
+          <div class="flex flex-wrap items-center gap-6 pt-6 border-t border-white/10">
+            <div class="flex items-center gap-2 text-cream-100/60 text-sm">
+              <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              Registered Trust
+            </div>
+            <div class="flex items-center gap-2 text-cream-100/60 text-sm">
+              <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              80G Tax Exemption
+            </div>
+            <div class="flex items-center gap-2 text-cream-100/60 text-sm">
+              <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              323+ Contributors
             </div>
           </div>
         </div>
-      </div>
-      
-      <!-- Slide indicators -->
-      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 z-10">
-        {heroImages.map((_, i) => (
-          <button 
-            class={`hero-indicator transition-all duration-500 ${i === 0 ? 'w-10 h-1 bg-amber-400' : 'w-4 h-1 bg-cream-100/30 hover:bg-cream-100/50'}`}
-            data-index={i}
-            aria-label={`Slide ${i + 1}`}
-          />
-        ))}
-      </div>
-      
-      <!-- Scroll indicator -->
-      <div class="absolute bottom-8 right-8 z-10 hidden md:flex flex-col items-center gap-3 reveal">
-        <span class="font-sans text-[10px] uppercase tracking-[0.2em] text-cream-100/50" style="writing-mode: vertical-rl;">Scroll</span>
-        <div class="w-px h-12 bg-gradient-to-b from-cream-100/50 to-transparent"></div>
+        
+        <!-- Right: Image + Floating Cards -->
+        <div class="relative mt-12 lg:mt-0">
+          <!-- Main image -->
+          <div class="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/20">
+            <img
+              src={unsplash(IMAGE_POOL.HOME_RURAL_01, 800, 75)}
+              alt="A new home built by Care Veliyathunadu"
+              class="w-full aspect-[4/3] object-cover"
+              loading="eager"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-900/40 via-transparent to-transparent"></div>
+          </div>
+          
+          <!-- Floating stats card - bottom left -->
+          <div class="absolute -bottom-4 -left-4 lg:-bottom-6 lg:-left-6 bg-white rounded-xl shadow-xl p-5 max-w-[180px] hidden sm:block">
+            <div class="text-3xl font-bold text-brand-600">5+</div>
+            <div class="text-sm text-ink-500 mt-1">Homes Built</div>
+            <div class="mt-3 w-full bg-cream-200 rounded-full h-1.5">
+              <div class="bg-amber-400 h-1.5 rounded-full" style="width: 83%"></div>
+            </div>
+            <div class="text-[11px] text-ink-400 mt-1">Target: 6 homes</div>
+          </div>
+          
+          <!-- Floating impact badge - top right -->
+          <div class="absolute -top-3 -right-3 lg:-top-5 lg:-right-5 bg-amber-400 text-ink-900 rounded-2xl px-4 py-3 shadow-lg hidden sm:block">
+            <div class="text-2xl font-bold leading-none">21+</div>
+            <div class="text-[11px] font-medium mt-0.5">Lives Changed</div>
+          </div>
+        </div>
       </div>
     </div>
+    
+    <!-- Bottom curve transition to next section -->
+    <div class="absolute bottom-0 left-0 right-0">
+      <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full block">
+        <path d="M0 60H1440V30C1440 30 1200 0 720 0C240 0 0 30 0 30V60Z" fill="var(--color-cream-50, #FCFBF7)"/>
+      </svg>
+    </div>
   </section>
-
-  <style>
-    @keyframes kenBurns {
-      0% { transform: scale(1.05) translate(0, 0); }
-      100% { transform: scale(1.12) translate(-1%, -1%); }
-    }
-    
-    .hero-indicator {
-      cursor: pointer;
-      border: none;
-      outline: none;
-    }
-    .hero-indicator:focus-visible {
-      outline: 2px solid var(--color-amber-400);
-      outline-offset: 2px;
-    }
-    
-    @media (prefers-reduced-motion: reduce) {
-      .hero-bg-slide img {
-        animation: none !important;
-      }
-    }
-  </style>
-
-  <script>
-    // Hero background slider
-    const heroSlides = document.querySelectorAll('.hero-bg-slide');
-    const heroIndicators = document.querySelectorAll('.hero-indicator');
-    let currentSlide = 0;
-    const slideCount = heroSlides.length;
-    
-    function goToSlide(index: number) {
-      heroSlides.forEach((slide, i) => {
-        (slide as HTMLElement).style.opacity = i === index ? '1' : '0';
-      });
-      heroIndicators.forEach((ind, i) => {
-        if (i === index) {
-          ind.classList.remove('w-4');
-          ind.classList.add('w-10', 'bg-amber-400');
-          ind.classList.remove('bg-cream-100/30');
-        } else {
-          ind.classList.remove('w-10', 'bg-amber-400');
-          ind.classList.add('w-4', 'bg-cream-100/30');
-        }
-      });
-      currentSlide = index;
-    }
-    
-    heroIndicators.forEach((ind, i) => {
-      ind.addEventListener('click', () => goToSlide(i));
-    });
-    
-    // Auto-advance slides
-    setInterval(() => {
-      goToSlide((currentSlide + 1) % slideCount);
-    }, 6000);
-  </script>
 
   <!-- ============================================================
        EDITORIAL STATEMENT — Large typographic statement
