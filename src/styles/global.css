@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ============================================================
-   TYPOGRAPHY — Playfair Display (display) + Inter (body)
+   TYPOGRAPHY — Playfair Display (display) + Manrope (body)
    Classic, elegant, readable. Standard web fonts.
    ============================================================ */
 @import "@fontsource/playfair-display/400.css";
@@ -9,10 +9,11 @@
 @import "@fontsource/playfair-display/500.css";
 @import "@fontsource/playfair-display/600.css";
 @import "@fontsource/playfair-display/700.css";
-@import "@fontsource/inter/400.css";
-@import "@fontsource/inter/500.css";
-@import "@fontsource/inter/600.css";
-@import "@fontsource/inter/700.css";
+@import "@fontsource/manrope/400.css";
+@import "@fontsource/manrope/500.css";
+@import "@fontsource/manrope/600.css";
+@import "@fontsource/manrope/700.css";
+@import "@fontsource/manrope/800.css";
 
 /* ============================================================
    DESIGN TOKENS — Care Veliyathunadu
@@ -48,9 +49,9 @@
 
   /* Typography */
   --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-sans: "Manrope", system-ui, -apple-system, sans-serif;
   --font-script: "Playfair Display", Georgia, serif;
-  --font-ui: "Inter", var(--font-sans);  /* used in the top utility bar */
+  --font-ui: "Manrope", var(--font-sans);  /* used in the top utility bar */
 
   /* Type scale — consistent, responsive sizes */
   --text-hero: clamp(2.6rem, 5vw, 4.6rem);
