@@ -244,46 +244,50 @@ void IMPACT; void FEATURED_PROJECTS; void getProject;
   </section>
 
   <!-- ============================================================
-       5. THE PEOPLE — team, with photo placeholders
+       5. THE PEOPLE — editorial list
        ============================================================ -->
-  <section class="section-y bg-cream-50 border-y border-cream-200">
+  <section class="py-20 md:py-32">
     <div class="container-x">
-      <div class="reveal">
-        <SectionHeading
-          eyebrow="The people"
-          title="The people behind every home."
-          subtitle="Fifteen working organisers, and a wider community of volunteers, masons, and contributors who make the work possible."
-        />
-      </div>
-
-      <div class="mt-14 grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-5 gap-x-4 gap-y-10">
-        {WORKING_TEAM.slice(0, 10).map((m, i) => (
-          <div class={`text-center reveal delay-${(i % 5) + 1}`}>
-            <div
-              class="aspect-square w-full rounded-full overflow-hidden bg-cream-200"
-              aria-hidden="true"
-            >
-              <img
-                src={m.photo}
-                alt={m.name}
-                class="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <p class="mt-4 text-sm font-semibold text-ink-900 leading-snug">{m.name}</p>
-            <p class="text-xs text-ink-500 mt-1 leading-snug">{m.role}</p>
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16">
+        <!-- Left: Editorial introduction -->
+        <div class="lg:col-span-5 reveal">
+          <p class="font-sans text-xs uppercase tracking-[0.2em] text-ink-500 font-semibold mb-4">The people</p>
+          <h2 class="font-display text-[2rem] md:text-[2.8rem] leading-[1.05] text-ink-900 mb-6">
+            The people behind every home.
+          </h2>
+          <p class="text-ink-700 text-[16px] leading-[1.7] mb-8">
+            Fifteen working organisers, and a wider community of volunteers, masons, and contributors who make the work possible.
+          </p>
+          <a href="/team" class="btn-tertiary">
+            Meet the full team
+            <Icon name="arrow-right" size={16} />
+          </a>
+        </div>
+        
+        <!-- Right: Team list -->
+        <div class="lg:col-span-7">
+          <div class="space-y-0">
+            {WORKING_TEAM.slice(0, 8).map((m, i) => (
+              <div class="group flex items-center gap-6 py-5 border-b border-cream-200 reveal hover:bg-cream-50 transition-colors -mx-4 px-4">
+                <span class="font-display text-[1.5rem] text-ink-300 w-12">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div class="flex-1">
+                  <h4 class="font-sans font-semibold text-ink-900 text-[15px]">{m.role}</h4>
+                </div>
+                <!-- Portrait reveal on hover -->
+                <div class="w-12 h-12 rounded-full overflow-hidden bg-cream-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <img
+                    src={m.photo}
+                    alt={m.name}
+                    class="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-
-      <p class="mt-12 text-ink-500 text-sm max-w-2xl">
-        Photographs are placeholder images. Real photographs of the working organisers will be added with their consent.
-      </p>
-
-      <div class="mt-10">
-        <a href="/team" class="btn-text">
-          Meet the full team and society leaders <Icon name="arrow-right" size={16} />
-        </a>
+        </div>
       </div>
     </div>
   </section>
