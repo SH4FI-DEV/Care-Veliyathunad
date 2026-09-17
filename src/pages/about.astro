@@ -1,0 +1,220 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/Icon.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import OptimisedImage from "../components/OptimisedImage.astro";
+import { VALUES, FAQ } from "../data/faqs";
+import { TIMELINE, PROJECTS } from "../data/projects";
+import { IMAGE_POOL, unsplash } from "../data/images";
+---
+
+<Layout
+  title="About Care Veliyathunadu"
+  description="How Care Veliyathunadu began, what we do, and the people behind the homes we have built."
+>
+  <!-- HERO -->
+  <section class="pt-12 md:pt-20 pb-12 md:pb-16">
+    <div class="container-x">
+      <div class="max-w-3xl reveal">
+        <p class="eyebrow">About</p>
+        <h1 class="heading-display mt-4 text-[2.6rem] md:text-[3.4rem] lg:text-[4rem]">
+          A small group of neighbours who decided to act.
+        </h1>
+        <p class="mt-6 text-ink-700 text-[17px] md:text-[19px] leading-[1.7]">
+          Care Veliyathunadu is a community initiative based in Veliyathunadu, Kerala. We do one thing: we help build simple, dignified homes for families in our area who need one — together with the neighbours, masons, and contributors who make the work possible.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="section-y">
+    <div class="container-x grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+      <div class="order-2 lg:order-1 reveal">
+        <p class="eyebrow">How it started</p>
+        <h2 class="heading-display mt-3 text-[2.4rem] md:text-[3rem]">A leaking roof. A cup of tea. A decision.</h2>
+        <div class="mt-6 text-ink-700 text-[17px] leading-[1.8] space-y-5">
+          <p>
+            In 2021, after a particularly bad monsoon, our founder visited a grandmother who had been sheltering her grandchildren under a torn tarpaulin for nearly five years. He sat down with her, drank tea, and asked what she needed most. She said, simply: "a house that does not leak when it rains."
+          </p>
+          <p>
+            That conversation became Care Veliyathunadu. What started with one neighbour's contribution grew into 120+ contributors, 15 core organisers, and five homes — each one built, blessed, and handed over with the entire neighbourhood watching.
+          </p>
+          <p>
+            We are not a foundation with offices in distant cities. We are a group of masons, teachers, drivers, mothers, students, and retirees who believe the smallest acts of kindness can build the largest hopes.
+          </p>
+        </div>
+      </div>
+      <div class="order-1 lg:order-2 reveal-soft">
+        <OptimisedImage
+          src={unsplash(IMAGE_POOL.HOME_RURAL_01, 900, 72)}
+          alt="A simple home in a rural setting"
+          width={900}
+          height={1125}
+          sizes="(min-width: 1024px) 40vw, 100vw"
+        />
+        <p class="text-ink-500 text-xs mt-3 italic">Photograph: representative of a typical completed home, to be replaced with an authentic on-site photograph of an actual Care Veliyathunadu project.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION / VISION -->
+  <section class="section-y bg-cream-50 border-y border-cream-200">
+    <div class="container-x">
+      <div class="grid md:grid-cols-2 gap-10 reveal">
+        <div>
+          <p class="eyebrow">Mission</p>
+          <h3 class="heading-display mt-3 text-[1.9rem] md:text-[2.2rem]">To build simple, dignified homes for families in need.</h3>
+          <p class="mt-5 text-ink-700 text-[16px] leading-[1.75]">
+            We do this with community contributions, local labour, and complete transparency — so that shelter becomes a starting point for dignity, not a privilege.
+          </p>
+        </div>
+        <div>
+          <p class="eyebrow">Vision</p>
+          <h3 class="heading-display mt-3 text-[1.9rem] md:text-[2.2rem]">A world where no family sleeps under a leaking roof.</h3>
+          <p class="mt-5 text-ink-700 text-[16px] leading-[1.75]">
+            A world where every door opens from the inside with pride, and every community knows that the smallest acts of kindness can build the largest hopes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE DO -->
+  <section class="section-y">
+    <div class="container-x">
+      <div class="max-w-2xl reveal">
+        <p class="eyebrow">What we do</p>
+        <h2 class="heading-display mt-3 text-[2.4rem] md:text-[2.8rem]">Only one thing — and we do it carefully.</h2>
+        <p class="mt-5 text-ink-700 text-[16px] leading-[1.75]">
+          We focus exclusively on building homes. No other programmes, no distractions, just one mission executed with full attention.
+        </p>
+      </div>
+
+      <div class="mt-14 grid md:grid-cols-3 gap-10">
+        <div class="reveal">
+          <p class="font-display text-2xl text-brand-500">01</p>
+          <h4 class="font-display text-xl mt-3">We meet the family</h4>
+          <p class="mt-2 text-ink-700 text-[15px] leading-[1.7]">
+            We identify families through panchayat members, religious leaders, schoolteachers, and verified local volunteers who know the area intimately. We visit each family personally before any work begins.
+          </p>
+        </div>
+        <div class="reveal">
+          <p class="font-display text-2xl text-brand-500">02</p>
+          <h4 class="font-display text-xl mt-3">We build with the community</h4>
+          <p class="mt-2 text-ink-700 text-[15px] leading-[1.7]">
+            Local masons and volunteers construct a simple, dignified home — always raised foundations, two rooms minimum, attached toilet. Most of the materials are sourced from shops within a few kilometres of the site.
+          </p>
+        </div>
+        <div class="reveal">
+          <p class="font-display text-2xl text-brand-500">03</p>
+          <h4 class="font-display text-xl mt-3">We hand over the keys</h4>
+          <p class="mt-2 text-ink-700 text-[15px] leading-[1.7]">
+            A small community gathering marks the handover. The family receives the keys, the documents, and a fresh start. We do not photograph suffering, and we do not share a family's story without their consent.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section class="section-y bg-cream-50 border-y border-cream-200">
+    <div class="container-x">
+      <div class="max-w-2xl reveal">
+        <p class="eyebrow">Values</p>
+        <h2 class="heading-display mt-3 text-[2.4rem] md:text-[2.8rem]">The four ideas that hold the work together.</h2>
+      </div>
+
+      <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10">
+        {VALUES.map((v, i) => (
+          <div class={`reveal delay-${(i % 4) + 1}`}>
+            <p class="font-display text-xl text-brand-500">0{i + 1}</p>
+            <h4 class="font-display text-xl mt-3">{v.title}</h4>
+            <p class="mt-2 text-ink-700 text-[15px] leading-[1.7]">{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="section-y">
+    <div class="container-x">
+      <div class="max-w-2xl reveal">
+        <p class="eyebrow">The journey so far</p>
+        <h2 class="heading-display mt-3 text-[2.4rem] md:text-[2.8rem]">From the first brick to the fifth handover.</h2>
+      </div>
+
+      <div class="mt-14 relative max-w-3xl mx-auto">
+        <div class="absolute left-3 md:left-1/2 top-0 bottom-0 w-px bg-cream-200 md:-translate-x-1/2"></div>
+        {TIMELINE.map((t, i) => (
+          <div class={`relative mb-8 reveal ${i % 2 === 0 ? "md:pr-[calc(50%+2rem)] md:text-right" : "md:pl-[calc(50%+2rem)]"}`}>
+            <div class={`absolute top-2 left-3 md:left-1/2 w-2.5 h-2.5 rounded-full bg-brand-500 -translate-x-1/2`}></div>
+            <div class="ml-10 md:ml-0">
+              <p class="text-xs uppercase tracking-wider text-brand-500 font-semibold">{t.date}</p>
+              <h4 class="font-display text-lg md:text-xl mt-1">{t.title}</h4>
+              <p class="text-sm text-ink-500 mt-1 flex md:inline-flex items-center gap-1.5">
+                <Icon name="map-pin" size={13} /> {t.location}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {PROJECTS.some((p) => p.status === "in-progress") && (
+        <p class="mt-10 text-ink-500 text-sm italic font-display max-w-2xl mx-auto text-center">
+          A sixth home is currently in progress. It will be added to this timeline when handed over.
+        </p>
+      )}
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section-y bg-cream-50 border-y border-cream-200">
+    <div class="container-x">
+      <div class="grid lg:grid-cols-3 gap-12">
+        <div class="reveal">
+          <p class="eyebrow">Common questions</p>
+          <h2 class="heading-display mt-3 text-[2rem] md:text-[2.4rem]">Honest answers.</h2>
+          <p class="mt-4 text-ink-500 text-[15px]">If your question isn't here, write to us. We reply to every email.</p>
+          <a href="/contact" class="btn-text mt-6">
+            Ask anything <Icon name="arrow-right" size={16} />
+          </a>
+        </div>
+        <div class="lg:col-span-2 reveal">
+          <div class="space-y-2">
+            {FAQ.map((f) => (
+              <details class="group card-base">
+                <summary class="flex items-center justify-between cursor-pointer p-5 list-none">
+                  <h4 class="font-display text-base md:text-lg pr-4">{f.q}</h4>
+                  <span class="flex-shrink-0 inline-flex items-center justify-center w-7 h-7 rounded-full text-ink-500 group-open:bg-brand-500 group-open:text-cream-50 transition-all">
+                    <Icon name="chevron-down" size={14} class="transition-transform group-open:rotate-180" />
+                  </span>
+                </summary>
+                <p class="px-5 pb-5 text-ink-700 text-[15.5px] leading-[1.7]">{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20">
+    <div class="container-x">
+      <div class="max-w-2xl reveal">
+        <p class="eyebrow">Join the work</p>
+        <h2 class="heading-display mt-3 text-[2.4rem] md:text-[3rem]">Read enough? Help us build the next home.</h2>
+        <a href="/contact#donate" class="btn-saffron mt-8">
+          Support a Home
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  details > summary { list-style: none; }
+  details > summary::-webkit-details-marker { display: none; }
+</style>

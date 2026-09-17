@@ -1,0 +1,172 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Icon from "../../components/Icon.astro";
+import OptimisedImage from "../../components/OptimisedImage.astro";
+import { PROJECTS } from "../../data/projects";
+
+export function getStaticPaths() {
+  return PROJECTS.map((p) => ({
+    params: { slug: p.slug },
+    props: { project: p },
+  }));
+}
+
+const { project } = Astro.props;
+const completed = new Date(project.completedOn).toLocaleDateString("en-IN", {
+  day: "numeric", month: "long", year: "numeric"
+});
+const idx = PROJECTS.findIndex((p) => p.slug === project.slug);
+const nextProject = PROJECTS[(idx + 1) % PROJECTS.length];
+---
+
+<Layout
+  title={`Home #${project.number} — ${project.familyName}`}
+  description={project.short}
+  ogImage={project.cover}
+>
+  <!-- HERO -->
+  <section class="relative h-[55vh] min-h-[400px] max-h-[600px] overflow-hidden bg-ink-900">
+    <OptimisedImage
+      src={project.cover}
+      alt={project.familyName}
+      width={1600}
+      height={900}
+      sizes="100vw"
+      priority={true}
+      quality={72}
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-ink-900/85 via-ink-900/35 to-transparent"></div>
+    <div class="relative h-full container-x flex items-end pb-10 md:pb-16">
+      <div class="max-w-3xl text-cream-50 reveal">
+        <a href="/projects" class="inline-flex items-center gap-2 text-sm text-cream-100/85 hover:text-saffron-300 mb-4 transition">
+          <Icon name="arrow-right" size={14} class="rotate-180" /> Back to all projects
+        </a>
+        <p class="text-xs uppercase tracking-[0.14em] text-saffron-300 font-semibold">
+          Home #{String(project.number).padStart(2, "0")} · {project.status === "delivered" ? "Delivered" : "In Progress"}
+        </p>
+        <h1 class="heading-display text-cream-50 mt-2 text-[2.6rem] md:text-[3.4rem] lg:text-[4rem]">
+          {project.familyName}
+        </h1>
+        <p class="mt-3 text-cream-100/85 flex items-center gap-1.5 text-[15px]">
+          <Icon name="map-pin" size={15} /> {project.location}, {project.district} · {completed}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="section-y">
+    <div class="container-x grid lg:grid-cols-3 gap-10 lg:gap-14">
+      <div class="lg:col-span-2 reveal">
+        <p class="eyebrow">Their story</p>
+        <h2 class="heading-display mt-3 text-[2rem] md:text-[2.4rem]">A new beginning.</h2>
+        <div class="mt-6 text-ink-700 text-[17px] leading-[1.8] space-y-5">
+          <p>{project.story}</p>
+          <p>
+            Each home we build is a small miracle of community effort. The masons give their day, the women of the neighbourhood prepare lunch for the workers, and the children bring drawings they have made for the family. By the time the keys are handed over, the house already feels like home.
+          </p>
+        </div>
+        <p class="mt-6 text-ink-500 text-xs italic font-display">
+          Story text is illustrative and to be confirmed with the family before publication.
+        </p>
+      </div>
+
+      <!-- Sidebar facts -->
+      <aside class="reveal-soft">
+        <div class="card-base p-6 md:p-7">
+          <h3 class="font-display text-xl">Project record</h3>
+          <dl class="mt-5 space-y-4">
+            <div>
+              <dt class="text-[11px] uppercase tracking-wider text-ink-500 font-semibold">Family</dt>
+              <dd class="mt-1 text-ink-900 font-medium">{project.head}</dd>
+            </div>
+            <div>
+              <dt class="text-[11px] uppercase tracking-wider text-ink-500 font-semibold">Location</dt>
+              <dd class="mt-1 text-ink-900 font-medium">{project.location}, {project.district}</dd>
+            </div>
+            <div>
+              <dt class="text-[11px] uppercase tracking-wider text-ink-500 font-semibold">{project.status === "delivered" ? "Handover" : "Expected handover"}</dt>
+              <dd class="mt-1 text-ink-900 font-medium">{completed}</dd>
+            </div>
+            <div class="pt-4 border-t border-cream-200 grid grid-cols-2 gap-4">
+              <div>
+                <dt class="text-[11px] uppercase tracking-wider text-ink-500 font-semibold">Family</dt>
+                <dd class="mt-1 text-[2rem] font-display leading-none text-ink-900">{project.beneficiaries}</dd>
+                <dd class="text-xs text-ink-500 mt-1">members</dd>
+              </div>
+              <div>
+                <dt class="text-[11px] uppercase tracking-wider text-ink-500 font-semibold">Contributors</dt>
+                <dd class="mt-1 text-[2rem] font-display leading-none text-ink-900">{project.contributors}</dd>
+                <dd class="text-xs text-ink-500 mt-1">people</dd>
+              </div>
+            </div>
+          </dl>
+          <a href="/contact#donate" class="btn-saffron w-full justify-center mt-6">
+            Support the next home
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  {project.gallery.length > 0 && (
+    <section class="section-tight bg-cream-50 border-y border-cream-200">
+      <div class="container-x">
+        <p class="eyebrow">Photographs</p>
+        <h2 class="heading-display mt-3 text-[2rem] md:text-[2.4rem]">From this home.</h2>
+        <p class="mt-4 text-ink-500 text-sm max-w-2xl">
+          To be replaced with real on-site photographs of construction, handover, and the family in their new home.
+        </p>
+        <div class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 reveal">
+          {project.gallery.map((src, i) => (
+            <a href={src} target="_blank" rel="noopener"
+               class={`block relative overflow-hidden rounded-xl bg-cream-200 group ${i === 0 ? "md:col-span-2 md:row-span-2 aspect-square md:aspect-auto" : "aspect-square"}`}>
+              <OptimisedImage
+                src={src}
+                alt={`${project.familyName} — photograph ${i + 1}`}
+                width={800}
+                height={i === 0 ? 800 : 800}
+                sizes={i === 0 ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 33vw, 50vw"}
+                quality={70}
+              />
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- NEXT PROJECT -->
+  <section class="py-16">
+    <div class="container-x">
+      <a href={`/projects/${nextProject.slug}`} class="group block relative overflow-hidden rounded-2xl h-64 md:h-80 reveal">
+        <OptimisedImage
+          src={nextProject.cover}
+          alt={nextProject.familyName}
+          width={1400}
+          height={500}
+          sizes="100vw"
+          quality={70}
+        />
+        <div class="absolute inset-0 bg-gradient-to-r from-ink-900/85 via-ink-900/50 to-transparent"></div>
+        <div class="relative h-full flex items-center p-8 md:p-12">
+          <div class="text-cream-50 max-w-md">
+            <p class="text-xs uppercase tracking-[0.14em] text-saffron-300 font-semibold">Next project</p>
+            <h3 class="heading-display mt-2 text-cream-50 text-[2rem] md:text-[2.6rem]">{nextProject.familyName}</h3>
+            <p class="mt-2 text-cream-100/80 text-sm line-clamp-2">{nextProject.short}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

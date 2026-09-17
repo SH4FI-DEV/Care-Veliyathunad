@@ -1,0 +1,430 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/Icon.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import OptimisedImage from "../components/OptimisedImage.astro";
+import { SITE, IMPACT } from "../data/site";
+import { PROJECTS, COUNTS, FEATURED_PROJECTS, getProject } from "../data/projects";
+import { WORKING_TEAM, SOCIETY_LEADERS } from "../data/team";
+import { JOURNEY_STEPS } from "../data/faqs";
+import { IMAGE_POOL, unsplash } from "../data/images";
+
+// Documentary hero imagery — chosen to depict small homes, families and
+// community work in a Kerala / South Indian context, NOT luxury real estate.
+const heroSlides = [
+  { id: IMAGE_POOL.HOME_RURAL_01, alt: "A simple new home in rural Kerala" },
+  { id: IMAGE_POOL.HOME_SIMPLE_03, alt: "Volunteers at a construction site" },
+  { id: IMAGE_POOL.HANDOVER_04,    alt: "Family at the doorway of a new home" },
+];
+
+// Pick the most recent delivered project as the "A Family's Story" feature
+const FEATURED_STORY = PROJECTS.filter((p) => p.status === "delivered").slice(-1)[0];
+
+// Suppress unused-var lint
+void IMPACT; void FEATURED_PROJECTS; void getProject;
+---
+
+<Layout
+  title="Building Homes, Building Hope"
+  description="Care Veliyathunadu builds simple, dignified homes for families in need in Veliyathunadu, Kerala — with contributions of ₹1,000 from anyone who wishes to be part of the work."
+  darkHero={true}
+>
+  <!-- ============================================================
+       1. HERO — centered single-image banner (Kindflow-inspired)
+       ============================================================ -->
+  <section class="hero-section relative overflow-hidden bg-ink-900">
+    <!-- Background image: full-bleed rotating carousel with dark overlay -->
+    <div class="hero-bg absolute inset-0" id="heroCarousel">
+      {heroSlides.map((slide, i) => (
+        <div class={`hero-slide ${i === 0 ? "is-active" : ""}`} data-slide={i}>
+          <OptimisedImage
+            src={unsplash(slide.id, 1600, 70)}
+            alt={slide.alt}
+            width={1600}
+            height={900}
+            sizes="100vw"
+            priority={i === 0}
+            class="hero-img"
+            widths={[800, 1200, 1600, 1920]}
+            quality={70}
+          />
+        </div>
+      ))}
+      <div class="absolute inset-0 bg-gradient-to-b from-ink-900/60 via-ink-900/45 to-ink-900/80"></div>
+    </div>
+
+    <div class="relative container-x py-24 md:py-32 lg:py-40 flex items-center min-h-[600px] md:min-h-[680px]">
+      <div class="max-w-3xl text-cream-50 reveal">
+        <p class="hero-eyebrow">Help make a difference · Since 2021</p>
+        <h1 class="font-display text-cream-50 mt-5 text-[2.6rem] sm:text-[3.2rem] md:text-[4rem] lg:text-[4.6rem] leading-[1.02] tracking-tight">
+          Building Homes,
+          <span class="hero-script-accent">Building</span>
+          Hope.
+        </h1>
+        <p class="mt-6 text-cream-100/90 text-[17px] md:text-[19px] max-w-xl leading-[1.65]">
+          We build simple, dignified homes for families in Veliyathunadu, Kerala — and we do it with the smallest acts of kindness, starting at just <span class="text-saffron-300 font-semibold">₹1,000</span>.
+        </p>
+        <div class="mt-9 flex flex-wrap items-center gap-5">
+          <a href="/contact#donate" class="btn-orange !text-[15px] !px-6 !py-4">
+            <Icon name="heart" size={16} />
+            Donate Now
+          </a>
+          <a href="/contact" class="inline-flex items-center gap-2 text-cream-50 font-semibold border-b border-cream-100/40 hover:border-saffron-300 hover:text-saffron-300 transition pb-1">
+            <span class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+              <Icon name="users" size={13} />
+            </span>
+            <span class="uppercase tracking-wider text-[12px] font-ui">Be a Volunteer</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide dots -->
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10" id="heroDots">
+      {heroSlides.map((_, i) => (
+        <button class={`hero-dot ${i === 0 ? "is-active" : ""}`} data-dot={i} aria-label={`Slide ${i + 1}`}></button>
+      ))}
+    </div>
+  </section>
+
+  <!-- ============================================================
+       2. STATS — animated counter, distinctive warm background
+       ============================================================ -->
+  <section class="stats-section relative overflow-hidden">
+    <!-- Distinctive warm background: deep green with subtle pattern -->
+    <div class="absolute inset-0 bg-brand-500"></div>
+    <div class="absolute inset-0 dot-pattern opacity-[0.06]"></div>
+
+    <div class="relative container-x py-20 md:py-28">
+      <div class="text-center mb-14 reveal">
+        <p class="eyebrow text-saffron-300">Our impact, in numbers</p>
+        <h2 class="font-display text-cream-50 mt-3 text-[2.4rem] md:text-[3rem] leading-[1.05]">
+          Every brick, counted.
+        </h2>
+        <p class="mt-4 text-cream-100/85 text-[16px] md:text-[17px] max-w-2xl mx-auto leading-[1.7]">
+          Since 2021, the Care Veliyathunadu community has grown — one home, one family, one contribution at a time.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-y-12 md:gap-y-0 md:gap-x-8">
+        {[
+          { value: COUNTS.homesDelivered,    suffix: "",  label: "Homes delivered",        sub: "Simple, dignified, complete" },
+          { value: COUNTS.homesInProgress,   suffix: "",  label: "Currently building",     sub: "Sixth home, in progress" },
+          { value: COUNTS.totalBeneficiaries, suffix: "+", label: "Lives supported",        sub: "Families with a new door" },
+          { value: COUNTS.totalContributors, suffix: "+", label: "Contributors joined",    sub: "From across Kerala and beyond" },
+        ].map((stat) => (
+          <div class="text-center md:border-r md:border-cream-100/10 md:last:border-r-0 reveal">
+            <div
+              class="font-display font-medium text-saffron-300 text-[3.6rem] md:text-[4.2rem] leading-none stat-counter"
+              data-target={stat.value}
+              data-suffix={stat.suffix}
+            >
+              0{stat.suffix}
+            </div>
+            <div class="mt-3 text-cream-50 font-semibold text-[15px] md:text-[16px]">
+              {stat.label}
+            </div>
+            <div class="mt-1 text-cream-100/65 text-[13px] leading-snug">
+              {stat.sub}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       3. PROJECTS — family-first, not house-first
+       ============================================================ -->
+  <section class="section-y bg-cream-50 border-y border-cream-200" id="projects">
+    <div class="container-x">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 reveal">
+        <SectionHeading
+          eyebrow="The families"
+          title="Five families. Five new beginnings."
+          subtitle="Each home is a story of a family we came to know, a home we built together, and a door that now locks from inside."
+        />
+        <a href="/projects" class="hidden md:inline-flex btn-text self-end">
+          See all projects <Icon name="arrow-right" size={16} />
+        </a>
+      </div>
+
+      <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {PROJECTS.filter((p) => p.status === "delivered").map((p, i) => (
+          <a href={`/projects/${p.slug}`} class={`group block reveal delay-${(i % 3) + 1}`}>
+            <div class="aspect-[4/5] overflow-hidden bg-cream-200 rounded-xl">
+              <OptimisedImage
+                src={p.cover}
+                alt={p.familyName}
+                width={800}
+                height={1000}
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              />
+            </div>
+            <div class="mt-5">
+              <p class="text-xs uppercase tracking-[0.14em] text-ink-500 font-semibold">
+                Home #{String(p.number).padStart(2, "0")} · Delivered
+              </p>
+              <h3 class="font-display text-2xl mt-2 group-hover:text-brand-400 transition-colors">
+                {p.familyName}
+              </h3>
+              <p class="text-ink-500 text-sm mt-1.5">
+                {p.location}, {p.district} · {p.beneficiaries} family members
+              </p>
+              <p class="text-ink-700 text-[15px] mt-3 leading-[1.65] line-clamp-3">{p.short}</p>
+              <p class="mt-4 text-brand-400 font-semibold text-sm inline-flex items-center gap-2 group-hover:gap-3 transition-all">
+                Read their story <Icon name="arrow-right" size={14} />
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <div class="mt-10 md:hidden">
+        <a href="/projects" class="btn-text">See all projects <Icon name="arrow-right" size={16} /></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       4. GALLERY — grid of images
+       ============================================================ -->
+  <section class="section-y">
+    <div class="container-x">
+      <div class="reveal">
+        <SectionHeading
+          eyebrow="Gallery"
+          title="A visual record of the work."
+          subtitle="Photographs from the homes we have built — before, during, and after construction."
+        />
+      </div>
+
+      <div class="mt-14 grid grid-cols-2 md:grid-cols-3 gap-4">
+        {[
+          { src: IMAGE_POOL.HOME_RURAL_01, alt: "A simple new home in rural Kerala" },
+          { src: IMAGE_POOL.HOME_SIMPLE_03, alt: "Construction in progress" },
+          { src: IMAGE_POOL.HANDOVER_04, alt: "Family at the doorway" },
+          { src: IMAGE_POOL.HOME_RURAL_02, alt: "Another completed home" },
+          { src: IMAGE_POOL.BUILDING_01, alt: "Building materials" },
+          { src: IMAGE_POOL.VOLUNTEER_01, alt: "Volunteers at work" },
+        ].map((img, i) => (
+          <div class={`aspect-square overflow-hidden bg-cream-200 rounded-xl reveal delay-${(i % 3) + 1}`}>
+            <OptimisedImage
+              src={unsplash(img.src, 600)}
+              alt={img.alt}
+              width={600}
+              height={600}
+              sizes="(min-width: 768px) 33vw, 50vw"
+            />
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-10 text-center">
+        <a href="/gallery" class="btn-text">
+          View full gallery <Icon name="arrow-right" size={16} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       5. THE PEOPLE — team, with photo placeholders
+       ============================================================ -->
+  <section class="section-y bg-cream-50 border-y border-cream-200">
+    <div class="container-x">
+      <div class="reveal">
+        <SectionHeading
+          eyebrow="The people"
+          title="The people behind every home."
+          subtitle="Fifteen working organisers, and a wider community of volunteers, masons, and contributors who make the work possible."
+        />
+      </div>
+
+      <div class="mt-14 grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-5 gap-x-4 gap-y-10">
+        {WORKING_TEAM.slice(0, 10).map((m, i) => (
+          <div class={`text-center reveal delay-${(i % 5) + 1}`}>
+            <div
+              class="aspect-square w-full rounded-full overflow-hidden bg-cream-200"
+              aria-hidden="true"
+            >
+              <img
+                src={m.photo}
+                alt={m.name}
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <p class="mt-4 text-sm font-semibold text-ink-900 leading-snug">{m.name}</p>
+            <p class="text-xs text-ink-500 mt-1 leading-snug">{m.role}</p>
+          </div>
+        ))}
+      </div>
+
+      <p class="mt-12 text-ink-500 text-sm max-w-2xl">
+        Photographs are placeholder images. Real photographs of the working organisers will be added with their consent.
+      </p>
+
+      <div class="mt-10">
+        <a href="/team" class="btn-text">
+          Meet the full team and society leaders <Icon name="arrow-right" size={16} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       6. VOICES — only verified, with clear TODO if not
+       ============================================================ -->
+  <section class="section-y">
+    <div class="container-x">
+      <div class="reveal">
+        <SectionHeading
+          eyebrow="Voices"
+          title="What people in the community are saying."
+          subtitle="Verified, on-record quotations from people in the community who have supported the work."
+        />
+      </div>
+
+      <div class="mt-12 grid md:grid-cols-2 gap-6">
+        {SOCIETY_LEADERS.map((l) => (
+          <figure class={`card-base p-7 reveal`}>
+            <blockquote class="font-display italic text-[1.15rem] text-ink-700 leading-[1.55]">
+              "{l.quote}"
+            </blockquote>
+            <figcaption class="mt-5 pt-5 border-t border-cream-200 flex items-center gap-3">
+              <div
+                class="w-10 h-10 rounded-full overflow-hidden bg-cream-200"
+                aria-hidden="true"
+              >
+                <img
+                  src={l.photo}
+                  alt={l.name}
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <div>
+                <div class="text-sm font-semibold text-ink-900">{l.name}</div>
+                <div class="text-xs text-ink-500 mt-0.5">{l.designation}</div>
+              </div>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       7. FINAL CTA — solid deep green, no gradient
+       ============================================================ -->
+  <section class="py-20 md:py-28 bg-brand-500 text-cream-50">
+    <div class="container-x text-center">
+      <div class="max-w-2xl mx-auto reveal">
+        <p class="eyebrow text-saffron-300">Join the work</p>
+        <h2 class="heading-display text-cream-50 mt-4 text-[2.6rem] md:text-[3.4rem] leading-[1.05]">
+          Help build the next home.
+        </h2>
+        <p class="mt-6 text-cream-100/85 text-[17px] md:text-[19px] leading-[1.65]">
+          A sixth home is currently being built. A contribution of ₹1,000 — or any amount — joins you to the people who will live there.
+        </p>
+        <div class="mt-10 flex flex-wrap justify-center gap-3">
+          <a href="/contact#donate" class="btn-saffron !text-[15px] !px-6 !py-4">
+            Donate Now
+          </a>
+          <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-4 text-cream-50 font-semibold border border-cream-100/30 hover:bg-cream-50/5 transition rounded-md">
+            <Icon name="chat" size={18} />
+            Talk to us
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero-dot {
+    width: 28px;
+    height: 3px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.35);
+    transition: all 0.3s ease;
+  }
+  .hero-dot.is-active {
+    background: var(--color-saffron-300);
+    width: 38px;
+  }
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
+
+<script>
+  // Hero carousel
+  const slides = document.querySelectorAll<HTMLElement>(".hero-slide");
+  const dots   = document.querySelectorAll<HTMLElement>(".hero-dot");
+  let current  = 0;
+  let timer: number | null = null;
+  const showSlide = (i: number) => {
+    slides.forEach((s, idx) => s.classList.toggle("is-active", idx === i));
+    dots.forEach((d, idx) => d.classList.toggle("is-active", idx === i));
+    current = i;
+  };
+  const next = () => showSlide((current + 1) % slides.length);
+  dots.forEach((d, i) => d.addEventListener("click", () => { showSlide(i); restart(); }));
+  const restart = () => { if (timer) clearInterval(timer); timer = window.setInterval(next, 6000); };
+  restart();
+
+  // ============================================================
+  // STAT COUNTER ANIMATION
+  // Animates the .stat-counter numbers from 0 up to the value
+  // in data-target. Triggered when the section enters the viewport
+  // (one-time animation). Respects prefers-reduced-motion.
+  // ============================================================
+  const counters = document.querySelectorAll<HTMLElement>(".stat-counter");
+  if (counters.length > 0) {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const animate = (el: HTMLElement) => {
+      const target = parseInt(el.dataset.target || "0", 10);
+      const suffix = el.dataset.suffix || "";
+      if (reduceMotion) {
+        el.textContent = target + suffix;
+        return;
+      }
+      const duration = 1800; // ms
+      const start = performance.now();
+      const tick = (now: number) => {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease-out cubic for a nice deceleration
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const value = Math.round(eased * target);
+        el.textContent = value + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+        else el.textContent = target + suffix;
+      };
+      requestAnimationFrame(tick);
+    };
+
+    if ("IntersectionObserver" in window) {
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              animate(e.target as HTMLElement);
+              obs.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.4 }
+      );
+      counters.forEach((c) => obs.observe(c));
+    } else {
+      counters.forEach((c) => animate(c));
+    }
+  }
+</script>

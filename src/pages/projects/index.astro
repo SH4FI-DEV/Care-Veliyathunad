@@ -1,0 +1,116 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Icon from "../../components/Icon.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import OptimisedImage from "../../components/OptimisedImage.astro";
+import { PROJECTS } from "../../data/projects";
+
+const filters = [
+  { id: "all",          label: "All",          count: PROJECTS.length },
+  { id: "delivered",    label: "Delivered",    count: PROJECTS.filter((p) => p.status === "delivered").length },
+  { id: "in-progress",  label: "In Progress",  count: PROJECTS.filter((p) => p.status === "in-progress").length },
+];
+---
+
+<Layout
+  title="Projects — Homes we have built"
+  description="Browse the homes that Care Veliyathunadu has built and delivered with the community — and the one currently being built."
+>
+  <!-- HERO -->
+  <section class="pt-12 md:pt-20 pb-10 md:pb-14">
+    <div class="container-x">
+      <div class="max-w-3xl reveal">
+        <p class="eyebrow">Projects</p>
+        <h1 class="heading-display mt-4 text-[2.6rem] md:text-[3.4rem] lg:text-[4rem]">
+          Every project is a family.
+        </h1>
+        <p class="mt-5 text-ink-700 text-[17px] md:text-[18px] leading-[1.7]">
+          Each home below belongs to a family we have come to know. Click into any project to read the record, the date of handover, and the people who made it possible.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTERS + GRID -->
+  <section class="section-y pt-0">
+    <div class="container-x">
+      <div class="flex items-center flex-wrap gap-2 mb-12 reveal">
+        {filters.map((f) => (
+          <button
+            class={`filter-btn px-4 py-2 rounded-md text-sm font-medium border transition ${f.id === "all" ? "bg-brand-500 text-cream-50 border-brand-500" : "bg-transparent text-ink-700 border-cream-200 hover:border-brand-300"}`}
+            data-filter={f.id}
+          >
+            {f.label} <span class={`ml-1.5 text-xs ${f.id === "all" ? "text-cream-100/70" : "text-ink-300"}`}>{f.count}</span>
+          </button>
+        ))}
+      </div>
+
+      <div id="projectsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+        {PROJECTS.map((p, i) => (
+          <a
+            href={`/projects/${p.slug}`}
+            class={`project-card group block reveal delay-${(i % 3) + 1}`}
+            data-status={p.status}
+          >
+            <div class="aspect-[4/5] overflow-hidden bg-cream-200 rounded-xl">
+              <OptimisedImage
+                src={p.cover}
+                alt={p.familyName}
+                width={800}
+                height={1000}
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              />
+            </div>
+            <div class="mt-5">
+              <p class="text-xs uppercase tracking-[0.14em] text-ink-500 font-semibold">
+                Home #{String(p.number).padStart(2, "0")} · {p.status === "delivered" ? "Delivered" : "In Progress"}
+              </p>
+              <h3 class="font-display text-2xl mt-2 group-hover:text-brand-500 transition-colors">
+                {p.familyName}
+              </h3>
+              <p class="text-ink-500 text-sm mt-1.5">
+                {p.location}, {p.district} · {p.beneficiaries} family members
+              </p>
+              <p class="text-ink-700 text-[15px] mt-3 leading-[1.65] line-clamp-3">{p.short}</p>
+              <p class="mt-4 text-brand-500 font-semibold text-sm inline-flex items-center gap-2 group-hover:gap-3 transition-all">
+                Read their story <Icon name="arrow-right" size={14} />
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .project-card.is-hidden { display: none; }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>(".filter-btn");
+  const cards   = document.querySelectorAll<HTMLElement>(".project-card");
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const filter = btn.dataset.filter;
+      buttons.forEach((b) => {
+        b.classList.remove("bg-brand-500", "text-cream-50", "border-brand-500");
+        b.classList.add("bg-transparent", "text-ink-700", "border-cream-200");
+      });
+      btn.classList.remove("bg-transparent", "text-ink-700", "border-cream-200");
+      btn.classList.add("bg-brand-500", "text-cream-50", "border-brand-500");
+
+      cards.forEach((c) => {
+        const status = c.dataset.status;
+        if (filter === "all" || status === filter) c.classList.remove("is-hidden");
+        else c.classList.add("is-hidden");
+      });
+    });
+  });
+</script>

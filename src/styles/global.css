@@ -1,0 +1,422 @@
+@import "tailwindcss";
+
+/* ============================================================
+   TYPOGRAPHY — Playfair Display (display) + Inter (body)
+   Classic, elegant, readable. Standard web fonts.
+   ============================================================ */
+@import "@fontsource/playfair-display/400.css";
+@import "@fontsource/playfair-display/400-italic.css";
+@import "@fontsource/playfair-display/500.css";
+@import "@fontsource/playfair-display/600.css";
+@import "@fontsource/playfair-display/700.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+
+/* ============================================================
+   DESIGN TOKENS — Care Veliyathunadu
+   Original: lighter greens, warm orange, cream — classic
+   ============================================================ */
+@theme {
+  /* Brand: lighter, more vibrant greens */
+  --color-brand-50:  #E8F5EE;
+  --color-brand-100: #C5E6D4;
+  --color-brand-200: #8ECBAA;
+  --color-brand-300: #5AB885;
+  --color-brand-400: #2D8B6E;   /* PRIMARY — Organisation / trust */
+  --color-brand-500: #1E6B52;   /* Slightly darker */
+  --color-brand-600: #155A45;   /* Dark accent */
+  --color-brand-700: #0F4A39;
+  --color-brand-800: #0A3A2E;
+  --color-brand-900: #052A22;
+
+  /* Warm orange (action / warmth / donation) */
+  --color-saffron-300: #F7C171;
+  --color-saffron-400: #F5A623;   /* SECONDARY */
+  --color-saffron-500: #D88A0E;
+
+  /* Editorial surfaces */
+  --color-cream-50:  #FFFDFC;   /* Warm white */
+  --color-cream-100: #F8F6F0;   /* Cream */
+  --color-cream-200: #E6E1D7;   /* Borders */
+
+  --color-ink-900: #19332D;     /* Dark text */
+  --color-ink-700: #3D4D45;
+  --color-ink-500: #6B7B76;     /* Muted text */
+  --color-ink-300: #98A39E;
+
+  /* Typography */
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-script: "Playfair Display", Georgia, serif;
+  --font-ui: "Inter", var(--font-sans);  /* used in the top utility bar */
+
+  /* Reduced shadow palette (was excessive) */
+  --shadow-soft: 0 2px 8px -2px rgba(7, 92, 77, 0.06), 0 1px 2px rgba(7, 92, 77, 0.04);
+  --shadow-lift: 0 8px 24px -8px rgba(7, 92, 77, 0.12), 0 2px 4px rgba(7, 92, 77, 0.06);
+  --shadow-card: 0 1px 3px rgba(25, 51, 45, 0.06);
+
+  /* Generous, rounded radii */
+  --radius-soft: 1.5rem;       /* 24px — buttons, small UI */
+  --radius-card: 2rem;            /* 32px — large cards */
+  --radius-image: 1.75rem;      /* 28px — image containers */
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--color-cream-100);
+  color: var(--color-ink-900);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.65;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+/* Display headings: Newsreader, NOT bold by default */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 400;            /* Editorial — not bold */
+  letter-spacing: -0.015em;
+  line-height: 1.08;
+  color: var(--color-ink-900);
+}
+h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--color-ink-900);
+}
+
+a { color: inherit; }
+
+::selection {
+  background: var(--color-brand-500);
+  color: #fff;
+}
+
+/* ============================================================
+   ACCESSIBLE FOCUS STATES
+   ============================================================ */
+*:focus-visible {
+  outline: 2px solid var(--color-saffron-400);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ============================================================
+   SCROLL-REVEAL — gentle, restrained
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-soft {
+  opacity: 0;
+  transition: opacity 1s ease-out;
+}
+.reveal-soft.is-visible {
+  opacity: 1;
+}
+
+.delay-1 { transition-delay: 0.08s; }
+.delay-2 { transition-delay: 0.16s; }
+.delay-3 { transition-delay: 0.24s; }
+.delay-4 { transition-delay: 0.32s; }
+.delay-5 { transition-delay: 0.40s; }
+
+/* ============================================================
+   HERO — gentle Ken Burns, no aggressive scale
+   ============================================================ */
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.4s ease-in-out;
+  pointer-events: none;
+}
+.hero-slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.hero-slide.is-active .hero-img {
+  animation: kenBurns 12s ease-out forwards;
+}
+@keyframes kenBurns {
+  from { transform: scale(1.0); }
+  to   { transform: scale(1.06); }
+}
+
+/* ============================================================
+   EMBLA CAROUSEL
+   ============================================================ */
+.embla { overflow: hidden; }
+.embla__container { display: flex; }
+.embla__slide { flex: 0 0 100%; min-width: 0; }
+@media (min-width: 768px) {
+  .embla__slide--md-half   { flex: 0 0 50%; }
+  .embla__slide--md-third  { flex: 0 0 33.3333%; }
+}
+@media (min-width: 1024px) {
+  .embla__slide--lg-half   { flex: 0 0 50%; }
+  .embla__slide--lg-third  { flex: 0 0 33.3333%; }
+  .embla__slide--lg-quarter { flex: 0 0 25%; }
+}
+
+/* ============================================================
+   HERO-SPECIFIC — Kindflow-inspired split hero
+   ============================================================ */
+.hero-section {
+  min-height: 92vh;
+  display: flex;
+  align-items: stretch;
+}
+.hero-section > .hero-bg { z-index: 0; }
+.hero-section > .container-x { z-index: 2; }
+
+.hero-eyebrow {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-saffron-400);
+}
+.hero-script-accent {
+  font-family: var(--font-script);
+  font-weight: 700;
+  color: var(--color-saffron-400);
+  font-size: 1.1em;
+  line-height: 0.85;
+  display: inline-block;
+  transform: rotate(-2deg);
+  padding: 0 0.1em;
+}
+@media (min-width: 1024px) {
+  .hero-script-accent { font-size: 1.18em; }
+}
+
+/* Dot pattern background — used in the dark stats section */
+.dot-pattern {
+  background-image: radial-gradient(circle, var(--color-cream-50) 1px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+/* ============================================================
+   UTILITIES — decorative, with ornamentation
+   ============================================================ */
+.container-x { @apply mx-auto max-w-6xl px-5 sm:px-6 lg:px-8; }
+.section-y   { @apply py-16 md:py-24 lg:py-28; }
+.section-tight { @apply py-10 md:py-14; }
+
+/* Editorial display heading — used for hero H1 and section H2s */
+.heading-display {
+  font-family: var(--font-display);
+  font-weight: 700;             /* Bold, prominent */
+  letter-spacing: -0.022em;
+  line-height: 1.02;
+}
+
+/* Small editorial label — with decorative line */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+  color: var(--color-brand-400);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 2rem;
+  height: 2px;
+  background: var(--color-saffron-400);
+  border-radius: 9999px;
+}
+
+/* Pill-shaped status chips */
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.status-chip-delivered {
+  background: var(--color-brand-50);
+  color: var(--color-brand-500);
+}
+.status-chip-progress {
+  background: var(--color-saffron-300);
+  color: var(--color-ink-900);
+}
+
+/* Decorative orange divider */
+.divider-orange {
+  width: 4rem;
+  height: 3px;
+  background: var(--color-saffron-400);
+  border-radius: 9999px;
+  margin: 1.5rem 0;
+}
+
+/* Blur orb decorative element */
+.blur-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  pointer-events: none;
+}
+.blur-orb-green {
+  background: var(--color-brand-400);
+}
+.blur-orb-orange {
+  background: var(--color-saffron-400);
+}
+
+/* ============================================================
+   BUTTONS — generous, rounded, pill-shaped
+   ============================================================ */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--color-brand-400);
+  color: #fff;
+  padding: 0.85rem 1.5rem;
+  border-radius: 9999px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+.btn-primary:hover {
+  background: var(--color-brand-500);
+  transform: translateY(-1px);
+}
+.btn-primary:active { transform: translateY(0); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: var(--color-ink-900);
+  padding: 0.85rem 1.5rem;
+  border-radius: 9999px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid var(--color-cream-200);
+  transition: all 0.2s ease;
+}
+.btn-secondary:hover {
+  border-color: var(--color-ink-900);
+  background: transparent;
+}
+
+.btn-saffron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--color-saffron-400);
+  color: var(--color-ink-900);
+  padding: 0.85rem 1.5rem;
+  border-radius: 9999px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+.btn-saffron:hover {
+  background: var(--color-saffron-500);
+  color: #fff;
+}
+
+.btn-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-brand-400);
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 2px;
+  transition: gap 0.2s ease;
+}
+.btn-text:hover { gap: 0.7rem; }
+
+/* ============================================================
+   CARDS — generous, rounded, less shadow
+   ============================================================ */
+.card-base {
+  background: #fff;
+  border: 1px solid var(--color-cream-200);
+  border-radius: 32px;
+}
+.card-lift {
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.card-lift:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-brand-200);
+}
+
+/* ============================================================
+   NAV — minimal, no pill highlights
+   ============================================================ */
+.nav-link {
+  position: relative;
+  font-weight: 500;
+  color: var(--color-ink-700);
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  transition: color 0.2s ease;
+}
+.nav-link:hover, .nav-link.is-active {
+  color: var(--color-brand-500);
+}
+
+/* Mobile drawer */
+#mobileDrawer.is-open { opacity: 1; pointer-events: auto; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal, .reveal-soft { opacity: 1 !important; transform: none !important; }
+}

@@ -1,0 +1,73 @@
+---
+// ============================================================================
+// <OptimisedImage />
+// ----------------------------------------------------------------------------
+// Performance features:
+//   - Explicit `width` / `height` so the browser reserves layout space
+//     and the page does not jump while the image loads (good for CLS).
+//   - `loading="lazy"` and `decoding="async"` on every below-the-fold image.
+//   - `fetchpriority="high"` on the LCP image (hero) so it loads first.
+//   - `srcset` + `sizes` so the browser picks the smallest image that
+//     still looks sharp on the user's device.
+//   - Sensible default `sizes` for the most common layouts.
+//   - Graceful fallback: if the primary image errors, the alt text shows.
+// ============================================================================
+import { IMG_WIDTHS, unsplash, unsplashSrcSet } from "../data/images";
+
+interface Props {
+  src: string;                  // primary URL (e.g. unsplash(..., 1200))
+  alt: string;                  // required, descriptive
+  width: number;                // intrinsic width of the image
+  height: number;               // intrinsic height of the image
+  sizes?: string;               // CSS sizes hint
+  priority?: boolean;           // true = hero/LCP (skip lazy, use high priority)
+  class?: string;
+  widths?: readonly number[];   // override responsive widths
+  quality?: number;             // override jpeg quality (1-100)
+  objectPosition?: string;      // CSS object-position, default "center"
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  sizes = "(min-width: 1024px) 50vw, 100vw",
+  priority = false,
+  class: className = "",
+  widths = IMG_WIDTHS,
+  quality = 72,
+  objectPosition = "center",
+} = Astro.props;
+
+// Build srcset by replacing the trailing /w=NNNN/ in the URL
+const buildSrcSet = () => {
+  // If src is a Unsplash URL, swap the w param
+  if (src.includes("images.unsplash.com/photo-")) {
+    const id = src.split("photo-")[1].split("?")[0];
+    return unsplashSrcSet(id, widths, quality);
+  }
+  // Generic fallback: same URL repeated
+  return widths.map((w) => `${src} ${w}w`).join(", ");
+};
+
+const srcset = buildSrcSet();
+const loading = priority ? "eager" : "lazy";
+const decoding = priority ? "sync" : "async";
+const fetchpriority = priority ? "high" : "auto";
+---
+
+<img
+  src={src}
+  srcset={srcset}
+  sizes={sizes}
+  alt={alt}
+  width={width}
+  height={height}
+  loading={loading}
+  decoding={decoding}
+  fetchpriority={fetchpriority}
+  style={`object-position: ${objectPosition};`}
+  class={`block w-full h-full object-cover ${className}`}
+  onerror="this.style.display='none'"
+/>

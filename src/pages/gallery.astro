@@ -1,0 +1,159 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/Icon.astro";
+import OptimisedImage from "../components/OptimisedImage.astro";
+import { GALLERY, GALLERY_CATEGORIES } from "../data/gallery";
+---
+
+<Layout
+  title="Gallery — The work, in photographs"
+  description="A photographic record of the Care Veliyathunadu homes — from before the build, through construction, to the handover and the family at home."
+>
+  <!-- HERO -->
+  <section class="pt-12 md:pt-20 pb-10">
+    <div class="container-x">
+      <div class="max-w-3xl reveal">
+        <p class="eyebrow">Gallery</p>
+        <h1 class="heading-display mt-4 text-[2.6rem] md:text-[3.4rem] lg:text-[4rem]">
+          The work, in photographs.
+        </h1>
+        <p class="mt-5 text-ink-700 text-[17px] md:text-[18px] leading-[1.7]">
+          We have organised the gallery as a quiet story — before, building, handover, and the family at home. Photographs below are placeholders for documentary images of each Care Veliyathunadu project.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <section class="pb-8">
+    <div class="container-x">
+      <div class="flex items-center flex-wrap gap-2 reveal">
+        {GALLERY_CATEGORIES.map((c) => (
+          <button
+            class={`filter-btn px-4 py-2 rounded-md text-sm font-medium border transition ${c.id === "all" ? "bg-brand-500 text-cream-50 border-brand-500" : "bg-transparent text-ink-700 border-cream-200 hover:border-brand-300"}`}
+            data-filter={c.id}
+          >
+            {c.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- MASONRY GRID -->
+  <section class="pb-24">
+    <div class="container-x">
+      <div id="galleryGrid" class="columns-1 sm:columns-2 lg:columns-3 gap-3 md:gap-4 space-y-3 md:space-y-4">
+        {GALLERY.map((g, i) => (
+          <button
+            class={`gallery-item group block w-full break-inside-avoid mb-3 md:mb-4 relative overflow-hidden rounded-xl bg-cream-200 reveal`}
+            data-category={g.category}
+            data-index={i}
+            data-src={g.src}
+            data-alt={g.alt}
+          >
+            <div class={`relative ${g.aspect === "tall" ? "aspect-[3/4]" : g.aspect === "wide" ? "aspect-[4/3]" : "aspect-square"}`}>
+              <OptimisedImage
+                src={g.src}
+                alt={g.alt}
+                width={800}
+                height={g.aspect === "tall" ? 1066 : g.aspect === "wide" ? 600 : 800}
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                quality={70}
+              />
+              <div class="absolute inset-0 bg-ink-900/0 group-hover:bg-ink-900/20 transition-colors"></div>
+              <span class="absolute bottom-3 left-3 text-cream-50 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity bg-ink-900/50 backdrop-blur px-2 py-1 rounded capitalize">{g.category}</span>
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="fixed inset-0 z-[100] bg-ink-900/95 hidden items-center justify-center p-4 backdrop-blur" aria-modal="true" role="dialog">
+    <button id="lbClose" class="absolute top-4 right-4 inline-flex items-center justify-center w-11 h-11 rounded-full bg-cream-50/10 hover:bg-cream-50/20 text-cream-50 transition" aria-label="Close">
+      <Icon name="x" size={22} />
+    </button>
+    <button id="lbPrev" class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-11 h-11 rounded-full bg-cream-50/10 hover:bg-cream-50/20 text-cream-50 transition" aria-label="Previous">
+      <Icon name="chevron-left" size={22} />
+    </button>
+    <button id="lbNext" class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-11 h-11 rounded-full bg-cream-50/10 hover:bg-cream-50/20 text-cream-50 transition" aria-label="Next">
+      <Icon name="chevron-right" size={22} />
+    </button>
+    <figure class="max-w-5xl w-full">
+      <img id="lbImg" src="" alt="" class="max-h-[80vh] mx-auto rounded-xl" />
+      <figcaption id="lbCap" class="text-center text-cream-100/80 mt-4 text-sm"></figcaption>
+    </figure>
+  </div>
+</Layout>
+
+<style>
+  .gallery-item.is-hidden { display: none; }
+</style>
+
+<script>
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>(".filter-btn");
+  const items      = document.querySelectorAll<HTMLElement>(".gallery-item");
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const filter = btn.dataset.filter;
+      filterBtns.forEach((b) => {
+        b.classList.remove("bg-brand-500", "text-cream-50", "border-brand-500");
+        b.classList.add("bg-transparent", "text-ink-700", "border-cream-200");
+      });
+      btn.classList.remove("bg-transparent", "text-ink-700", "border-cream-200");
+      btn.classList.add("bg-brand-500", "text-cream-50", "border-brand-500");
+
+      items.forEach((it) => {
+        const cat = it.dataset.category;
+        if (filter === "all" || cat === filter) it.classList.remove("is-hidden");
+        else it.classList.add("is-hidden");
+      });
+    });
+  });
+
+  // Lightbox
+  const lb     = document.getElementById("lightbox")!;
+  const lbImg  = document.getElementById("lbImg") as HTMLImageElement;
+  const lbCap  = document.getElementById("lbCap")!;
+  const closeBtn = document.getElementById("lbClose")!;
+  const prevBtn  = document.getElementById("lbPrev")!;
+  const nextBtn  = document.getElementById("lbNext")!;
+
+  let currentIndex = 0;
+  const show = (i: number) => {
+    const visible = Array.from(items).filter((el) => !el.classList.contains("is-hidden"));
+    if (visible.length === 0) return;
+    currentIndex = ((i % visible.length) + visible.length) % visible.length;
+    const item = visible[currentIndex];
+    lbImg.src = item.dataset.src || "";
+    lbImg.alt = item.dataset.alt || "";
+    lbCap.textContent = item.dataset.alt || "";
+  };
+
+  items.forEach((it) => {
+    it.addEventListener("click", () => {
+      const visible = Array.from(items).filter((el) => !el.classList.contains("is-hidden"));
+      show(visible.indexOf(it));
+      lb.classList.remove("hidden");
+      lb.classList.add("flex");
+      document.body.style.overflow = "hidden";
+    });
+  });
+  closeBtn.addEventListener("click", () => {
+    lb.classList.add("hidden");
+    lb.classList.remove("flex");
+    document.body.style.overflow = "";
+  });
+  prevBtn.addEventListener("click", () => show(currentIndex - 1));
+  nextBtn.addEventListener("click", () => show(currentIndex + 1));
+  lb.addEventListener("click", (e) => { if (e.target === lb) closeBtn.click(); });
+  document.addEventListener("keydown", (e) => {
+    if (lb.classList.contains("hidden")) return;
+    if (e.key === "Escape")     closeBtn.click();
+    if (e.key === "ArrowLeft")  prevBtn.click();
+    if (e.key === "ArrowRight") nextBtn.click();
+  });
+</script>

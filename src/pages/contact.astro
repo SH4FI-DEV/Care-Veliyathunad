@@ -1,0 +1,522 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/Icon.astro";
+import { SITE } from "../data/site";
+---
+
+<Layout
+  title="Contact — Support a Home or talk to us"
+  description="Reach out to Care Veliyathunadu — by phone, email, WhatsApp, or the contact form. Support a home with a ₹1,000 contribution or more."
+>
+  <!-- HERO -->
+  <section class="pt-12 md:pt-20 pb-10">
+    <div class="container-x">
+      <div class="max-w-3xl reveal">
+        <p class="eyebrow">Contact</p>
+        <h1 class="heading-display mt-4 text-[2.6rem] md:text-[3.4rem] lg:text-[4rem]">
+          Talk to us. Or support a home.
+        </h1>
+        <p class="mt-5 text-ink-700 text-[17px] md:text-[18px] leading-[1.7]">
+          There is more than one way to reach Care Veliyathunadu. Choose the one that feels right.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT CARDS -->
+  <section class="pb-12">
+    <div class="container-x">
+      <div class="grid sm:grid-cols-3 gap-5 reveal">
+        <a href={`tel:${SITE.phone}`} class="card-base p-7 card-lift">
+          <div class="inline-flex items-center justify-center w-11 h-11 rounded-md bg-brand-500 text-cream-50">
+            <Icon name="phone" size={20} />
+          </div>
+          <h3 class="font-display text-xl mt-4">Call us</h3>
+          <p class="text-sm text-ink-500 mt-1.5">{SITE.phone}</p>
+        </a>
+        <a href={`mailto:${SITE.email}`} class="card-base p-7 card-lift">
+          <div class="inline-flex items-center justify-center w-11 h-11 rounded-md bg-brand-500 text-cream-50">
+            <Icon name="mail" size={20} />
+          </div>
+          <h3 class="font-display text-xl mt-4">Email us</h3>
+          <p class="text-sm text-ink-500 mt-1.5 break-all">{SITE.email}</p>
+        </a>
+        <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener" class="card-base p-7 card-lift">
+          <div class="inline-flex items-center justify-center w-11 h-11 rounded-md bg-[#25D366] text-cream-50">
+            <Icon name="whatsapp" size={20} />
+          </div>
+          <h3 class="font-display text-xl mt-4">Talk on WhatsApp</h3>
+          <p class="text-sm text-ink-500 mt-1.5">Reach the working team directly</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN: TAB GENERAL | SUPPORT A HOME -->
+  <section class="section-y pt-0" id="donate">
+    <div class="container-x">
+      <div class="card-base overflow-hidden reveal">
+        <!-- Tabs -->
+        <div class="flex border-b border-cream-200" role="tablist">
+          <button class="tab-btn is-active flex-1 py-4 px-4 md:px-6 text-sm md:text-base font-semibold inline-flex items-center justify-center gap-2" data-tab="general" role="tab">
+            <Icon name="mail" size={15} />
+            <span>General enquiry</span>
+          </button>
+          <button class="tab-btn flex-1 py-4 px-4 md:px-6 text-sm md:text-base font-semibold inline-flex items-center justify-center gap-2" data-tab="donate" role="tab">
+            <Icon name="heart" size={15} />
+            <span>Support a Home</span>
+          </button>
+        </div>
+
+        <!-- TAB: GENERAL -->
+        <div class="tab-panel is-active p-6 md:p-10" data-panel="general" role="tabpanel">
+          <div class="grid lg:grid-cols-5 gap-10">
+            <div class="lg:col-span-2">
+              <p class="eyebrow">General enquiry</p>
+              <h3 class="heading-display mt-3 text-[1.9rem] md:text-[2.2rem]">Send us a message.</h3>
+              <p class="mt-4 text-ink-700 leading-[1.7] text-[15px]">
+                For volunteer enquiries, partnerships, media, or anything else. We reply to every message within 24 hours.
+              </p>
+              <div class="mt-6 space-y-3 text-sm text-ink-700">
+                <p class="flex items-start gap-3">
+                  <Icon name="map-pin" size={15} class="text-brand-500 flex-shrink-0 mt-0.5" />
+                  <span>{SITE.address}</span>
+                </p>
+                <p class="flex items-start gap-3">
+                  <Icon name="mail" size={15} class="text-brand-500 flex-shrink-0 mt-0.5" />
+                  <a href={`mailto:${SITE.email}`} class="hover:text-brand-500">{SITE.email}</a>
+                </p>
+                <p class="flex items-start gap-3">
+                  <Icon name="phone" size={15} class="text-brand-500 flex-shrink-0 mt-0.5" />
+                  <a href={`tel:${SITE.phone}`} class="hover:text-brand-500">{SITE.phone}</a>
+                </p>
+              </div>
+            </div>
+            <form class="lg:col-span-3 space-y-4" id="generalForm">
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="label" for="g-name">Your name</label>
+                  <input id="g-name" type="text" name="name" required placeholder="Full name" class="form-input" />
+                </div>
+                <div>
+                  <label class="label" for="g-phone">Phone</label>
+                  <input id="g-phone" type="tel" name="phone" required placeholder="+91" class="form-input" />
+                </div>
+              </div>
+              <div>
+                <label class="label" for="g-email">Email</label>
+                <input id="g-email" type="email" name="email" required placeholder="you@example.com" class="form-input" />
+              </div>
+              <div>
+                <label class="label" for="g-subject">Subject</label>
+                <select id="g-subject" name="subject" class="form-input">
+                  <option>Volunteer enquiry</option>
+                  <option>Partnership / CSR</option>
+                  <option>Media / Press</option>
+                  <option>Visit a home</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div>
+                <label class="label" for="g-message">Message</label>
+                <textarea id="g-message" name="message" required rows="4" placeholder="Tell us what's on your mind..." class="form-input resize-none"></textarea>
+              </div>
+              <button type="submit" class="btn-primary">
+                Send message <Icon name="arrow-right" size={16} />
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- TAB: DONATE -->
+        <div class="tab-panel p-6 md:p-10" data-panel="donate" role="tabpanel">
+          <div class="mb-8">
+            <p class="eyebrow">Support a Home</p>
+            <h3 class="heading-display mt-3 text-[1.9rem] md:text-[2.2rem]">Join the work of the next home.</h3>
+            <p class="mt-4 text-ink-700 leading-[1.7] text-[15px] max-w-2xl">
+              You can support a home in three simple ways: talk to us on WhatsApp, transfer to the bank account below, and submit your details with the payment slip so we can send you a receipt.
+            </p>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-10">
+            <!-- LEFT: WhatsApp + Bank details -->
+            <div class="space-y-6">
+              <a
+                href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent("Hello Care Veliyathunadu, I would like to support the next home. Please share the details.")}`}
+                target="_blank"
+                rel="noopener"
+                class="card-base p-5 flex items-center justify-between gap-4 card-lift"
+              >
+                <div class="flex items-center gap-4">
+                  <span class="inline-flex items-center justify-center w-11 h-11 rounded-full bg-[#25D366] text-cream-50 flex-shrink-0">
+                    <Icon name="whatsapp" size={20} />
+                  </span>
+                  <div>
+                    <h4 class="font-display text-lg">Talk to us on WhatsApp</h4>
+                    <p class="text-sm text-ink-500 mt-0.5">Reach the working team directly</p>
+                  </div>
+                </div>
+                <Icon name="arrow-right" size={20} class="text-ink-500" />
+              </a>
+
+              <div class="card-base p-5 md:p-6">
+                <div class="flex items-center gap-3 mb-4">
+                  <span class="inline-flex items-center justify-center w-10 h-10 rounded-md bg-brand-500 text-cream-50">
+                    <Icon name="bank" size={18} />
+                  </span>
+                  <h3 class="font-display text-xl">Bank account details</h3>
+                </div>
+                <dl class="space-y-3 text-sm">
+                  <div class="bank-row">
+                    <dt>Account name</dt>
+                    <dd>{SITE.bank.accountName}</dd>
+                  </div>
+                  <div class="bank-row">
+                    <dt>Account number</dt>
+                    <dd class="font-mono flex items-center gap-2">
+                      <span>{SITE.bank.accountNumber}</span>
+                      <button type="button" class="copy-btn" data-copy={SITE.bank.accountNumber} aria-label="Copy account number">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                      </button>
+                    </dd>
+                  </div>
+                  <div class="bank-row">
+                    <dt>IFSC code</dt>
+                    <dd class="font-mono flex items-center gap-2">
+                      <span>{SITE.bank.ifsc}</span>
+                      <button type="button" class="copy-btn" data-copy={SITE.bank.ifsc} aria-label="Copy IFSC">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                      </button>
+                    </dd>
+                  </div>
+                  <div class="bank-row">
+                    <dt>Bank and branch</dt>
+                    <dd>{SITE.bank.bankName} — {SITE.bank.branch}</dd>
+                  </div>
+                  <div class="bank-row">
+                    <dt>UPI ID</dt>
+                    <dd class="font-mono flex items-center gap-2">
+                      <span>{SITE.bank.upi}</span>
+                      <button type="button" class="copy-btn" data-copy={SITE.bank.upi} aria-label="Copy UPI">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                      </button>
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+
+              <p class="text-xs text-ink-500 leading-[1.7]">
+                Care Veliyathunadu is a registered charitable trust. Contributions above ₹500 are eligible for tax exemption under Section 80G. Receipts are sent within 7 working days of submission.
+              </p>
+            </div>
+
+            <!-- RIGHT: Donate form with slip upload -->
+            <form id="donateForm" class="space-y-4">
+              <h3 class="heading-display text-[1.6rem] md:text-[1.8rem]">Submit your details</h3>
+              <p class="text-sm text-ink-500 -mt-2">Fill this in after the transfer. We will email your receipt.</p>
+
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="label" for="d-name">Full name</label>
+                  <input id="d-name" type="text" name="name" required placeholder="Your full name" class="form-input" />
+                </div>
+                <div>
+                  <label class="label" for="d-phone">Phone</label>
+                  <input id="d-phone" type="tel" name="phone" required placeholder="+91" class="form-input" />
+                </div>
+              </div>
+
+              <div>
+                <label class="label" for="d-email">Email (for receipt)</label>
+                <input id="d-email" type="email" name="email" required placeholder="you@example.com" class="form-input" />
+              </div>
+
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="label" for="d-amount">Amount</label>
+                  <div class="relative">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-ink-500 font-medium">₹</span>
+                    <input id="d-amount" type="number" name="amount" required min="100" placeholder="1000" class="form-input !pl-9" />
+                  </div>
+                </div>
+                <div>
+                  <label class="label" for="d-txn">Transaction ref / UTR</label>
+                  <input id="d-txn" type="text" name="txn" required placeholder="e.g. 123456789012" class="form-input" />
+                </div>
+              </div>
+
+              <div>
+                <label class="label">Payment slip / screenshot</label>
+                <label for="slipFile" class="file-drop">
+                  <input type="file" id="slipFile" name="slip" accept="image/*,application/pdf" required class="sr-only" />
+                  <div class="flex flex-col items-center text-center">
+                    <span class="inline-flex items-center justify-center w-11 h-11 rounded-full bg-brand-50 text-brand-500 mb-2">
+                      <Icon name="upload" size={20} />
+                    </span>
+                    <span class="text-sm font-medium text-ink-900">Click to upload</span>
+                    <span class="text-xs text-ink-500 mt-1">PNG, JPG, or PDF · Max 5MB</span>
+                    <span id="fileName" class="text-xs text-brand-500 font-semibold mt-2 hidden"></span>
+                  </div>
+                </label>
+              </div>
+
+              <div>
+                <label class="label" for="d-message">Message (optional)</label>
+                <textarea id="d-message" name="message" rows="3" placeholder="Any dedication or message..." class="form-input resize-none"></textarea>
+              </div>
+
+              <button type="submit" class="btn-saffron w-full justify-center !text-[15px] !py-3.5">
+                <Icon name="check" size={18} />
+                Submit donation details
+              </button>
+
+              <p class="text-xs text-ink-500 text-center">
+                By submitting, you confirm the transfer was made from your account. Receipt will be emailed.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP PLACEHOLDER + FAQ -->
+  <section class="pb-12">
+    <div class="container-x grid lg:grid-cols-2 gap-12">
+      <div class="reveal">
+        <p class="eyebrow">Find us</p>
+        <h3 class="heading-display mt-3 text-[1.8rem] md:text-[2.2rem]">Veliyathunadu, Kerala.</h3>
+        <p class="mt-4 text-ink-700 text-[15.5px] leading-[1.7]">
+          Our office is in the heart of the community we serve — a small rented room that doubles as our meeting space, storage, and sometimes a guest room for visiting volunteers.
+        </p>
+        <div class="mt-6 card-base aspect-video flex items-center justify-center relative overflow-hidden">
+          <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle, #CFE0D8 1px, transparent 1px); background-size: 18px 18px;"></div>
+          <div class="relative text-center px-4">
+            <Icon name="map-pin" size={32} class="text-brand-500 mx-auto" />
+            <p class="font-display text-lg mt-2">{SITE.address}</p>
+            <a
+              href="https://maps.google.com/?q=Veliyathunadu+Kerala"
+              target="_blank"
+              rel="noopener"
+              class="btn-secondary !py-2 !px-3 !text-xs mt-3 inline-flex"
+            >
+              Open in Google Maps <Icon name="arrow-right" size={12} />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <p class="eyebrow">Common questions</p>
+        <h3 class="heading-display mt-3 text-[1.8rem] md:text-[2.2rem]">Quick answers</h3>
+        <div class="mt-5 space-y-2">
+          <details class="group card-base">
+            <summary class="flex items-center justify-between cursor-pointer p-4 list-none">
+              <h4 class="font-semibold text-[15px] pr-4">When will I receive the receipt?</h4>
+              <Icon name="chevron-down" size={14} class="transition-transform group-open:rotate-180 text-brand-500" />
+            </summary>
+            <p class="px-4 pb-4 text-sm text-ink-700">Within 7 working days of submitting the form and uploading your slip.</p>
+          </details>
+          <details class="group card-base">
+            <summary class="flex items-center justify-between cursor-pointer p-4 list-none">
+              <h4 class="font-semibold text-[15px] pr-4">Is my contribution tax-deductible?</h4>
+              <Icon name="chevron-down" size={14} class="transition-transform group-open:rotate-180 text-brand-500" />
+            </summary>
+            <p class="px-4 pb-4 text-sm text-ink-700">Yes, contributions above ₹500 are eligible for 80G tax exemption in India (subject to the trust's current registration).</p>
+          </details>
+          <details class="group card-base">
+            <summary class="flex items-center justify-between cursor-pointer p-4 list-none">
+              <h4 class="font-semibold text-[15px] pr-4">Can I donate material instead of money?</h4>
+              <Icon name="chevron-down" size={14} class="transition-transform group-open:rotate-180 text-brand-500" />
+            </summary>
+            <p class="px-4 pb-4 text-sm text-ink-700">Yes. Please reach us on WhatsApp to coordinate material contributions such as cement, steel, or paint.</p>
+          </details>
+          <details class="group card-base">
+            <summary class="flex items-center justify-between cursor-pointer p-4 list-none">
+              <h4 class="font-semibold text-[15px] pr-4">Where does my ₹1,000 actually go?</h4>
+              <Icon name="chevron-down" size={14} class="transition-transform group-open:rotate-180 text-brand-500" />
+            </summary>
+            <p class="px-4 pb-4 text-sm text-ink-700">Every contributor receives a one-page expense summary after each home is handed over. The work is small enough that every rupee can be accounted for.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .tab-btn {
+    color: var(--color-ink-500);
+    transition: all 0.2s ease;
+    position: relative;
+  }
+  .tab-btn:hover { color: var(--color-brand-500); }
+  .tab-btn.is-active {
+    color: var(--color-brand-500);
+    background: #fff;
+  }
+  .tab-btn.is-active::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -1px;
+    width: 56px;
+    height: 2px;
+    background: var(--color-saffron-400);
+    border-radius: 9999px;
+    transform: translateX(-50%);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.is-active { display: block; animation: panelIn 0.3s ease-out; }
+  @keyframes panelIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-ink-700);
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .form-input {
+    width: 100%;
+    background: var(--color-cream-50);
+    border: 1px solid var(--color-cream-200);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    color: var(--color-ink-900);
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+  .form-input:focus {
+    outline: none;
+    background: #fff;
+    border-color: var(--color-brand-300);
+    box-shadow: 0 0 0 4px rgba(7, 92, 77, 0.08);
+  }
+  .form-input::placeholder { color: var(--color-ink-300); }
+
+  .bank-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.55rem 0;
+    border-bottom: 1px dashed var(--color-cream-200);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .bank-row:last-child { border-bottom: none; }
+  .bank-row dt {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-ink-500);
+    font-weight: 600;
+  }
+  .bank-row dd { font-weight: 600; color: var(--color-ink-900); }
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--color-brand-50);
+    color: var(--color-brand-500);
+    transition: all 0.2s ease;
+  }
+  .copy-btn:hover { background: var(--color-brand-100); }
+  .copy-btn.is-copied { background: var(--color-brand-500); color: #fff; }
+
+  .file-drop {
+    display: block;
+    background: var(--color-cream-50);
+    border: 1.5px dashed var(--color-cream-200);
+    border-radius: 10px;
+    padding: 1.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .file-drop:hover {
+    border-color: var(--color-brand-300);
+    background: #fff;
+  }
+  details > summary { list-style: none; }
+  details > summary::-webkit-details-marker { display: none; }
+</style>
+
+<script>
+  // Tabs
+  const tabs = document.querySelectorAll<HTMLButtonElement>(".tab-btn");
+  const panels = document.querySelectorAll<HTMLElement>(".tab-panel");
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const target = tab.dataset.tab;
+      tabs.forEach((t) => t.classList.toggle("is-active", t === tab));
+      panels.forEach((p) => p.classList.toggle("is-active", p.dataset.panel === target));
+    });
+  });
+  if (window.location.hash === "#donate") {
+    const donateTab = document.querySelector<HTMLButtonElement>('.tab-btn[data-tab="donate"]');
+    donateTab?.click();
+    setTimeout(() => donateTab?.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
+  }
+
+  // Copy buttons
+  document.querySelectorAll<HTMLButtonElement>(".copy-btn").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const text = btn.dataset.copy || "";
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.classList.add("is-copied");
+        setTimeout(() => btn.classList.remove("is-copied"), 1500);
+      } catch {
+        const ta = document.createElement("textarea");
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); } catch {}
+        document.body.removeChild(ta);
+      }
+    });
+  });
+
+  // File input
+  const fileInput = document.getElementById("slipFile") as HTMLInputElement;
+  const fileName  = document.getElementById("fileName");
+  fileInput?.addEventListener("change", () => {
+    if (fileInput.files && fileInput.files[0]) {
+      const f = fileInput.files[0];
+      const sizeMB = (f.size / (1024*1024)).toFixed(2);
+      if (fileName) {
+        fileName.textContent = `${f.name} (${sizeMB} MB) · Ready to submit`;
+        fileName.classList.remove("hidden");
+      }
+    }
+  });
+
+  // Form submissions
+  const generalForm = document.getElementById("generalForm") as HTMLFormElement;
+  generalForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const f = new FormData(generalForm);
+    const body = `Name: ${f.get("name")}\nPhone: ${f.get("phone")}\nEmail: ${f.get("email")}\nSubject: ${f.get("subject")}\n\n${f.get("message")}`;
+    window.location.href = `mailto:${SITE.email}?subject=${encodeURIComponent("Enquiry: " + f.get("subject"))}&body=${encodeURIComponent(body)}`;
+  });
+
+  const donateForm = document.getElementById("donateForm") as HTMLFormElement;
+  donateForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const f = new FormData(donateForm);
+    const file = fileInput.files?.[0];
+    const fileInfo = file ? `\n\nSlip: ${file.name} (${(file.size/1024).toFixed(0)}KB) — attached offline` : "";
+    const body = `SUPPORT A HOME — Donation details\n\nName: ${f.get("name")}\nPhone: ${f.get("phone")}\nEmail: ${f.get("email")}\nAmount: ₹${f.get("amount")}\nTxn ref: ${f.get("txn")}\nMessage: ${f.get("message") || "(none)"}${fileInfo}\n\nThank you for joining the work.`;
+    const wa = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(body)}`;
+    if (confirm("Your details will now be sent to our working team via WhatsApp. Click OK to continue.")) {
+      window.open(wa, "_blank");
+    }
+  });
+</script>
