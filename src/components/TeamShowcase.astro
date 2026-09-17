@@ -1,0 +1,70 @@
+---
+interface TeamMember {
+  name: string;
+  role: string;
+  photo: string;
+}
+
+interface Props {
+  members: TeamMember[];
+}
+
+const { members } = Astro.props;
+---
+
+<div class="team-showcase">
+  <!-- Editorial introduction -->
+  <div class="mb-16 max-w-2xl">
+    <p class="font-sans text-xs uppercase tracking-[0.2em] text-ink-500 font-semibold mb-4">The people</p>
+    <h2 class="font-display text-[2rem] md:text-[2.8rem] lg:text-[3.5rem] leading-[1.0] text-ink-900 mb-6">
+      The people behind<br/>every home.
+    </h2>
+    <p class="text-ink-700 text-[17px] leading-[1.7]">
+      Fifteen working organisers, and a wider community of volunteers, masons, and contributors who make the work possible.
+    </p>
+  </div>
+  
+  <!-- Interactive team grid -->
+  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 md:gap-8">
+    {members.slice(0, 10).map((member, i) => (
+      <div class="team-member group cursor-pointer reveal" style={`animation-delay: ${i * 80}ms`}>
+        <!-- Portrait container -->
+        <div class="relative aspect-[3/4] overflow-hidden bg-cream-200 rounded-lg mb-4">
+          <img
+            src={member.photo}
+            alt={member.name}
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="lazy"
+          />
+          <!-- Overlay on hover -->
+          <div class="absolute inset-0 bg-brand-900/0 group-hover:bg-brand-900/20 transition-colors duration-300" />
+          
+          <!-- Number badge -->
+          <div class="absolute top-3 left-3 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center">
+            <span class="font-display text-sm text-ink-900">{String(i + 1).padStart(2, "0")}</span>
+          </div>
+        </div>
+        
+        <!-- Info -->
+        <div>
+          <h4 class="font-sans font-semibold text-ink-900 text-[14px] mb-1 group-hover:text-brand-500 transition-colors">
+            {member.role}
+          </h4>
+          <p class="font-sans text-ink-500 text-[12px]">
+            {member.name}
+          </p>
+        </div>
+      </div>
+    ))}
+  </div>
+  
+  <!-- View all link -->
+  <div class="mt-12">
+    <a href="/team" class="inline-flex items-center gap-2 text-brand-500 font-semibold text-[15px] hover:gap-3 transition-all">
+      View full team
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+      </svg>
+    </a>
+  </div>
+</div>

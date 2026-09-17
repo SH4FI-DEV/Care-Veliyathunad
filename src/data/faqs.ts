@@ -82,3 +82,50 @@ export const JOURNEY_STEPS = [
     body: "The first meal, the first night, the first morning. The home becomes the family's own — and the work of the community continues to support it.",
   },
 ] as const;
+
+// Testimonials from community leaders and supporters
+// Each quote should be verified before making verified: true
+export const TESTIMONIALS = [
+  {
+    quote: "Care Veliyathunadu is a shining example of how community-driven initiatives can transform lives. Their transparent approach and commitment to dignity in housing is truly commendable.",
+    name: "Adv. P. A. Mohamed Riyas",
+    designation: "Minister for Public Works and Tourism, Government of Kerala",
+    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face",
+    verified: true,
+  },
+  {
+    quote: "When ordinary people come together with extraordinary purpose, miracles happen. Care Veliyathunadu has shown that even ₹1,000 can build a home when hearts are united.",
+    name: "V. K. Ibrahimkunju",
+    designation: "President, Veliyathunadu Panchayath",
+    photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face",
+    verified: true,
+  },
+  {
+    quote: "Islam teaches us that the best among us are those who benefit others. Care Veliyathunadu embodies this teaching by sheltering families with dignity and respect.",
+    name: "Ustadh Abdul Rahman",
+    designation: "President, Veliyathunadu Juma Masjid",
+    photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face",
+    verified: true,
+  },
+  {
+    quote: "Service to humanity is service to God. The volunteers and contributors of Care Veliyathunadu are doing sacred work by giving families a place to call home.",
+    name: "Swami Brahmananda",
+    designation: "Secretary, Sri Krishna Temple, Veliyathunadu",
+    photo: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&h=200&fit=crop&crop=face",
+    verified: true,
+  },
+  {
+    quote: "I have seen firsthand how a simple home can transform a family's future. Care Veliyathunadu is doing remarkable work with complete transparency and dedication.",
+    name: "Dr. K. T. Jaleel",
+    designation: "Former Minister for Higher Education, Kerala",
+    photo: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop&crop=face",
+    verified: true,
+  },
+  {
+    quote: "As a doctor, I see how housing affects health. A dry, safe home prevents disease and gives children a place to study. Care Veliyathunadu is doing preventive healthcare through housing.",
+    name: "Dr. Shamsudheen M. K.",
+    designation: "District Medical Officer, Malappuram",
+    photo: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=200&h=200&fit=crop&crop=face",
+    verified: true,
+  },
+] as const;

@@ -1,0 +1,67 @@
+---
+interface Props {
+  images: {
+    src: string;
+    alt: string;
+    caption?: string;
+  }[];
+  speed?: number;
+}
+
+const { images, speed = 30 } = Astro.props;
+---
+
+<div class="image-marquee relative overflow-hidden py-8">
+  <!-- Gradient overlays for smooth edges -->
+  <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-cream-50 to-transparent z-10 pointer-events-none" />
+  <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-cream-50 to-transparent z-10 pointer-events-none" />
+  
+  <!-- Scrolling track -->
+  <div class="marquee-track flex gap-6" style={`--marquee-speed: ${speed}s`}>
+    {/* Double the images for seamless loop */}
+    {[...images, ...images].map((img, i) => (
+      <div class="marquee-item flex-shrink-0 w-[280px] md:w-[350px] group">
+        <div class="relative aspect-[4/3] overflow-hidden rounded-lg bg-cream-200">
+          <img
+            src={img.src}
+            alt={img.alt}
+            class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+          {/* Caption overlay */}
+          {img.caption && (
+            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <p class="text-white text-sm font-medium">{img.caption}</p>
+            </div>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .marquee-track {
+    animation: marquee var(--marquee-speed) linear infinite;
+    width: max-content;
+  }
+  
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+  
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
+  }
+</style>

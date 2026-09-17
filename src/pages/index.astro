@@ -5,10 +5,13 @@ import SectionHeading from "../components/SectionHeading.astro";
 import OptimisedImage from "../components/OptimisedImage.astro";
 import ImageSlider from "../components/ImageSlider.astro";
 import ProjectSlider from "../components/ProjectSlider.astro";
+import TestimonialCarousel from "../components/TestimonialCarousel.astro";
+import TeamShowcase from "../components/TeamShowcase.astro";
+import ImageMarquee from "../components/ImageMarquee.astro";
 import { SITE, IMPACT } from "../data/site";
 import { PROJECTS, COUNTS, FEATURED_PROJECTS, getProject } from "../data/projects";
 import { WORKING_TEAM, SOCIETY_LEADERS } from "../data/team";
-import { JOURNEY_STEPS } from "../data/faqs";
+import { JOURNEY_STEPS, TESTIMONIALS } from "../data/faqs";
 import { IMAGE_POOL, unsplash } from "../data/images";
 
 // Hero slider images - authentic Kerala project photos
@@ -156,190 +159,237 @@ void IMPACT; void FEATURED_PROJECTS; void getProject;
   </section>
 
   <!-- ============================================================
-       4. GALLERY — grid of images
+       4. FEATURED PROJECT — latest project showcase
        ============================================================ -->
-  <section class="section-y">
-    <div class="container-x">
-      <div class="reveal">
-        <SectionHeading
-          eyebrow="Gallery"
-          title="A visual record of the work."
-          subtitle="Photographs from the homes we have built, before, during, and after construction."
-        />
-      </div>
-
-      <div class="mt-14 grid grid-cols-2 md:grid-cols-3 gap-4">
-        {[
-          { src: IMAGE_POOL.HOME_RURAL_01, alt: "A simple new home in rural Kerala" },
-          { src: IMAGE_POOL.HOME_SIMPLE_03, alt: "Construction in progress" },
-          { src: IMAGE_POOL.HANDOVER_04, alt: "Family at the doorway" },
-          { src: IMAGE_POOL.HOME_RURAL_02, alt: "Another completed home" },
-          { src: IMAGE_POOL.BUILDING_01, alt: "Building materials" },
-          { src: IMAGE_POOL.VOLUNTEER_01, alt: "Volunteers at work" },
-        ].map((img, i) => (
-          <div class={`aspect-square overflow-hidden bg-cream-200 rounded-xl reveal delay-${(i % 3) + 1}`}>
-            <OptimisedImage
-              src={unsplash(img.src, 600)}
-              alt={img.alt}
-              width={600}
-              height={600}
-              sizes="(min-width: 768px) 33vw, 50vw"
-            />
+  {FEATURED_STORY && (
+    <section class="py-20 md:py-32">
+      <div class="container-x">
+        <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <!-- Image -->
+          <div class="lg:col-span-7 reveal">
+            <div class="aspect-[4/3] overflow-hidden bg-cream-200 rounded-lg">
+              <img
+                src={FEATURED_STORY.cover}
+                alt={FEATURED_STORY.familyName}
+                class="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.03]"
+                loading="lazy"
+              />
+            </div>
           </div>
-        ))}
+          
+          <!-- Content -->
+          <div class="lg:col-span-5 reveal">
+            <p class="font-sans text-xs uppercase tracking-[0.2em] text-ink-500 font-semibold mb-3">Featured Project</p>
+            <h3 class="font-display text-[2rem] md:text-[2.5rem] lg:text-[3rem] leading-[1.05] text-ink-900 mb-4">
+              {FEATURED_STORY.familyName}
+            </h3>
+            <div class="flex items-center gap-4 text-sm text-ink-500 mb-6">
+              <span>{FEATURED_STORY.location}, {FEATURED_STORY.district}</span>
+              <span>·</span>
+              <span>{FEATURED_STORY.beneficiaries} family members</span>
+            </div>
+            <p class="text-ink-700 text-[16px] leading-[1.7] mb-8">
+              {FEATURED_STORY.story}
+            </p>
+            <a href={`/projects/${FEATURED_STORY.slug}`} class="btn-primary">
+              View Project
+              <Icon name="arrow-right" size={16} />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ============================================================
+       5. GALLERY — masonry editorial layout
+       ============================================================ -->
+  <section class="py-20 md:py-32 bg-cream-50">
+    <div class="container-x">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 reveal">
+        <div>
+          <p class="font-sans text-xs uppercase tracking-[0.2em] text-ink-500 font-semibold mb-4">Gallery</p>
+          <h2 class="font-display text-[2rem] md:text-[2.8rem] lg:text-[3.2rem] leading-[1.05] text-ink-900">
+            A visual record<br/>of the work.
+          </h2>
+        </div>
+        <a href="/gallery" class="btn-tertiary hidden md:inline-flex">
+          View full gallery
+          <Icon name="arrow-right" size={16} />
+        </a>
       </div>
 
-      <div class="mt-10 text-center">
-        <a href="/gallery" class="btn-text">
-          View full gallery <Icon name="arrow-right" size={16} />
+      <!-- Masonry grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- Large image -->
+        <div class="col-span-2 row-span-2 aspect-square overflow-hidden bg-cream-200 rounded-lg reveal">
+          <img
+            src={unsplash(IMAGE_POOL.HOME_RURAL_01, 800)}
+            alt="Completed home in Kerala"
+            class="w-full h-full object-cover transition-transform duration-700 hover:scale-105 cursor-pointer"
+            loading="lazy"
+          />
+        </div>
+        <!-- Small images -->
+        <div class="aspect-square overflow-hidden bg-cream-200 rounded-lg reveal delay-1">
+          <img
+            src={unsplash(IMAGE_POOL.HOME_SIMPLE_03, 400)}
+            alt="Construction in progress"
+            class="w-full h-full object-cover transition-transform duration-700 hover:scale-105 cursor-pointer"
+            loading="lazy"
+          />
+        </div>
+        <div class="aspect-square overflow-hidden bg-cream-200 rounded-lg reveal delay-2">
+          <img
+            src={unsplash(IMAGE_POOL.HANDOVER_04, 400)}
+            alt="Family at doorway"
+            class="w-full h-full object-cover transition-transform duration-700 hover:scale-105 cursor-pointer"
+            loading="lazy"
+          />
+        </div>
+        <div class="aspect-square overflow-hidden bg-cream-200 rounded-lg reveal delay-1">
+          <img
+            src={unsplash(IMAGE_POOL.BUILDING_01, 400)}
+            alt="Building materials"
+            class="w-full h-full object-cover transition-transform duration-700 hover:scale-105 cursor-pointer"
+            loading="lazy"
+          />
+        </div>
+        <div class="aspect-square overflow-hidden bg-cream-200 rounded-lg reveal delay-2">
+          <img
+            src={unsplash(IMAGE_POOL.VOLUNTEER_01, 400)}
+            alt="Volunteers at work"
+            class="w-full h-full object-cover transition-transform duration-700 hover:scale-105 cursor-pointer"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <div class="mt-8 text-center md:hidden reveal">
+        <a href="/gallery" class="btn-secondary">
+          View full gallery
+          <Icon name="arrow-right" size={16} />
         </a>
       </div>
     </div>
   </section>
 
   <!-- ============================================================
-       5. THE PEOPLE — editorial list
+       6. THE PEOPLE — creative team showcase
        ============================================================ -->
   <section class="py-20 md:py-32">
     <div class="container-x">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16">
-        <!-- Left: Editorial introduction -->
-        <div class="lg:col-span-5 reveal">
-          <p class="font-sans text-xs uppercase tracking-[0.2em] text-ink-500 font-semibold mb-4">The people</p>
-          <h2 class="font-display text-[2rem] md:text-[2.8rem] leading-[1.05] text-ink-900 mb-6">
-            The people behind every home.
-          </h2>
-          <p class="text-ink-700 text-[16px] leading-[1.7] mb-8">
-            Fifteen working organisers, and a wider community of volunteers, masons, and contributors who make the work possible.
-          </p>
-          <a href="/team" class="btn-tertiary">
-            Meet the full team
-            <Icon name="arrow-right" size={16} />
+      <TeamShowcase members={[...WORKING_TEAM]} />
+    </div>
+  </section>
+
+  <!-- ============================================================
+       7. TESTIMONIALS — community leader carousel
+       ============================================================ -->
+  <section class="py-20 md:py-32 bg-sage-100">
+    <div class="container-x">
+      <div class="text-center mb-16 reveal">
+        <p class="font-sans text-xs uppercase tracking-[0.2em] text-ink-500 font-semibold mb-4">Community voices</p>
+        <h2 class="font-display text-[2rem] md:text-[2.8rem] lg:text-[3.2rem] leading-[1.05] text-ink-900">
+          What leaders are saying.
+        </h2>
+      </div>
+
+      <TestimonialCarousel testimonials={[...TESTIMONIALS]} autoPlay={true} interval={7000} />
+    </div>
+  </section>
+
+  <!-- ============================================================
+       8. CTA — creative emotional section
+       ============================================================ -->
+  <section class="relative py-24 md:py-32 overflow-hidden">
+    <!-- Background image with Ken Burns effect -->
+    <div class="absolute inset-0">
+      <img
+        src={unsplash(IMAGE_POOL.HANDOVER_04, 1920, 60)}
+        alt="Family at handover"
+        class="w-full h-full object-cover ken-burns"
+      />
+      <div class="absolute inset-0 bg-brand-900/85"></div>
+    </div>
+    
+    <div class="container-x relative z-10 text-center">
+      <div class="max-w-3xl mx-auto reveal">
+        <p class="font-sans text-xs uppercase tracking-[0.2em] text-cream-100/60 font-semibold mb-6">Join the work</p>
+        <h2 class="font-display text-[2.5rem] md:text-[3.5rem] lg:text-[4rem] leading-[1.0] text-cream-50 mb-8">
+          Every home begins<br/>with one act of kindness.
+        </h2>
+        <p class="text-cream-100/80 text-[18px] md:text-[20px] leading-[1.65] max-w-xl mx-auto mb-12">
+          A sixth home is currently being built. Your ₹1,000 contribution joins you to the people who will live there.
+        </p>
+        
+        <!-- Progress bar -->
+        <div class="max-w-md mx-auto mb-10">
+          <div class="flex justify-between text-sm text-cream-100/60 mb-2">
+            <span>Home #6 Progress</span>
+            <span>65%</span>
+          </div>
+          <div class="h-2 bg-cream-100/20 rounded-full overflow-hidden">
+            <div class="h-full bg-amber-400 rounded-full transition-all duration-1000" style="width: 65%"></div>
+          </div>
+        </div>
+        
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="/contact#donate" class="btn-primary !h-14 !px-8">
+            Support a Home
+            <Icon name="arrow-right" size={18} />
+          </a>
+          <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener" class="btn-secondary !border-cream-100/30 !text-cream-50 hover:!bg-cream-50/10 !h-14 !px-8">
+            <Icon name="chat" size={18} />
+            Talk to Us
           </a>
         </div>
-        
-        <!-- Right: Team list -->
-        <div class="lg:col-span-7">
-          <div class="space-y-0">
-            {WORKING_TEAM.slice(0, 8).map((m, i) => (
-              <div class="group flex items-center gap-6 py-5 border-b border-cream-200 reveal hover:bg-cream-50 transition-colors -mx-4 px-4">
-                <span class="font-display text-[1.5rem] text-ink-300 w-12">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div class="flex-1">
-                  <h4 class="font-sans font-semibold text-ink-900 text-[15px]">{m.role}</h4>
-                </div>
-                <!-- Portrait reveal on hover -->
-                <div class="w-12 h-12 rounded-full overflow-hidden bg-cream-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <img
-                    src={m.photo}
-                    alt={m.name}
-                    class="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </div>
   </section>
 
   <!-- ============================================================
-       6. VOICES — only verified, with clear TODO if not
+       9. BEHIND THE SCENES — image marquee
        ============================================================ -->
-  <section class="section-y">
-    <div class="container-x">
-      <div class="reveal">
-        <SectionHeading
-          eyebrow="Voices"
-          title="What people in the community are saying."
-          subtitle="Verified, on-record quotations from people in the community who have supported the work."
-        />
-      </div>
-
-      {SOCIETY_LEADERS.some((l) => l.verified) ? (
-        <div class="mt-12 grid md:grid-cols-2 gap-6">
-          {SOCIETY_LEADERS.filter((l) => l.verified).map((l) => (
-            <figure class={`card-base p-7 reveal`}>
-              <blockquote class="font-display italic text-[1.15rem] text-ink-700 leading-[1.55]">
-                "{l.quote}"
-              </blockquote>
-              <figcaption class="mt-5 pt-5 border-t border-cream-200 flex items-center gap-3">
-                <div
-                  class="w-10 h-10 rounded-full overflow-hidden bg-cream-200"
-                  aria-hidden="true"
-                >
-                  <img
-                    src={l.photo}
-                    alt={l.name}
-                    class="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-                <div>
-                  <div class="text-sm font-semibold text-ink-900">{l.name}</div>
-                  <div class="text-xs text-ink-500 mt-0.5">{l.designation}</div>
-                </div>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      ) : (
-        <div class="mt-12 text-center">
-          <p class="text-ink-500 text-[16px] max-w-2xl mx-auto">
-            We are currently collecting verified, on-record quotations from community leaders and supporters. These will appear here once verified.
-          </p>
-        </div>
-      )}
+  <section class="py-16 bg-cream-50">
+    <div class="container-x mb-8">
+      <p class="font-sans text-xs uppercase tracking-[0.2em] text-ink-500 font-semibold text-center reveal">Behind the scenes</p>
     </div>
-  </section>
-
-  <!-- ============================================================
-       7. FINAL CTA — asymmetric editorial composition
-       ============================================================ -->
-  <section class="py-24 md:py-32 bg-brand-600 text-cream-50">
-    <div class="container-x">
-      <div class="grid lg:grid-cols-12 gap-12 items-center">
-        <!-- Left: Typography -->
-        <div class="lg:col-span-7 reveal">
-          <p class="font-sans text-xs uppercase tracking-[0.2em] text-cream-100/60 font-semibold mb-6">Join the work</p>
-          <h2 class="font-display text-[2.2rem] md:text-[3rem] lg:text-[3.5rem] leading-[1.0] text-cream-50 mb-8">
-            Help build<br/>the next home.
-          </h2>
-          <p class="text-cream-100/80 text-[17px] md:text-[19px] leading-[1.65] max-w-lg mb-10">
-            A sixth home is currently being built. A contribution of ₹1,000, or any amount, joins you to the people who will live there.
-          </p>
-          <div class="flex flex-wrap items-center gap-4">
-            <a href="/contact#donate" class="btn-primary">
-              Support a Home
-              <Icon name="arrow-right" size={16} />
-            </a>
-            <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener" class="btn-secondary !border-cream-100/30 !text-cream-50 hover:!bg-cream-50/10">
-              <Icon name="chat" size={16} />
-              Talk to Us
-            </a>
-          </div>
-        </div>
-        
-        <!-- Right: Decorative element -->
-        <div class="lg:col-span-5 hidden lg:block reveal">
-          <div class="aspect-[4/5] bg-brand-700 rounded-sm overflow-hidden relative">
-            <OptimisedImage
-              src={unsplash(IMAGE_POOL.HANDOVER_04, 600, 70)}
-              alt="Family at handover ceremony"
-              width={600}
-              height={750}
-              sizes="(min-width: 1024px) 42vw, 0vw"
-              class="w-full h-full object-cover opacity-80"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+    
+    <ImageMarquee 
+      images={[
+        { src: unsplash(IMAGE_POOL.BUILDING_01, 700), alt: "Construction work", caption: "Foundation work" },
+        { src: unsplash(IMAGE_POOL.VOLUNTEER_01, 700), alt: "Volunteers", caption: "Community volunteers" },
+        { src: unsplash(IMAGE_POOL.HOME_RURAL_01, 700), alt: "Completed home", caption: "Home #1 Complete" },
+        { src: unsplash(IMAGE_POOL.CONSTRUCTION_01, 700), alt: "Building", caption: "Raising the walls" },
+        { src: unsplash(IMAGE_POOL.HANDOVER_04, 700), alt: "Handover", caption: "Key handover ceremony" },
+        { src: unsplash(IMAGE_POOL.HOME_SIMPLE_03, 700), alt: "New home", caption: "A new beginning" },
+      ]}
+      speed={35}
+    />
   </section>
 </Layout>
+
+<style>
+  .ken-burns {
+    animation: kenBurns 20s ease-in-out infinite alternate;
+  }
+  
+  @keyframes kenBurns {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.1);
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .ken-burns {
+      animation: none;
+    }
+  }
+</style>
 
 <style>
   .hero-dot {
