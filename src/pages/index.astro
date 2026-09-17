@@ -4,6 +4,7 @@ import Icon from "../components/Icon.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import OptimisedImage from "../components/OptimisedImage.astro";
 import ImageSlider from "../components/ImageSlider.astro";
+import ProjectSlider from "../components/ProjectSlider.astro";
 import { SITE, IMPACT } from "../data/site";
 import { PROJECTS, COUNTS, FEATURED_PROJECTS, getProject } from "../data/projects";
 import { WORKING_TEAM, SOCIETY_LEADERS } from "../data/team";
@@ -90,7 +91,7 @@ void IMPACT; void FEATURED_PROJECTS; void getProject;
   </section>
 
   <!-- ============================================================
-       2. IMPACT — editorial typography
+       2. IMPACT — editorial typography with animated counters
        ============================================================ -->
   <section class="py-20 md:py-28 bg-cream-100">
     <div class="container-x">
@@ -100,10 +101,17 @@ void IMPACT; void FEATURED_PROJECTS; void getProject;
           { value: COUNTS.homesInProgress, label: "Currently building", sub: "Sixth home, in progress" },
           { value: COUNTS.totalBeneficiaries, suffix: "+", label: "Lives supported", sub: "Families with a new door" },
           { value: COUNTS.totalContributors, suffix: "+", label: "Contributors", sub: "From across Kerala and beyond" },
-        ].map((stat) => (
-          <div class="reveal">
+        ].map((stat, i) => (
+          <div class="reveal" style={`animation-delay: ${i * 100}ms`}>
             <div class="font-display text-[2.5rem] md:text-[3.5rem] leading-none text-ink-900">
-              {stat.value}{stat.suffix || ""}
+              <span 
+                class="counter-value" 
+                data-end={stat.value} 
+                data-suffix={stat.suffix || ""} 
+                data-duration="2000"
+              >
+                0{stat.suffix || ""}
+              </span>
             </div>
             <div class="mt-3 font-sans font-semibold text-ink-900 text-[15px]">
               {stat.label}
@@ -118,64 +126,27 @@ void IMPACT; void FEATURED_PROJECTS; void getProject;
   </section>
 
   <!-- ============================================================
-       3. THE FAMILIES — editorial alternating layouts
+       3. THE FAMILIES — project slider with info cards
        ============================================================ -->
   <section class="py-20 md:py-32 bg-cream-50" id="projects">
     <div class="container-x">
-      <div class="mb-20 reveal">
-        <p class="font-sans text-xs uppercase tracking-[0.2em] text-ink-500 font-semibold mb-4">The families</p>
-        <h2 class="font-display text-[2rem] md:text-[2.8rem] lg:text-[3.2rem] leading-[1.05] text-ink-900">
-          Five families.<br/>Five new beginnings.
-        </h2>
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 reveal">
+        <div>
+          <p class="font-sans text-xs uppercase tracking-[0.2em] text-ink-500 font-semibold mb-4">The families</p>
+          <h2 class="font-display text-[2rem] md:text-[2.8rem] lg:text-[3.2rem] leading-[1.05] text-ink-900">
+            Five families.<br/>Five new beginnings.
+          </h2>
+        </div>
+        <a href="/projects" class="btn-tertiary hidden md:inline-flex">
+          See all projects
+          <Icon name="arrow-right" size={16} />
+        </a>
       </div>
 
-      <!-- Alternating project stories -->
-      <div class="space-y-24 md:space-y-32">
-        {PROJECTS.filter((p) => p.status === "delivered").slice(0, 3).map((p, i) => (
-          <div class={`grid lg:grid-cols-12 gap-8 lg:gap-12 items-center reveal ${i % 2 === 1 ? 'lg:direction-rtl' : ''}`}>
-            <!-- Image -->
-            <div class={`${i % 2 === 0 ? 'lg:col-span-7' : 'lg:col-span-7 lg:order-2'}`}>
-              <div class="aspect-[4/3] overflow-hidden bg-cream-200">
-                <OptimisedImage
-                  src={p.cover}
-                  alt={p.familyName}
-                  width={900}
-                  height={675}
-                  sizes="(min-width: 1024px) 58vw, 100vw"
-                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.03]"
-                />
-              </div>
-            </div>
-            
-            <!-- Content -->
-            <div class={`${i % 2 === 0 ? 'lg:col-span-5' : 'lg:col-span-5 lg:order-1'}`}>
-              <p class="font-sans text-xs uppercase tracking-[0.2em] text-ink-500 font-semibold mb-3">
-                Project {String(p.number).padStart(2, "0")} · Delivered
-              </p>
-              <h3 class="font-display text-[1.8rem] md:text-[2.2rem] leading-[1.1] text-ink-900 mb-4">
-                {p.familyName}
-              </h3>
-              <p class="text-ink-500 text-[15px] mb-2">
-                {p.location}, {p.district}
-              </p>
-              <p class="text-ink-700 text-[16px] leading-[1.7] mb-6">
-                {p.short}
-              </p>
-              <div class="flex items-center gap-6 text-sm text-ink-500 mb-8">
-                <span>{p.beneficiaries} family members</span>
-                <span>·</span>
-                <span>{p.contributors} contributors</span>
-              </div>
-              <a href={`/projects/${p.slug}`} class="btn-tertiary">
-                Read their story
-                <Icon name="arrow-right" size={16} />
-              </a>
-            </div>
-          </div>
-        ))}
-      </div>
+      <!-- Project slider -->
+      <ProjectSlider projects={PROJECTS.filter((p) => p.status === "delivered")} />
 
-      <div class="mt-16 text-center reveal">
+      <div class="mt-8 text-center md:hidden reveal">
         <a href="/projects" class="btn-secondary">
           See all projects
           <Icon name="arrow-right" size={16} />

@@ -1,0 +1,80 @@
+---
+interface Props {
+  end: number;
+  suffix?: string;
+  duration?: number;
+}
+
+const { end, suffix = "", duration = 2000 } = Astro.props;
+---
+
+<span 
+  class="counter-value" 
+  data-end={end} 
+  data-suffix={suffix} 
+  data-duration={duration}
+>
+  0{suffix}
+</span>
+
+<script>
+  class CounterAnimation {
+    private el: HTMLElement;
+    private end: number;
+    private suffix: string;
+    private duration: number;
+    private startTime: number | null = null;
+    private hasAnimated: boolean = false;
+
+    constructor(el: HTMLElement) {
+      this.el = el;
+      this.end = parseInt(el.dataset.end || '0');
+      this.suffix = el.dataset.suffix || '';
+      this.duration = parseInt(el.dataset.duration || '2000');
+      this.init();
+    }
+
+    init() {
+      // Use IntersectionObserver to trigger animation when in view
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !this.hasAnimated) {
+              this.hasAnimated = true;
+              this.animate();
+              observer.unobserve(this.el);
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+      observer.observe(this.el);
+    }
+
+    animate() {
+      this.startTime = performance.now();
+      this.tick();
+    }
+
+    tick() {
+      const now = performance.now();
+      const elapsed = now - (this.startTime || now);
+      const progress = Math.min(elapsed / this.duration, 1);
+      
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(eased * this.end);
+      
+      this.el.textContent = current + this.suffix;
+      
+      if (progress < 1) {
+        requestAnimationFrame(() => this.tick());
+      }
+    }
+  }
+
+  // Initialize all counters
+  document.querySelectorAll('.counter-value').forEach((el) => {
+    new CounterAnimation(el as HTMLElement);
+  });
+</script>

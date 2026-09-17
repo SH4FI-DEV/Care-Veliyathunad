@@ -1,0 +1,210 @@
+---
+import Icon from "./Icon.astro";
+
+interface Project {
+  slug: string;
+  number: number;
+  familyName: string;
+  location: string;
+  district: string;
+  cover: string;
+  short: string;
+  beneficiaries: number;
+  status: string;
+}
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+<div class="project-slider relative">
+  <!-- Slider container -->
+  <div class="slider-overflow overflow-hidden">
+    <div class="slider-track flex gap-6 transition-transform duration-500 ease-out">
+      {projects.map((p) => (
+        <div class="slider-item flex-shrink-0 w-[85vw] sm:w-[45vw] lg:w-[30vw]">
+          <a href={`/projects/${p.slug}`} class="group block">
+            <!-- Image -->
+            <div class="aspect-[4/3] overflow-hidden bg-cream-200 rounded-lg mb-4">
+              <img
+                src={p.cover}
+                alt={p.familyName}
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+            
+            <!-- Info card -->
+            <div class="px-1">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="font-display text-[1.1rem] text-ink-300">
+                  {String(p.number).padStart(2, "0")}
+                </span>
+                <span class="text-xs uppercase tracking-[0.15em] text-ink-500 font-semibold">
+                  {p.status === "delivered" ? "Delivered" : "In Progress"}
+                </span>
+              </div>
+              <h3 class="font-display text-[1.4rem] md:text-[1.6rem] text-ink-900 mb-2 group-hover:text-brand-500 transition-colors">
+                {p.familyName}
+              </h3>
+              <p class="text-ink-500 text-[14px] mb-3">
+                {p.location}, {p.district}
+              </p>
+              <p class="text-ink-700 text-[14px] leading-[1.6] line-clamp-2 mb-4">
+                {p.short}
+              </p>
+              <div class="flex items-center justify-between">
+                <span class="text-ink-500 text-xs">
+                  {p.beneficiaries} family members
+                </span>
+                <span class="text-brand-500 text-sm font-semibold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                  Read story <Icon name="arrow-right" size={14} />
+                </span>
+              </div>
+            </div>
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+  
+  <!-- Navigation arrows -->
+  <button class="slider-arrow-prev absolute left-0 top-1/3 -translate-y-1/2 -translate-x-2 w-10 h-10 bg-white shadow-md rounded-full flex items-center justify-center text-ink-700 hover:bg-cream-100 transition z-10 hidden md:flex" aria-label="Previous projects">
+    <Icon name="chevron-left" size={18} />
+  </button>
+  <button class="slider-arrow-next absolute right-0 top-1/3 -translate-y-1/2 translate-x-2 w-10 h-10 bg-white shadow-md rounded-full flex items-center justify-center text-ink-700 hover:bg-cream-100 transition z-10 hidden md:flex" aria-label="Next projects">
+    <Icon name="chevron-right" size={18} />
+  </button>
+  
+  <!-- Dots -->
+  <div class="flex justify-center gap-2 mt-8">
+    {projects.map((_, i) => (
+      <button
+        class={`project-dot w-2 h-2 rounded-full transition-all duration-300 ${i === 0 ? 'bg-brand-500 w-6' : 'bg-ink-300'}`}
+        data-index={i}
+        aria-label={`Go to project ${i + 1}`}
+      />
+    ))}
+  </div>
+</div>
+
+<script>
+  class ProjectSlider {
+    private track: HTMLElement;
+    private items: NodeListOf<HTMLElement>;
+    private dots: NodeListOf<HTMLElement>;
+    private prevBtn: HTMLElement | null;
+    private nextBtn: HTMLElement | null;
+    private currentIndex: number = 0;
+    private itemWidth: number = 0;
+    private gap: number = 24; // 6 * 4px (gap-6)
+
+    constructor(el: HTMLElement) {
+      this.track = el.querySelector('.slider-track')!;
+      this.items = el.querySelectorAll('.slider-item');
+      this.dots = el.querySelectorAll('.project-dot');
+      this.prevBtn = el.querySelector('.slider-arrow-prev');
+      this.nextBtn = el.querySelector('.slider-arrow-next');
+      
+      this.calculateWidth();
+      this.init();
+      
+      // Recalculate on resize
+      window.addEventListener('resize', () => {
+        this.calculateWidth();
+        this.goTo(this.currentIndex);
+      });
+    }
+
+    calculateWidth() {
+      if (this.items.length > 0) {
+        this.itemWidth = this.items[0].offsetWidth + this.gap;
+      }
+    }
+
+    init() {
+      // Arrow navigation
+      this.prevBtn?.addEventListener('click', () => this.prev());
+      this.nextBtn?.addEventListener('click', () => this.next());
+
+      // Dot navigation
+      this.dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => this.goTo(i));
+      });
+
+      // Touch/swipe support
+      let startX = 0;
+      let isDragging = false;
+
+      this.track.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+      });
+
+      this.track.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        const diff = startX - e.touches[0].clientX;
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) this.next();
+          else this.prev();
+          isDragging = false;
+        }
+      });
+
+      this.track.addEventListener('touchend', () => {
+        isDragging = false;
+      });
+    }
+
+    goTo(index: number) {
+      const maxIndex = Math.max(0, this.items.length - this.getVisibleCount());
+      this.currentIndex = Math.min(Math.max(0, index), maxIndex);
+      this.track.style.transform = `translateX(-${this.currentIndex * this.itemWidth}px)`;
+      this.updateDots();
+    }
+
+    next() {
+      this.goTo(this.currentIndex + 1);
+    }
+
+    prev() {
+      this.goTo(this.currentIndex - 1);
+    }
+
+    getVisibleCount(): number {
+      const width = window.innerWidth;
+      if (width >= 1024) return 3;
+      if (width >= 640) return 2;
+      return 1;
+    }
+
+    updateDots() {
+      this.dots.forEach((dot, i) => {
+        if (i === this.currentIndex) {
+          dot.classList.add('bg-brand-500', 'w-6');
+          dot.classList.remove('bg-ink-300', 'w-2');
+        } else {
+          dot.classList.remove('bg-brand-500', 'w-6');
+          dot.classList.add('bg-ink-300', 'w-2');
+        }
+      });
+    }
+  }
+
+  // Initialize all project sliders
+  document.querySelectorAll('.project-slider').forEach((el) => {
+    new ProjectSlider(el as HTMLElement);
+  });
+</script>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
