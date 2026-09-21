@@ -8,67 +8,19 @@ interface Props {
 const { darkHero = false } = Astro.props;
 const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
 ---
-<!-- =====================================================================
-     HEADER — Kindflow-inspired two-bar structure
-       1. Top utility bar (dark green): "Become a Volunteer" + email/phone + socials
-       2. Main nav bar: logo + links + primary CTA
-     ===================================================================== -->
+
 <header class={`site-header ${darkHero ? "has-dark-hero" : ""}`} id="siteHeader">
-
-  <!-- ============= TOP UTILITY BAR ============= -->
-  <div class="utility-bar">
-    <div class="container-x">
-      <div class="flex items-center justify-between h-10 text-[13px]">
-
-        <!-- Left: Volunteer CTA -->
-        <a href="/contact" class="utility-volunteer hidden sm:inline-flex items-center gap-2 text-cream-100/85 hover:text-saffron-300 transition">
-          <span class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
-            <Icon name="users" size={13} />
-          </span>
-          <span class="font-ui font-medium">Let&rsquo;s help others:</span>
-          <span class="font-ui font-bold text-saffron-300 uppercase tracking-wider text-[12px]">Become a Volunteer</span>
-        </a>
-
-        <!-- Right: contact + social (hidden on small mobile) -->
-        <div class="flex items-center gap-5 ml-auto">
-          <a href={`mailto:${SITE.email}`} class="hidden md:inline-flex items-center gap-2 text-cream-100/85 hover:text-saffron-300 transition">
-            <Icon name="mail" size={14} />
-            <span class="font-ui">{SITE.email}</span>
-          </a>
-          <span class="hidden md:inline-block w-px h-3 bg-cream-100/20"></span>
-          <a href={`tel:${SITE.phone}`} class="hidden md:inline-flex items-center gap-2 text-cream-100/85 hover:text-saffron-300 transition">
-            <Icon name="phone" size={14} />
-            <span class="font-ui">{SITE.phone}</span>
-          </a>
-          <span class="hidden md:inline-block w-px h-3 bg-cream-100/20"></span>
-          <div class="flex items-center gap-1.5">
-            <a href={SITE.social.facebook}  aria-label="Facebook"  class="utility-social"><Icon name="facebook"  size={13} /></a>
-            <a href={SITE.social.instagram} aria-label="Instagram" class="utility-social"><Icon name="instagram" size={13} /></a>
-            <a href={SITE.social.youtube}   aria-label="YouTube"   class="utility-social"><Icon name="youtube"   size={13} /></a>
-            <a href={SITE.social.whatsapp}  aria-label="WhatsApp"  class="utility-social"><Icon name="whatsapp"  size={13} /></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============= MAIN NAV BAR ============= -->
   <div class="nav-bar" id="navBar">
     <div class="container-x">
-      <div class="flex items-center justify-between h-[72px] md:h-[80px]">
+      <div class="flex items-center justify-between h-16 md:h-[72px]">
 
-        <!-- Logo -->
-        <a href="/" class="flex items-center gap-3 group" aria-label={`${SITE.shortName} home`}>
+        <!-- Logo — compact -->
+        <a href="/" class="flex items-center gap-2.5 group" aria-label={`${SITE.shortName} home`}>
           <span class="logo-mark">
-            <Icon name="home" size={20} class="text-white" />
+            <Icon name="home" size={16} class="text-white" />
           </span>
-          <span class="flex flex-col leading-tight">
-            <span class="font-display text-[1.1rem] md:text-[1.2rem] text-ink-900 group-hover:text-brand-500 transition-colors">
-              {SITE.shortName}
-            </span>
-            <span class="text-[10px] md:text-[11px] uppercase tracking-[0.14em] text-ink-500 font-medium">
-              {SITE.brandLine}
-            </span>
+          <span class="font-display text-[1rem] md:text-[1.05rem] text-ink-900">
+            {SITE.shortName}
           </span>
         </a>
 
@@ -87,30 +39,30 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
           })}
         </nav>
 
-        <!-- Desktop CTA -->
-        <div class="hidden lg:flex items-center gap-3">
-          <a href="/contact#donate" class="btn-primary">
-            <Icon name="heart" size={15} />
+        <!-- Desktop CTA — small, yellow -->
+        <div class="hidden lg:flex items-center">
+          <a href="/contact#donate" class="btn-primary !h-10 !px-5 !text-[13px]">
             Support a Home
+            <Icon name="arrow-right" size={14} />
           </a>
         </div>
 
         <!-- Mobile hamburger -->
         <button
           id="navToggle"
-          class="lg:hidden inline-flex items-center justify-center w-10 h-10 text-ink-900"
+          class="lg:hidden inline-flex items-center justify-center w-9 h-9 text-ink-900"
           aria-label="Toggle navigation menu"
           aria-expanded="false"
         >
-          <Icon name="menu" size={22} class="block" id="iconMenu" />
-          <Icon name="x" size={22} class="hidden" id="iconClose" />
+          <Icon name="menu" size={20} class="block" id="iconMenu" />
+          <Icon name="x" size={20} class="hidden" id="iconClose" />
         </button>
       </div>
     </div>
   </div>
 
-  <!-- ============= MOBILE DRAWER ============= -->
-  <div id="mobileDrawer" class="lg:hidden fixed inset-0 top-[112px] bg-cream-50 z-40 opacity-0 pointer-events-none transition-opacity duration-300">
+  <!-- Mobile drawer — cream background, editorial -->
+  <div id="mobileDrawer" class="lg:hidden fixed inset-0 bg-cream-50 z-40 opacity-0 pointer-events-none transition-opacity duration-300">
     <div class="container-x pt-8 pb-12 h-full overflow-y-auto">
       <nav class="flex flex-col gap-1" aria-label="Mobile">
         {NAV.map((item) => {
@@ -118,31 +70,25 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
           return (
             <a
               href={item.href}
-              class={`mobile-nav-link flex items-center justify-between text-2xl font-display py-3 border-b border-cream-200 ${active ? "text-brand-500" : "text-ink-900"}`}
+              class={`mobile-nav-link flex items-center justify-between text-2xl font-display py-3.5 border-b border-cream-200 ${active ? "text-brand-500" : "text-ink-900"}`}
             >
               {item.label}
-              <Icon name="arrow-right" size={20} />
+              <Icon name="arrow-right" size={18} />
             </a>
           );
         })}
       </nav>
-      <div class="mt-6">
+      <div class="mt-8">
         <a href="/contact#donate" class="btn-primary w-full">
-          <Icon name="heart" size={16} />
+          <Icon name="heart" size={15} />
           Support a Home
         </a>
-      </div>
-      <div class="mt-8 pt-6 border-t border-cream-200 grid grid-cols-2 gap-3 text-sm text-ink-500">
-        <a href={`mailto:${SITE.email}`} class="flex items-center gap-2"><Icon name="mail" size={14} class="text-brand-500" /> Email</a>
-        <a href={`tel:${SITE.phone}`} class="flex items-center gap-2"><Icon name="phone" size={14} class="text-brand-500" /> Call</a>
       </div>
     </div>
   </div>
 </header>
 
 <style>
-  /* The header is fixed to the top so it stays visible while the hero
-     scrolls behind it. Both bars are stacked vertically. */
   .site-header {
     position: fixed;
     top: 0;
@@ -151,117 +97,72 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
     z-index: 50;
   }
 
-  /* Top utility bar — Kindflow style: dark green background, small text */
-  .utility-bar {
-    background: var(--color-brand-700);   /* #053A31 */
-    color: var(--color-cream-50);
-    border-bottom: 1px solid rgba(255,253,252,0.06);
+  /* Main nav bar — cream, minimal, editorial */
+  .nav-bar {
+    background: var(--color-cream-50);
+    border-bottom: 1px solid var(--color-cream-200);
+    transition: box-shadow 0.25s ease;
   }
-  .utility-bar .font-ui { font-family: var(--font-ui); }
 
-  .utility-social {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 26px;
-    height: 26px;
-    border-radius: 9999px;
-    color: rgba(255,253,252,0.8);
-    transition: all 0.2s ease;
+  /* On scroll — subtle shadow only */
+  .site-header.is-scrolled .nav-bar {
+    box-shadow: 0 1px 8px -4px rgba(23, 60, 52, 0.10);
   }
-  .utility-social:hover {
-    background: var(--color-saffron-400);
+
+  /* Dark hero: nav is transparent over the hero, becomes solid cream on scroll */
+  .site-header.has-dark-hero .nav-bar {
+    background: transparent;
+    border-bottom-color: transparent;
+  }
+  .site-header.has-dark-hero .nav-bar .nav-menu-link,
+  .site-header.has-dark-hero .nav-bar .font-display {
+    color: white;
+  }
+  .site-header.has-dark-hero .nav-bar .nav-menu-link.is-active {
+    color: var(--color-amber-400);
+  }
+  .site-header.has-dark-hero .nav-bar .btn-primary {
+    background: var(--color-amber-400);
     color: var(--color-ink-900);
   }
-
-  /* Main nav bar — cream/off-white by default; transparent only when
-     `has-dark-hero` is set. Solid background always, no transparency
-     even over the hero, so the nav is always readable. */
-  .nav-bar {
-    background: #FFFDFC;
-    border-bottom: 1px solid var(--color-cream-200);
-    box-shadow: 0 2px 12px -8px rgba(27, 45, 38, 0.10);
-    transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-  }
-
-  /* On scroll, add a stronger shadow for a clear "lifted" feel */
-  .site-header.is-scrolled .nav-bar {
+  .site-header.has-dark-hero.is-scrolled .nav-bar {
+    background: var(--color-cream-50);
     border-bottom-color: var(--color-cream-200);
-    box-shadow: 0 6px 22px -10px rgba(27, 45, 38, 0.18);
   }
-
-  /* On the home page (has-dark-hero), the nav starts on top of a dark
-     hero. We make the nav start with a warm dark-green accent stripe at
-     the very top so the brand is visible against the dark background.
-     When the user scrolls, the nav turns to its normal cream background. */
-  .site-header.has-dark-hero .nav-bar {
-    background: #FFFDFC;
-    border-bottom: 1px solid var(--color-cream-200);
+  .site-header.has-dark-hero.is-scrolled .nav-bar .nav-menu-link,
+  .site-header.has-dark-hero.is-scrolled .nav-bar .font-display {
+    color: var(--color-ink-900);
   }
-  .site-header.has-dark-hero .nav-bar .font-display,
-  .site-header.has-dark-hero .nav-bar span { color: var(--color-ink-900); }
-  .site-header.has-dark-hero .nav-bar .text-ink-500 { color: var(--color-ink-500) !important; }
-  .site-header.has-dark-hero.is-scrolled .nav-bar { background: #FFFDFC; }
-  .site-header.has-dark-hero.is-scrolled .nav-bar .font-display,
-  .site-header.has-dark-hero.is-scrolled .nav-bar span { color: var(--color-ink-900); }
-  .site-header.has-dark-hero.is-scrolled .nav-bar .text-ink-500 { color: var(--color-ink-500) !important; }
+  .site-header.has-dark-hero.is-scrolled .nav-bar .nav-menu-link.is-active {
+    color: var(--color-brand-500);
+  }
 
   /* Nav menu link */
   .nav-menu-link {
     position: relative;
     font-family: var(--font-sans);
-    padding: 10px 15px;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--color-ink-900);
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-ink-700);
     transition: color 0.2s ease;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
   }
-  .nav-menu-link::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: 4px;
-    width: 0;
-    height: 2px;
-    background: var(--color-saffron-400);
-    border-radius: 9999px;
-    transition: all 0.25s ease;
-    transform: translateX(-50%);
+  .nav-menu-link:hover { color: var(--color-ink-900); }
+  .nav-menu-link.is-active {
+    color: var(--color-brand-500);
+    font-weight: 600;
   }
-  .nav-menu-link:hover, .nav-menu-link.is-active { color: var(--color-brand-500); }
-  .nav-menu-link:hover::after, .nav-menu-link.is-active::after { width: 18px; }
 
-  /* Orange CTA button — Kindflow style */
-  .btn-orange {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background: var(--color-saffron-400);
-    color: #fff;
-    padding: 12px 22px;
-    border-radius: 6px;
-    font-family: var(--font-sans);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 1;
-    transition: background 0.2s ease, color 0.2s ease;
-  }
-  .btn-orange:hover { background: var(--color-saffron-500); }
-
-  /* Logo mark */
+  /* Logo mark — smaller, editorial */
   .logo-mark {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
     background: var(--color-brand-500);
     flex-shrink: 0;
   }

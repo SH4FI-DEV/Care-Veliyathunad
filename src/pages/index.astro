@@ -1,250 +1,162 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Icon from "../components/Icon.astro";
-import SectionHeading from "../components/SectionHeading.astro";
-import OptimisedImage from "../components/OptimisedImage.astro";
-import ImageSlider from "../components/ImageSlider.astro";
-import ProjectSlider from "../components/ProjectSlider.astro";
-import TestimonialCarousel from "../components/TestimonialCarousel.astro";
-import TeamShowcase from "../components/TeamShowcase.astro";
 import ImageMarquee from "../components/ImageMarquee.astro";
 import { SITE, IMPACT } from "../data/site";
-import { PROJECTS, COUNTS, FEATURED_PROJECTS, getProject } from "../data/projects";
-import { WORKING_TEAM, SOCIETY_LEADERS } from "../data/team";
-import { JOURNEY_STEPS, TESTIMONIALS } from "../data/faqs";
+import { PROJECTS, COUNTS } from "../data/projects";
+import { TESTIMONIALS } from "../data/faqs";
 import { IMAGE_POOL, unsplash } from "../data/images";
 
-// Hero slider images - authentic Kerala project photos
-const heroImages = [
-  { src: unsplash(IMAGE_POOL.HOME_RURAL_01, 1600, 70), alt: "A simple new home in rural Kerala" },
-  { src: unsplash(IMAGE_POOL.HOME_SIMPLE_03, 1600, 70), alt: "Volunteers at a construction site" },
-  { src: unsplash(IMAGE_POOL.HANDOVER_04, 1600, 70), alt: "Family at the doorway of a new home" },
-  { src: unsplash(IMAGE_POOL.HOME_RURAL_02, 1600, 70), alt: "Another completed home in Kerala" },
-];
+const DELIVERED = PROJECTS.filter((p) => p.status === "delivered");
+const LATEST_PROJECT = DELIVERED.slice(-1)[0];
+const NEXT_HOME = PROJECTS.find((p) => p.status === "in-progress");
 
-// Pick the most recent delivered project as the featured story
-const FEATURED_STORY = PROJECTS.filter((p) => p.status === "delivered").slice(-1)[0];
-
-// Suppress unused-var lint
-void IMPACT; void FEATURED_PROJECTS; void getProject;
+void IMPACT;
 ---
 
 <Layout
   title="Building Homes. Building Hope."
   description="Care Veliyathunadu builds simple, dignified homes for families in need in Veliyathunadu, Kerala. With contributions of ₹1,000 from anyone who wishes to be part of the work."
+  darkHero={true}
 >
-  <!-- ============================================================
-       1. HERO — nonprofit style: dark green, clean layout
-       ============================================================ -->
-  <section class="relative bg-brand-900 overflow-hidden">
-    <!-- Subtle background pattern -->
-    <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 40px 40px;"></div>
-    
-    <!-- Main hero content -->
-    <div class="relative z-10 container-x py-16 md:py-24 lg:py-32">
-      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center min-h-[70vh]">
-        <!-- Left: Content -->
-        <div>
-          <!-- Badge -->
-          <div class="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full mb-6">
-            <span class="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></span>
-            <span class="text-cream-100/80 text-sm font-medium">Since 2021</span>
-          </div>
-          
-          <!-- Headline -->
-          <h1 class="font-display text-white text-[2.5rem] sm:text-[3.2rem] lg:text-[4rem] leading-[1.08] tracking-tight mb-6">
-            Building Homes,<br/>
-            <span class="text-amber-400">Building Hope.</span>
-          </h1>
-          
-          <!-- Description -->
-          <p class="text-cream-100/70 text-[17px] leading-[1.7] max-w-lg mb-8">
-            We build simple, dignified homes for families in Veliyathunadu, Kerala, with contributions of ₹1,000 from anyone who wishes to be part of the work.
-          </p>
-          
-          <!-- CTAs -->
-          <div class="flex flex-wrap items-center gap-4 mb-12">
-            <a href="/contact#donate" class="inline-flex items-center gap-2.5 bg-amber-400 hover:bg-amber-500 text-ink-900 px-7 py-3.5 rounded-lg font-bold text-[15px] transition-all duration-200 shadow-lg shadow-amber-400/20 hover:shadow-amber-400/30">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-              Donate Now
-            </a>
-            <a href="/projects" class="inline-flex items-center gap-2 text-white border border-white/20 hover:border-white/40 px-7 py-3.5 rounded-lg font-semibold text-[15px] transition-all duration-200">
-              Our Projects
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-            </a>
-          </div>
-          
-          <!-- Trust strip -->
-          <div class="flex flex-wrap items-center gap-6 pt-6 border-t border-white/10">
-            <div class="flex items-center gap-2 text-cream-100/60 text-sm">
-              <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-              Registered Trust
-            </div>
-            <div class="flex items-center gap-2 text-cream-100/60 text-sm">
-              <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              80G Tax Exemption
-            </div>
-            <div class="flex items-center gap-2 text-cream-100/60 text-sm">
-              <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-              323+ Contributors
-            </div>
-          </div>
-        </div>
-        
-        <!-- Right: Image + Floating Cards -->
-        <div class="relative mt-12 lg:mt-0">
-          <!-- Main image -->
-          <div class="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/20">
-            <img
-              src={unsplash(IMAGE_POOL.HOME_RURAL_01, 800, 75)}
-              alt="A new home built by Care Veliyathunadu"
-              class="w-full aspect-[4/3] object-cover"
-              loading="eager"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-brand-900/40 via-transparent to-transparent"></div>
-          </div>
-          
-          <!-- Floating stats card - bottom left -->
-          <div class="absolute -bottom-4 -left-4 lg:-bottom-6 lg:-left-6 bg-white rounded-xl shadow-xl p-5 max-w-[180px] hidden sm:block">
-            <div class="text-3xl font-bold text-brand-600">5+</div>
-            <div class="text-sm text-ink-500 mt-1">Homes Built</div>
-            <div class="mt-3 w-full bg-cream-200 rounded-full h-1.5">
-              <div class="bg-amber-400 h-1.5 rounded-full" style="width: 83%"></div>
-            </div>
-            <div class="text-[11px] text-ink-400 mt-1">Target: 6 homes</div>
-          </div>
-          
-          <!-- Floating impact badge - top right -->
-          <div class="absolute -top-3 -right-3 lg:-top-5 lg:-right-5 bg-amber-400 text-ink-900 rounded-2xl px-4 py-3 shadow-lg hidden sm:block">
-            <div class="text-2xl font-bold leading-none">21+</div>
-            <div class="text-[11px] font-medium mt-0.5">Lives Changed</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Bottom curve transition to next section -->
-    <div class="absolute bottom-0 left-0 right-0">
-      <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full block">
-        <path d="M0 60H1440V30C1440 30 1200 0 720 0C240 0 0 30 0 30V60Z" fill="var(--color-cream-50, #FCFBF7)"/>
-      </svg>
-    </div>
-  </section>
 
   <!-- ============================================================
-       EDITORIAL STATEMENT — Large typographic statement
+       1. HERO BANNER
        ============================================================ -->
-  <section class="py-24 md:py-32 lg:py-40 bg-cream-50">
-    <div class="container-x max-w-4xl">
-      <blockquote class="reveal">
-        <p class="font-display text-[1.8rem] sm:text-[2.2rem] md:text-[2.8rem] lg:text-[3.2rem] leading-[1.15] text-ink-900 tracking-tight">
-          "A home is more than four walls.<br/>
-          It is security, dignity and a place to begin again."
+  <section class="hero-section-editorial relative overflow-hidden">
+    <div class="absolute inset-0">
+      <img
+        src={unsplash(IMAGE_POOL.HOME_RURAL_01, 1920, 75)}
+        alt="A new home built by Care Veliyathunadu in rural Kerala"
+        class="w-full h-full object-cover"
+        loading="eager"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10"></div>
+    </div>
+    <div class="relative z-10 container-x flex flex-col justify-end min-h-[85vh] md:min-h-[90vh] pb-16 md:pb-24">
+      <div class="max-w-2xl reveal">
+        <p class="text-amber-400 text-xs sm:text-sm uppercase tracking-[0.2em] font-semibold mb-5">
+          Building Homes, Building Hope
         </p>
-      </blockquote>
+        <h1 class="font-display text-white text-[clamp(2.5rem,6vw,5rem)] leading-[1.02] tracking-tight mb-6">
+          A Home Is More<br/>Than Four Walls.
+        </h1>
+        <p class="text-white/80 text-[17px] md:text-[18px] leading-[1.7] max-w-lg mb-8">
+          We build simple, dignified homes for families in Veliyathunadu, Kerala, with contributions of ₹1,000 from anyone who wishes to be part of the work.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/contact#donate" class="btn-primary">
+            Support a Home
+            <Icon name="arrow-right" size={16} />
+          </a>
+          <a href="/about" class="inline-flex items-center gap-2 text-white border border-white/25 hover:border-white/50 px-6 py-3 rounded-md font-semibold text-[14px] transition-all duration-200">
+            Learn More
+            <Icon name="arrow-right" size={14} />
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- ============================================================
-       2. IMPACT — editorial typography with animated counters
+       2. WHO WE ARE — Image + text + stats + about button
        ============================================================ -->
-  <section class="py-20 md:py-28 bg-cream-100">
+  <section class="section-y bg-cream-50">
     <div class="container-x">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-        {[
-          { value: COUNTS.homesDelivered, label: "Homes delivered", sub: "Simple, dignified, complete" },
-          { value: COUNTS.homesInProgress, label: "Currently building", sub: "Sixth home, in progress" },
-          { value: COUNTS.totalBeneficiaries, suffix: "+", label: "Lives supported", sub: "Families with a new door" },
-          { value: COUNTS.totalContributors, suffix: "+", label: "Contributors", sub: "From across Kerala and beyond" },
-        ].map((stat, i) => (
-          <div class="reveal" style={`animation-delay: ${i * 100}ms`}>
-            <div class="font-display text-[2.5rem] md:text-[3.5rem] leading-none text-ink-900">
-              <span 
-                class="counter-value" 
-                data-end={stat.value} 
-                data-suffix={stat.suffix || ""} 
-                data-duration="2000"
-              >
-                0{stat.suffix || ""}
-              </span>
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div class="lg:col-span-5 reveal">
+          <div class="overflow-hidden rounded-xl">
+            <img
+              src={unsplash(IMAGE_POOL.HOME_SIMPLE_03, 800, 80)}
+              alt="Community building a home together in Kerala"
+              class="w-full aspect-[4/5] object-cover"
+              loading="lazy"
+            />
+          </div>
+        </div>
+        <div class="lg:col-span-7">
+          <p class="eyebrow mb-5">Who We Are</p>
+          <h2 class="font-display text-[clamp(2rem,4vw,3.2rem)] leading-[1.08] text-ink-900 mb-6">
+            A Small Group of Neighbours<br/>Who Decided to Act.
+          </h2>
+          <p class="text-ink-700 text-[17px] leading-[1.8] mb-4">
+            Care Veliyathunadu is a community initiative based in Veliyathunadu, Kerala. We do one thing: we help build simple, dignified homes for families in our area who need one, together with the neighbours, masons, and contributors who make the work possible.
+          </p>
+          <p class="text-ink-700 text-[17px] leading-[1.8] mb-10">
+            Since 2021, what started with one neighbour's contribution has grown into a movement of hundreds working together.
+          </p>
+
+          <!-- Stats -->
+          <div class="grid grid-cols-3 gap-6 md:gap-8 py-8 px-6 md:px-8 bg-cream-100 rounded-xl mb-8 reveal">
+            <div class="text-center">
+              <div class="font-display text-[clamp(1.8rem,3vw,2.8rem)] leading-none text-ink-900 mb-1">
+                <span class="counter-value" data-end={COUNTS.homesDelivered} data-suffix="+" data-duration="2000">0</span>
+              </div>
+              <div class="text-xs md:text-sm text-ink-500 font-medium">Homes Built</div>
             </div>
-            <div class="mt-3 font-sans font-semibold text-ink-900 text-[15px]">
-              {stat.label}
+            <div class="text-center border-x border-cream-200">
+              <div class="font-display text-[clamp(1.8rem,3vw,2.8rem)] leading-none text-ink-900 mb-1">
+                <span class="counter-value" data-end={COUNTS.totalBeneficiaries} data-suffix="+" data-duration="2000">0</span>
+              </div>
+              <div class="text-xs md:text-sm text-ink-500 font-medium">Lives Changed</div>
             </div>
-            <div class="mt-1 text-ink-500 text-[13px] leading-snug">
-              {stat.sub}
+            <div class="text-center">
+              <div class="font-display text-[clamp(1.8rem,3vw,2.8rem)] leading-none text-ink-900 mb-1">
+                <span class="counter-value" data-end={COUNTS.totalContributors} data-suffix="+" data-duration="2000">0</span>
+              </div>
+              <div class="text-xs md:text-sm text-ink-500 font-medium">Contributors</div>
             </div>
           </div>
-        ))}
-      </div>
-    </div>
-  </section>
 
-  <!-- ============================================================
-       3. THE FAMILIES — project slider with info cards
-       ============================================================ -->
-  <section class="py-20 md:py-32 bg-cream-50" id="projects">
-    <div class="container-x">
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 reveal">
-        <div>
-          <p class="font-sans text-xs uppercase tracking-[0.2em] text-ink-500 font-semibold mb-4">The families</p>
-          <h2 class="font-display text-[2rem] md:text-[2.8rem] lg:text-[3.2rem] leading-[1.05] text-ink-900">
-            Five families.<br/>Five new beginnings.
-          </h2>
+          <a href="/about" class="btn-primary">
+            About Us
+            <Icon name="arrow-right" size={16} />
+          </a>
         </div>
-        <a href="/projects" class="btn-tertiary hidden md:inline-flex">
-          See all projects
-          <Icon name="arrow-right" size={16} />
-        </a>
-      </div>
-
-      <!-- Project slider -->
-      <ProjectSlider projects={PROJECTS.filter((p) => p.status === "delivered")} />
-
-      <div class="mt-8 text-center md:hidden reveal">
-        <a href="/projects" class="btn-secondary">
-          See all projects
-          <Icon name="arrow-right" size={16} />
-        </a>
       </div>
     </div>
   </section>
 
   <!-- ============================================================
-       4. FEATURED PROJECT — latest project showcase
+       3. FEATURED / LATEST PROJECT
        ============================================================ -->
-  {FEATURED_STORY && (
-    <section class="py-20 md:py-32">
+  {LATEST_PROJECT && (
+    <section class="section-y bg-cream-100">
       <div class="container-x">
         <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          <!-- Image -->
           <div class="lg:col-span-7 reveal">
-            <div class="aspect-[4/3] overflow-hidden bg-cream-200 rounded-lg">
+            <div class="overflow-hidden rounded-xl">
               <img
-                src={FEATURED_STORY.cover}
-                alt={FEATURED_STORY.familyName}
-                class="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.03]"
+                src={LATEST_PROJECT.cover}
+                alt={LATEST_PROJECT.familyName}
+                class="w-full aspect-[16/10] object-cover"
                 loading="lazy"
               />
             </div>
           </div>
-          
-          <!-- Content -->
           <div class="lg:col-span-5 reveal">
-            <p class="font-sans text-xs uppercase tracking-[0.2em] text-ink-500 font-semibold mb-3">Featured Project</p>
-            <h3 class="font-display text-[2rem] md:text-[2.5rem] lg:text-[3rem] leading-[1.05] text-ink-900 mb-4">
-              {FEATURED_STORY.familyName}
-            </h3>
-            <div class="flex items-center gap-4 text-sm text-ink-500 mb-6">
-              <span>{FEATURED_STORY.location}, {FEATURED_STORY.district}</span>
-              <span>·</span>
-              <span>{FEATURED_STORY.beneficiaries} family members</span>
+            <p class="eyebrow mb-4">Latest Project</p>
+            <span class="inline-block text-xs uppercase tracking-[0.14em] font-semibold text-brand-500 bg-brand-50 px-3 py-1 rounded-full mb-4">
+              Completed
+            </span>
+            <h2 class="font-display text-[clamp(1.8rem,3.5vw,2.8rem)] leading-[1.08] text-ink-900 mb-4">
+              {LATEST_PROJECT.familyName}
+            </h2>
+            <div class="flex items-center gap-4 text-sm text-ink-500 mb-5">
+              <span class="flex items-center gap-1.5">
+                <Icon name="map-pin" size={14} />
+                {LATEST_PROJECT.location}, {LATEST_PROJECT.district}
+              </span>
+              <span class="flex items-center gap-1.5">
+                <Icon name="users" size={14} />
+                {LATEST_PROJECT.beneficiaries} members
+              </span>
             </div>
             <p class="text-ink-700 text-[16px] leading-[1.7] mb-8">
-              {FEATURED_STORY.story}
+              {LATEST_PROJECT.short}
             </p>
-            <a href={`/projects/${FEATURED_STORY.slug}`} class="btn-primary">
-              View Project
+            <a href={`/projects/${LATEST_PROJECT.slug}`} class="btn-primary">
+              Read Their Story
               <Icon name="arrow-right" size={16} />
             </a>
           </div>
@@ -254,145 +166,174 @@ void IMPACT; void FEATURED_PROJECTS; void getProject;
   )}
 
   <!-- ============================================================
-       5. GALLERY — masonry editorial layout
+       4. FAMILIES / PROJECTS — Cards with image, info, button
        ============================================================ -->
-  <section class="py-20 md:py-32 bg-cream-50">
+  <section class="section-y bg-cream-50">
     <div class="container-x">
-      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 reveal">
-        <div>
-          <p class="font-sans text-xs uppercase tracking-[0.2em] text-ink-500 font-semibold mb-4">Gallery</p>
-          <h2 class="font-display text-[2rem] md:text-[2.8rem] lg:text-[3.2rem] leading-[1.05] text-ink-900">
-            A visual record<br/>of the work.
-          </h2>
-        </div>
-        <a href="/gallery" class="btn-tertiary hidden md:inline-flex">
-          View full gallery
-          <Icon name="arrow-right" size={16} />
-        </a>
-      </div>
-
-      <!-- Masonry grid -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <!-- Large image -->
-        <div class="col-span-2 row-span-2 aspect-square overflow-hidden bg-cream-200 rounded-lg reveal">
-          <img
-            src={unsplash(IMAGE_POOL.HOME_RURAL_01, 800)}
-            alt="Completed home in Kerala"
-            class="w-full h-full object-cover transition-transform duration-700 hover:scale-105 cursor-pointer"
-            loading="lazy"
-          />
-        </div>
-        <!-- Small images -->
-        <div class="aspect-square overflow-hidden bg-cream-200 rounded-lg reveal delay-1">
-          <img
-            src={unsplash(IMAGE_POOL.HOME_SIMPLE_03, 400)}
-            alt="Construction in progress"
-            class="w-full h-full object-cover transition-transform duration-700 hover:scale-105 cursor-pointer"
-            loading="lazy"
-          />
-        </div>
-        <div class="aspect-square overflow-hidden bg-cream-200 rounded-lg reveal delay-2">
-          <img
-            src={unsplash(IMAGE_POOL.HANDOVER_04, 400)}
-            alt="Family at doorway"
-            class="w-full h-full object-cover transition-transform duration-700 hover:scale-105 cursor-pointer"
-            loading="lazy"
-          />
-        </div>
-        <div class="aspect-square overflow-hidden bg-cream-200 rounded-lg reveal delay-1">
-          <img
-            src={unsplash(IMAGE_POOL.BUILDING_01, 400)}
-            alt="Building materials"
-            class="w-full h-full object-cover transition-transform duration-700 hover:scale-105 cursor-pointer"
-            loading="lazy"
-          />
-        </div>
-        <div class="aspect-square overflow-hidden bg-cream-200 rounded-lg reveal delay-2">
-          <img
-            src={unsplash(IMAGE_POOL.VOLUNTEER_01, 400)}
-            alt="Volunteers at work"
-            class="w-full h-full object-cover transition-transform duration-700 hover:scale-105 cursor-pointer"
-            loading="lazy"
-          />
-        </div>
-      </div>
-
-      <div class="mt-8 text-center md:hidden reveal">
-        <a href="/gallery" class="btn-secondary">
-          View full gallery
-          <Icon name="arrow-right" size={16} />
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       6. THE PEOPLE — creative team showcase
-       ============================================================ -->
-  <section class="py-20 md:py-32">
-    <div class="container-x">
-      <TeamShowcase members={[...WORKING_TEAM]} />
-    </div>
-  </section>
-
-  <!-- ============================================================
-       7. TESTIMONIALS — community leader carousel
-       ============================================================ -->
-  <section class="py-20 md:py-32 bg-sage-100">
-    <div class="container-x">
-      <div class="text-center mb-16 reveal">
-        <p class="font-sans text-xs uppercase tracking-[0.2em] text-ink-500 font-semibold mb-4">Community voices</p>
-        <h2 class="font-display text-[2rem] md:text-[2.8rem] lg:text-[3.2rem] leading-[1.05] text-ink-900">
-          What leaders are saying.
+      <div class="text-center mb-14 reveal">
+        <p class="eyebrow justify-center mb-5">Our Projects</p>
+        <h2 class="font-display text-[clamp(2rem,4vw,3.2rem)] leading-[1.08] text-ink-900 mb-4">
+          Families We Have Helped<br/>Build Homes For.
         </h2>
-      </div>
-
-      <TestimonialCarousel testimonials={[...TESTIMONIALS]} autoPlay={true} interval={7000} />
-    </div>
-  </section>
-
-  <!-- ============================================================
-       8. CTA — creative emotional section
-       ============================================================ -->
-  <section class="relative py-24 md:py-32 overflow-hidden">
-    <!-- Background image with Ken Burns effect -->
-    <div class="absolute inset-0">
-      <img
-        src={unsplash(IMAGE_POOL.HANDOVER_04, 1920, 60)}
-        alt="Family at handover"
-        class="w-full h-full object-cover ken-burns"
-      />
-      <div class="absolute inset-0 bg-brand-900/85"></div>
-    </div>
-    
-    <div class="container-x relative z-10 text-center">
-      <div class="max-w-3xl mx-auto reveal">
-        <p class="font-sans text-xs uppercase tracking-[0.2em] text-cream-100/60 font-semibold mb-6">Join the work</p>
-        <h2 class="font-display text-[2.5rem] md:text-[3.5rem] lg:text-[4rem] leading-[1.0] text-cream-50 mb-8">
-          Every home begins<br/>with one act of kindness.
-        </h2>
-        <p class="text-cream-100/80 text-[18px] md:text-[20px] leading-[1.65] max-w-xl mx-auto mb-12">
-          A sixth home is currently being built. Your ₹1,000 contribution joins you to the people who will live there.
+        <p class="text-ink-700 text-[17px] leading-[1.7] max-w-2xl mx-auto">
+          Each card below represents a family, a story, and a home that was built together by the community.
         </p>
-        
-        <!-- Progress bar -->
-        <div class="max-w-md mx-auto mb-10">
-          <div class="flex justify-between text-sm text-cream-100/60 mb-2">
-            <span>Home #6 Progress</span>
-            <span>65%</span>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {DELIVERED.map((project, i) => (
+          <div class="bg-cream-50 border border-cream-200 rounded-xl overflow-hidden group reveal" style={`animation-delay: ${i * 80}ms`}>
+            <div class="aspect-[16/10] overflow-hidden">
+              <img
+                src={project.cover}
+                alt={project.familyName}
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-3 mb-3">
+                <span class="text-xs uppercase tracking-[0.12em] font-semibold text-brand-500 bg-brand-50 px-2.5 py-0.5 rounded-full">
+                  Home #{project.number}
+                </span>
+                <span class="text-xs text-ink-500 flex items-center gap-1">
+                  <Icon name="map-pin" size={12} />
+                  {project.location}
+                </span>
+              </div>
+              <h3 class="font-display text-[1.25rem] leading-[1.15] text-ink-900 mb-2">
+                {project.familyName}
+              </h3>
+              <p class="text-ink-700 text-[14px] leading-[1.65] mb-4 line-clamp-2">
+                {project.short}
+              </p>
+              <div class="flex items-center gap-4 text-xs text-ink-500 mb-5 pt-4 border-t border-cream-200">
+                <span class="flex items-center gap-1.5">
+                  <Icon name="users" size={13} />
+                  {project.beneficiaries} members
+                </span>
+                <span class="flex items-center gap-1.5">
+                  <Icon name="people" size={13} />
+                  {project.contributors} contributors
+                </span>
+              </div>
+              <a href={`/projects/${project.slug}`} class="btn-tertiary text-[13px]">
+                Read their story
+                <Icon name="arrow-right" size={14} />
+              </a>
+            </div>
           </div>
-          <div class="h-2 bg-cream-100/20 rounded-full overflow-hidden">
-            <div class="h-full bg-amber-400 rounded-full transition-all duration-1000" style="width: 65%"></div>
+        ))}
+      </div>
+
+      <div class="text-center mt-12 reveal">
+        <a href="/projects" class="btn-secondary">
+          View All Projects
+          <Icon name="arrow-right" size={16} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       5. HOW IT WORKS — Fund allocation breakdown
+       ============================================================ -->
+  <section class="section-y bg-cream-100">
+    <div class="container-x">
+      <div class="text-center mb-14 reveal">
+        <p class="eyebrow justify-center mb-5">How It Works</p>
+        <h2 class="font-display text-[clamp(2rem,4vw,3.2rem)] leading-[1.08] text-ink-900 mb-4">
+          Where Your Fund Goes.
+        </h2>
+        <p class="text-ink-700 text-[17px] leading-[1.7] max-w-2xl mx-auto">
+          Every contribution is tracked and spent on building materials and local labour. Here&rsquo;s how approximately ₹4,00,000 is allocated per home.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+        {[
+          { icon: "shield", label: "Cement & Concrete", percent: "35%", amount: "~₹1,40,000", desc: "Foundation, walls, and structural work" },
+          { icon: "home", label: "Roofing & Doors", percent: "25%", amount: "~₹1,00,000", desc: "Steel roof trusses, sheets, doors, and windows" },
+          { icon: "coin", label: "Bricks & Materials", percent: "25%", amount: "~₹1,00,000", desc: "Laterite bricks, sand, gravel, and wiring" },
+          { icon: "users", label: "Skilled Labour", percent: "15%", amount: "~₹60,000", desc: "Masons, carpenters, and electricians" },
+        ].map((item, i) => (
+          <div class="bg-cream-50 border border-cream-200 rounded-xl p-6 text-center reveal" style={`animation-delay: ${i * 100}ms`}>
+            <div class="w-12 h-12 rounded-full bg-brand-50 flex items-center justify-center mx-auto mb-4">
+              <Icon name={item.icon} size={20} class="text-brand-500" />
+            </div>
+            <div class="font-display text-amber-400 text-[1.5rem] mb-1">{item.percent}</div>
+            <h3 class="font-semibold text-ink-900 text-[15px] mb-1">{item.label}</h3>
+            <p class="text-ink-500 text-xs mb-2">{item.amount}</p>
+            <p class="text-ink-700 text-[13px] leading-[1.6]">{item.desc}</p>
           </div>
-        </div>
-        
+        ))}
+      </div>
+
+      <div class="text-center mt-10 reveal">
+        <p class="text-ink-500 text-sm">
+          Contributing just <strong class="text-ink-900">₹1,000</strong> gets you listed as a contributor. The receipt is valid for <strong class="text-ink-900">80G tax exemption</strong>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       6. TESTIMONIALS — Twitter-style white card carousel
+       ============================================================ -->
+  <section class="section-y bg-cream-50 overflow-hidden">
+    <div class="container-x">
+      <div class="text-center mb-14 reveal">
+        <p class="eyebrow justify-center mb-5">Testimonials</p>
+        <h2 class="font-display text-[clamp(2rem,4vw,3.2rem)] leading-[1.08] text-ink-900">
+          What People Are Saying.
+        </h2>
+      </div>
+    </div>
+
+    <div class="testimonial-marquee-wrapper">
+      <div class="testimonial-marquee">
+        {[...TESTIMONIALS, ...TESTIMONIALS].map((t) => (
+          <div class="testimonial-card">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-full bg-brand-50 flex items-center justify-center text-brand-500 font-bold text-sm flex-shrink-0">
+                {t.name.charAt(0)}
+              </div>
+              <div class="min-w-0">
+                <p class="font-semibold text-ink-900 text-[14px] leading-tight truncate">{t.name}</p>
+                <p class="text-ink-500 text-[12px] truncate">{t.designation}</p>
+              </div>
+            </div>
+            <p class="text-ink-700 text-[14px] leading-[1.65]">
+              &ldquo;{t.quote}&rdquo;
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       7. CTA — Support section
+       ============================================================ -->
+  <section class="section-y" style="background: #F8C62F;">
+    <div class="container-x text-center">
+      <div class="max-w-2xl mx-auto reveal">
+        <p class="text-ink-900/60 text-xs uppercase tracking-[0.2em] font-semibold mb-5">
+          {NEXT_HOME ? `Currently Building: ${NEXT_HOME.familyName}` : "Join the Work"}
+        </p>
+        <h2 class="font-display text-ink-900 text-[clamp(2rem,5vw,3.5rem)] leading-[1.05] mb-6">
+          Every Home Begins<br/>With One Act of Kindness.
+        </h2>
+        <p class="text-ink-900/80 text-[17px] leading-[1.7] max-w-lg mx-auto mb-10">
+          Your ₹1,000 contribution joins you to the people who are building a home for a family in need. Every brick, every wall, every roof — built together.
+        </p>
         <div class="flex flex-wrap justify-center gap-4">
-          <a href="/contact#donate" class="btn-primary !h-14 !px-8">
+          <a href="/contact#donate" class="inline-flex items-center gap-2 bg-ink-900 text-cream-50 px-7 py-3.5 rounded-md font-bold text-[14px] hover:bg-ink-900/90 transition-colors">
             Support a Home
-            <Icon name="arrow-right" size={18} />
+            <Icon name="arrow-right" size={15} />
           </a>
-          <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener" class="btn-secondary !border-cream-100/30 !text-cream-50 hover:!bg-cream-50/10 !h-14 !px-8">
-            <Icon name="chat" size={18} />
+          <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-white text-ink-900 px-7 py-3.5 rounded-md font-bold text-[14px] hover:bg-white/90 transition-colors">
+            <Icon name="whatsapp" size={15} />
             Talk to Us
           </a>
         </div>
@@ -401,14 +342,13 @@ void IMPACT; void FEATURED_PROJECTS; void getProject;
   </section>
 
   <!-- ============================================================
-       9. BEHIND THE SCENES — image marquee
+       8. MOVING GALLERY CAROUSEL
        ============================================================ -->
   <section class="py-16 bg-cream-50">
     <div class="container-x mb-8">
-      <p class="font-sans text-xs uppercase tracking-[0.2em] text-ink-500 font-semibold text-center reveal">Behind the scenes</p>
+      <p class="eyebrow justify-center reveal">Behind the Scenes</p>
     </div>
-    
-    <ImageMarquee 
+    <ImageMarquee
       images={[
         { src: unsplash(IMAGE_POOL.BUILDING_01, 700), alt: "Construction work", caption: "Foundation work" },
         { src: unsplash(IMAGE_POOL.VOLUNTEER_01, 700), alt: "Volunteers", caption: "Community volunteers" },
@@ -420,107 +360,84 @@ void IMPACT; void FEATURED_PROJECTS; void getProject;
       speed={35}
     />
   </section>
+
 </Layout>
 
 <style>
-  .ken-burns {
-    animation: kenBurns 20s ease-in-out infinite alternate;
+  .hero-section-editorial {
+    min-height: 85vh;
+    display: flex;
+    align-items: stretch;
   }
-  
-  @keyframes kenBurns {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(1.1);
-    }
+  @media (min-width: 768px) {
+    .hero-section-editorial { min-height: 90vh; }
   }
-  
-  @media (prefers-reduced-motion: reduce) {
-    .ken-burns {
-      animation: none;
-    }
-  }
-</style>
 
-<style>
-  .hero-dot {
-    width: 28px;
-    height: 3px;
-    border-radius: 9999px;
-    background: rgba(255, 255, 255, 0.35);
-    transition: all 0.3s ease;
-  }
-  .hero-dot.is-active {
-    background: var(--color-saffron-300);
-    width: 38px;
-  }
-  .line-clamp-3 {
+  .line-clamp-2 {
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+
+  /* Testimonial marquee */
+  .testimonial-marquee-wrapper {
+    overflow: hidden;
+    width: 100%;
+  }
+  .testimonial-marquee {
+    display: flex;
+    gap: 24px;
+    animation: testimonialScroll 40s linear infinite;
+    width: max-content;
+  }
+  .testimonial-marquee:hover {
+    animation-play-state: paused;
+  }
+  .testimonial-card {
+    flex-shrink: 0;
+    width: 360px;
+    background: white;
+    border: 1px solid var(--color-cream-200);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  @keyframes testimonialScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .testimonial-marquee { animation: none; }
+  }
+  @media (max-width: 640px) {
+    .testimonial-card { width: 300px; }
   }
 </style>
 
 <script>
-  // Hero carousel
-  const slides = document.querySelectorAll<HTMLElement>(".hero-slide");
-  const dots   = document.querySelectorAll<HTMLElement>(".hero-dot");
-  let current  = 0;
-  let timer: number | null = null;
-  const showSlide = (i: number) => {
-    slides.forEach((s, idx) => s.classList.toggle("is-active", idx === i));
-    dots.forEach((d, idx) => d.classList.toggle("is-active", idx === i));
-    current = i;
-  };
-  const next = () => showSlide((current + 1) % slides.length);
-  dots.forEach((d, i) => d.addEventListener("click", () => { showSlide(i); restart(); }));
-  const restart = () => { if (timer) clearInterval(timer); timer = window.setInterval(next, 6000); };
-  restart();
-
-  // ============================================================
-  // STAT COUNTER ANIMATION
-  // Animates the .stat-counter numbers from 0 up to the value
-  // in data-target. Triggered when the section enters the viewport
-  // (one-time animation). Respects prefers-reduced-motion.
-  // ============================================================
-  const counters = document.querySelectorAll<HTMLElement>(".stat-counter");
+  // Stat counter animation
+  const counters = document.querySelectorAll<HTMLElement>(".counter-value");
   if (counters.length > 0) {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
     const animate = (el: HTMLElement) => {
-      const target = parseInt(el.dataset.target || "0", 10);
+      const target = parseInt(el.dataset.end || "0", 10);
       const suffix = el.dataset.suffix || "";
-      if (reduceMotion) {
-        el.textContent = target + suffix;
-        return;
-      }
-      const duration = 1800; // ms
+      if (reduceMotion) { el.textContent = target + suffix; return; }
+      const duration = 2000;
       const start = performance.now();
       const tick = (now: number) => {
         const elapsed = now - start;
         const progress = Math.min(elapsed / duration, 1);
-        // Ease-out cubic for a nice deceleration
         const eased = 1 - Math.pow(1 - progress, 3);
-        const value = Math.round(eased * target);
-        el.textContent = value + suffix;
+        el.textContent = Math.round(eased * target) + suffix;
         if (progress < 1) requestAnimationFrame(tick);
         else el.textContent = target + suffix;
       };
       requestAnimationFrame(tick);
     };
-
     if ("IntersectionObserver" in window) {
       const obs = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => {
-            if (e.isIntersecting) {
-              animate(e.target as HTMLElement);
-              obs.unobserve(e.target);
-            }
-          });
-        },
+        (entries) => { entries.forEach((e) => { if (e.isIntersecting) { animate(e.target as HTMLElement); obs.unobserve(e.target); } }); },
         { threshold: 0.4 }
       );
       counters.forEach((c) => obs.observe(c));

@@ -84,7 +84,7 @@ const fullTitle = title.includes(SITE.name) ? title : `${title} · ${SITE.name}`
       Skip to main content
     </a>
     <Header darkHero={darkHero} />
-    <main id="main" class="flex-1 pt-[112px] md:pt-[120px]">
+    <main id="main" class:list={["flex-1", { "pt-[64px] md:pt-[72px]": !darkHero }]}>
       <slot />
     </main>
     <Footer />

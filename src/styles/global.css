@@ -27,44 +27,49 @@
   --color-brand-600: #123B2E;   /* Darker accent */
   --color-brand-700: #0E2D23;
   --color-brand-800: #0A1F19;
-  --color-brand-900: #06120E;
+  --color-brand-900: #0D1F1A;   /* Footer dark — deep charcoal-green */
 
   /* Sage green */
   --color-sage-50: #F0F5F1;
   --color-sage-100: #DCE9DF;
 
-  /* Amber accent (action / warmth / donation) */
-  --color-amber-300: #FCD34D;
-  --color-amber-400: #F4A623;   /* PRIMARY accent */
-  --color-amber-500: #D97706;
+  /* Amber accent (action / warmth / donation) — warm golden yellow */
+  --color-amber-300: #FDD84D;
+  --color-amber-400: #F8C62F;   /* PRIMARY accent — warm golden */
+  --color-amber-500: #E0A820;   /* Hover */
 
-  /* Editorial surfaces */
-  --color-cream-50:  #FCFBF7;   /* Warm white */
-  --color-cream-100: #F7F4EC;   /* Warm cream */
-  --color-cream-200: #E8E3D8;   /* Borders */
+  /* Saffron aliases — map to amber for legacy references */
+  --color-saffron-300: var(--color-amber-300);
+  --color-saffron-400: var(--color-amber-400);
+  --color-saffron-500: var(--color-amber-500);
 
-  --color-ink-900: #18302A;     /* Dark text */
-  --color-ink-700: #2D4A3E;
-  --color-ink-500: #66736D;     /* Muted text */
-  --color-ink-300: #9CA8A2;
+  /* Editorial surfaces — warm paper-like cream */
+  --color-cream-50:  #F5F1E6;   /* Page background — warm ivory */
+  --color-cream-100: #EDE8DA;   /* Alternate section bg */
+  --color-cream-200: #E4DED2;   /* Borders — thin, subtle */
+
+  --color-ink-900: #173C34;     /* Primary text — deep green-charcoal */
+  --color-ink-700: #2A4A40;     /* Body text — muted dark green */
+  --color-ink-500: #5E7068;     /* Secondary/muted text */
+  --color-ink-300: #949E98;     /* Placeholder/very muted */
 
   /* Typography */
   --font-display: "DM Serif Display", Georgia, "Times New Roman", serif;
   --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
   --font-ui: "Plus Jakarta Sans", var(--font-sans);
 
-  /* Type scale — editorial, responsive */
-  --text-display: clamp(2.5rem, 5vw, 4.5rem);   /* 64-72px desktop */
-  --text-hero: clamp(2.5rem, 5vw, 4.5rem);
-  --text-h1: clamp(2.4rem, 4vw, 3.5rem);        /* 48-56px */
-  --text-h2: clamp(1.9rem, 3.5vw, 2.75rem);     /* 38-48px */
+  /* Type scale — editorial, responsive — larger, more expressive */
+  --text-display: clamp(2.8rem, 5.5vw, 5rem);    /* 45-80px — hero, major headings */
+  --text-hero: clamp(2.8rem, 5.5vw, 5rem);
+  --text-h1: clamp(2.4rem, 4vw, 3.5rem);          /* 38-56px */
+  --text-h2: clamp(2rem, 4vw, 3.2rem);            /* 32-50px */
   --text-h3: clamp(1.5rem, 2.5vw, 2rem);
   --text-h4: clamp(1.25rem, 2vw, 1.5rem);
 
-  /* Shadow palette — minimal */
-  --shadow-soft: 0 2px 8px -2px rgba(23, 74, 58, 0.06), 0 1px 2px rgba(23, 74, 58, 0.04);
-  --shadow-lift: 0 8px 24px -8px rgba(23, 74, 58, 0.12), 0 2px 4px rgba(23, 74, 58, 0.06);
-  --shadow-card: 0 1px 3px rgba(24, 48, 42, 0.06);
+  /* Shadow palette — very minimal, prefer borders */
+  --shadow-soft: 0 1px 3px rgba(23, 60, 52, 0.04);
+  --shadow-lift: 0 4px 12px -4px rgba(23, 60, 52, 0.08);
+  --shadow-card: 0 1px 2px rgba(23, 60, 52, 0.04);
 
   /* Editorial radii — restrained */
   --radius-soft: 0.375rem;       /* 6px — buttons */
@@ -84,10 +89,10 @@ html {
 
 body {
   background-color: var(--color-cream-50);
-  color: var(--color-ink-900);
+  color: var(--color-ink-700);
   font-family: var(--font-sans);
   font-size: 17px;
-  line-height: 1.65;
+  line-height: 1.7;
   font-feature-settings: "kern" 1, "liga" 1;
 }
 
@@ -120,7 +125,7 @@ p { text-wrap: pretty; }
    ACCESSIBLE FOCUS STATES
    ============================================================ */
 *:focus-visible {
-  outline: 2px solid var(--color-saffron-400);
+  outline: 2px solid var(--color-amber-400);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -208,16 +213,15 @@ p { text-wrap: pretty; }
   letter-spacing: 2.5px;
   font-size: 14px;
   font-weight: 700;
-  color: var(--color-saffron-400);
+  color: var(--color-amber-400);
 }
 .hero-script-accent {
-  font-family: var(--font-script);
-  font-weight: 700;
-  color: var(--color-saffron-400);
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--color-amber-400);
   font-size: 1.1em;
   line-height: 0.85;
   display: inline-block;
-  transform: rotate(-2deg);
   padding: 0 0.1em;
 }
 @media (min-width: 1024px) {
@@ -234,7 +238,7 @@ p { text-wrap: pretty; }
    UTILITIES — decorative, with ornamentation
    ============================================================ */
 .container-x { @apply mx-auto max-w-6xl px-5 sm:px-6 lg:px-8; }
-.section-y   { @apply py-16 md:py-24 lg:py-28; }
+.section-y   { @apply py-[clamp(55px,10vw,140px)]; }
 .section-tight { @apply py-10 md:py-14; }
 
 /* Editorial display heading — used for hero H1 and section H2s */
@@ -251,9 +255,9 @@ p { text-wrap: pretty; }
   font-family: var(--font-sans);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-size: 0.72rem;
-  color: var(--color-brand-400);
+  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+  color: var(--color-ink-500);
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -263,7 +267,7 @@ p { text-wrap: pretty; }
   display: inline-block;
   width: 2rem;
   height: 2px;
-  background: var(--color-saffron-400);
+  background: var(--color-amber-400);
   border-radius: 9999px;
 }
 
@@ -284,15 +288,15 @@ p { text-wrap: pretty; }
   color: var(--color-brand-500);
 }
 .status-chip-progress {
-  background: var(--color-saffron-300);
+  background: var(--color-amber-300);
   color: var(--color-ink-900);
 }
 
-/* Decorative orange divider */
+/* Decorative amber divider */
 .divider-orange {
   width: 4rem;
   height: 3px;
-  background: var(--color-saffron-400);
+  background: var(--color-amber-400);
   border-radius: 9999px;
   margin: 1.5rem 0;
 }
@@ -309,7 +313,7 @@ p { text-wrap: pretty; }
   background: var(--color-brand-400);
 }
 .blur-orb-orange {
-  background: var(--color-saffron-400);
+  background: var(--color-amber-400);
 }
 
 /* ============================================================
@@ -324,20 +328,18 @@ p { text-wrap: pretty; }
   background: var(--color-amber-400);
   color: var(--color-ink-900);
   padding: 0 1.5rem;
-  height: 52px;
+  height: 48px;
   border-radius: 8px;
   font-family: var(--font-sans);
   font-weight: 700;
   font-size: 0.9375rem;
   letter-spacing: 0.01em;
-  transition: all 0.2s ease;
-  border: 1px solid transparent;
+  transition: background 0.2s ease;
+  border: none;
 }
 .btn-primary:hover {
   background: var(--color-amber-500);
-  transform: translateY(-1px);
 }
-.btn-primary:active { transform: translateY(0); }
 
 .btn-secondary {
   display: inline-flex;
@@ -392,19 +394,18 @@ p { text-wrap: pretty; }
 .btn-text:hover { gap: 0.7rem; }
 
 /* ============================================================
-   CARDS — editorial, restrained
+   CARDS — editorial, restrained, border-first
    ============================================================ */
 .card-base {
-  background: #fff;
+  background: var(--color-cream-50);
   border: 1px solid var(--color-cream-200);
   border-radius: 10px;
 }
 .card-lift {
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  transition: border-color 0.3s ease;
 }
 .card-lift:hover {
-  transform: translateY(-2px);
-  border-color: var(--color-brand-200);
+  border-color: var(--color-ink-300);
 }
 
 /* ============================================================
